@@ -1,0 +1,421 @@
+/* Paleta de colores: Verde Pacay Pastel y Cremas */
+:root {
+    --bg-cream: #FDFBF7;
+    --pacay-light: #E8F5E9;   /* Verde muy claro de fondo */
+    --pacay-pastel: #A5D6A7;  /* Verde pacay principal */
+    --pacay-dark: #2E4F2F;    /* Verde oscuro para textos fuertes */
+    --pacay-accent: #66BB6A;  /* Verde para acentos/botones */
+    --gold: #D4AF37;
+    
+    font-family: 'Montserrat', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--pacay-light);
+    color: var(--pacay-dark);
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* =========================================
+   PANTALLA DE CARGA (EL SOBRE)
+========================================= */
+#envelope-screen {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: linear-gradient(135deg, var(--bg-cream) 0%, var(--pacay-light) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity 1s ease-in-out;
+}
+
+.floating-container {
+    animation: float 4s ease-in-out infinite;
+    text-align: center;
+}
+
+/* Dibujando el Sobre con CSS */
+.envelope {
+    position: relative;
+    width: 280px;
+    height: 180px;
+    background: var(--pacay-pastel);
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 auto 30px auto;
+    box-shadow: 0 10px 30px rgba(46, 79, 47, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.envelope:hover {
+    transform: scale(1.05);
+}
+
+.envelope::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 0; height: 0;
+    border-style: solid;
+    border-width: 90px 140px 90px 140px;
+    border-color: transparent transparent var(--bg-cream) transparent;
+    z-index: 2;
+}
+
+.top-flap {
+    position: absolute;
+    top: 0; left: 0;
+    width: 0; height: 0;
+    border-style: solid;
+    border-width: 100px 140px 0 140px;
+    border-color: var(--pacay-accent) transparent transparent transparent;
+    z-index: 4;
+    transform-origin: top;
+    transition: transform 0.8s ease-in-out;
+}
+
+.seal {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -100%);
+    width: 50px; height: 50px;
+    background: var(--gold);
+    border-radius: 50%;
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: opacity 0.5s ease;
+}
+
+.envelope-opened .top-flap {
+    transform: rotateX(180deg);
+}
+.envelope-opened .seal {
+    opacity: 0;
+}
+
+.envelope-text {
+    font-family: 'Lora', serif;
+    font-size: 1.2rem;
+    color: var(--pacay-dark);
+    font-style: italic;
+    opacity: 0.8;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+/* =========================================
+   CONTENIDO PRINCIPAL Y FONDOS
+========================================= */
+#main-content {
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Hojas o partículas que caerán de fondo (creadas via JS) */
+#particles {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+.particle {
+    position: absolute;
+    top: -5%;
+    background-color: var(--pacay-pastel);
+    opacity: 0.6;
+    border-radius: 50%; /* O en forma de hojita */
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.7; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+
+.content-wrapper {
+    position: relative;
+    z-index: 10;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+/* Glassmorphism Panel */
+.glass-panel {
+    background: rgba(253, 251, 247, 0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(46, 79, 47, 0.1);
+    padding: 3rem 2rem;
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+/* Typography styles */
+.badge {
+    display: inline-block;
+    background: var(--pacay-pastel);
+    color: var(--pacay-dark);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+}
+
+.main-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 4rem;
+    color: var(--pacay-dark);
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+}
+
+.subtitle {
+    font-family: 'Lora', serif;
+    font-size: 1.2rem;
+    color: #557956;
+    margin-bottom: 2.5rem;
+}
+
+/* Contador */
+.countdown-label {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+}
+
+.time-blocks {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.time-box {
+    background: var(--bg-cream);
+    min-width: 80px;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border-bottom: 3px solid var(--pacay-accent);
+}
+
+.time-box span {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--pacay-accent);
+    display: block;
+}
+
+.time-box p {
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+    color: var(--pacay-dark);
+    font-weight: 500;
+}
+
+#birthday-message {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--pacay-accent);
+    margin-top: 1rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* =========================================
+   GALERÍA (Haciéndolo ver como Polaroids)
+========================================= */
+.section-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3rem;
+    text-align: center;
+    color: var(--pacay-dark);
+    margin-bottom: 0.5rem;
+}
+.section-desc {
+    text-align: center;
+    font-family: 'Lora', serif;
+    color: #557956;
+    margin-bottom: 3rem;
+    font-style: italic;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 5rem;
+}
+
+.polaroid {
+    background: #fff;
+    padding: 15px 15px 40px 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    border-radius: 4px;
+    transition: transform 0.4s ease;
+    text-align: center;
+}
+
+.polaroid:hover {
+    transform: scale(1.05) translateY(-10px) rotate(0deg) !important;
+    z-index: 5;
+    position: relative;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+.polaroid-image {
+    width: 100%;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    background: #eee;
+    border-radius: 2px;
+}
+
+.polaroid-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.polaroid-text {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    margin-top: 15px;
+    color: #333;
+}
+
+.tilt-left { transform: rotate(-3deg); }
+.tilt-right { transform: rotate(4deg); }
+
+/* =========================================
+   LA CARTA ROMÁNTICA
+========================================= */
+.love-letter-section {
+    margin: 4rem auto;
+    max-width: 800px;
+}
+
+.letter-paper {
+    background-color: #fffff8;
+    background-image: linear-gradient(#f4f4f4 1px, transparent 1px);
+    background-size: 100% 2.5rem;
+    padding: 4rem 3rem;
+    border-radius: 8px;
+    box-shadow: 0 15px 35px rgba(46, 79, 47, 0.1);
+    position: relative;
+    border-left: 2px solid var(--pacay-pastel);
+}
+
+.floral-decoration {
+    position: absolute;
+    font-size: 2.5rem;
+    opacity: 0.6;
+}
+.top-left { top: 20px; left: 20px; }
+.bottom-right { bottom: 20px; right: 20px; }
+
+.letter-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    text-align: center;
+    color: var(--pacay-dark);
+    margin-bottom: 2rem;
+}
+
+.letter-content {
+    font-family: 'Lora', serif;
+    font-size: 1.1rem;
+    line-height: 2.5rem; /* Ajustado al grid de fondo */
+    color: #444;
+}
+
+.signature {
+    margin-top: 3rem;
+    text-align: right;
+    font-family: 'Lora', serif;
+    font-style: italic;
+}
+
+.sign-name {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    color: var(--pacay-accent);
+    display: block;
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+footer {
+    text-align: center;
+    padding: 3rem 0;
+    color: #557956;
+    font-family: 'Lora', serif;
+}
+
+.heart-pulse {
+    font-size: 2rem;
+    margin-top: 0.5rem;
+    animation: heartbeat 1.5s infinite alternate;
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.2); }
+}
+
+/* Animaciones al hacer scroll */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.fade-in-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* =========================================
+   MEDIA QUERIES (Responsividad Móvil)
+========================================= */
+@media (max-width: 768px) {
+    .main-title { font-size: 3rem; }
+    .glass-panel { padding: 2rem 1rem; }
+    .time-blocks { gap: 0.8rem; }
+    .time-box { min-width: 65px; padding: 0.5rem; }
+    .time-box span { font-size: 1.5rem; }
+    .letter-paper { padding: 3rem 1.5rem; }
+}
