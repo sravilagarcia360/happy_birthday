@@ -6,14 +6,14 @@
     <title>ValeFlix</title>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- CSS en su carpeta organizada -->
-    <link rel="stylesheet" href="css/style.css">
+    <!-- CSS en su carpeta de Assets -->
+    <link rel="stylesheet" href="assets/css/style.css">
     
     <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
-    <link rel="manifest" href="favicons/site.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="assets/favicons/site.webmanifest">
 </head>
 <body>
     <audio id="netflix-sound" src="https://assets.mixkit.co/active_storage/sfx/2218/2218-preview.mp3" preload="auto"></audio>
@@ -124,31 +124,8 @@
         <div class="sliders-container">
             <div class="slider-row" style="margin-bottom:0;">
                 <h3 class="row-title">Pequeñas razones por las que te amo (¡Tócalas!)</h3>
-                <div class="row-items flip-items" style="gap:20px; padding-bottom:30px;">
-                    <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                        <div class="flip-inner">
-                            <div class="flip-front"><p>Razón #1</p></div>
-                            <div class="flip-back"><p>Amo la forma en la que sonríes cuando me miras.</p></div>
-                        </div>
-                    </div>
-                    <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                        <div class="flip-inner">
-                            <div class="flip-front"><p>Razón #2</p></div>
-                            <div class="flip-back"><p>Me das paz y haces que todo sea más bonito.</p></div>
-                        </div>
-                    </div>
-                    <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                        <div class="flip-inner">
-                            <div class="flip-front"><p>Razón #3</p></div>
-                            <div class="flip-back"><p>Tus ojitos son las estrellas de mi propio cielo universo.</p></div>
-                        </div>
-                    </div>
-                    <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                        <div class="flip-inner">
-                            <div class="flip-front"><p>Razón #4</p></div>
-                            <div class="flip-back"><p>Tu manera tan única y loca de alegrarme mis días más grises.</p></div>
-                        </div>
-                    </div>
+                <div class="row-items flip-items" id="slider-razones" style="gap:20px; padding-bottom:30px;">
+                    <!-- Se ha delegado la generación de 50 cartas mágicas al archivo script.js para mejor orden y escalabilidad -->
                 </div>
             </div>
         </div>
@@ -215,8 +192,8 @@
                 <div id="birthday-message" class="hidden">
                     <p style="color:var(--pacay-accent); font-size:1.5rem; margin-top:20px; font-weight:800;">¡FELIZ CUMPLEAÑOS! TE AMO 🎉</p>
                     <div class="video-wrapper">
-                        <!-- El video se reproducirá automáticamente aquí. Pon tu video en img/ y cámbiale el nombre en script.js -->
-                        <video id="birthday-video" src="img/tu_video_aqui.mp4" controls preload="none"></video>
+                        <!-- El video se reproducirá automáticamente aquí. Pon tu video en assets/img/ y cámbiale el nombre en script.js -->
+                        <video id="birthday-video" src="assets/img/tu_video_aqui.mp4" controls preload="none"></video>
                     </div>
                 </div>
             </div>
@@ -224,6 +201,6 @@
     </div>
 
     <!-- Referencia al archivo JS organizado -->
-    <script src="js/script.js"></script>
+    <script src="assets/js/script.js"></script>
 </body>
 </html>
