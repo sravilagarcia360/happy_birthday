@@ -6,7 +6,8 @@
     <title>ValeFlix</title>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600;700;800&family=Sniglet:wght@400;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <!-- CSS en su carpeta organizada -->
+    <link rel="stylesheet" href="css/style.css">
     
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
@@ -15,10 +16,9 @@
     <link rel="manifest" href="favicons/site.webmanifest">
 </head>
 <body>
-    <!-- Efecto de Sonido "Ta-dum" -->
     <audio id="netflix-sound" src="https://assets.mixkit.co/active_storage/sfx/2218/2218-preview.mp3" preload="auto"></audio>
     
-    <!-- PANTALLA 1: SELECCIÓN DE PERFIL -->
+    <!-- PANTALLA INICIAL: ENTRADA VALEFLIX -->
     <div id="profile-gate" class="profile-gate">
         <header class="gate-header">
             <h1 class="logo-netflix">ValeFlix</h1>
@@ -26,37 +26,24 @@
         <div class="profile-selection">
             <h2 class="profile-title">¿Quién está viendo?</h2>
             <div class="profiles-container">
-                <!-- Perfil 1: Cartas y Sentimientos -->
-                <div class="profile" onclick="selectProfile('vale')">
+                <div class="profile" onclick="enterValeFlix()">
                     <div class="avatar-wrapper"><div class="avatar avatar-1"></div></div>
-                    <span class="profile-name">Cartas Mágicas</span>
-                </div>
-                <!-- Perfil 2: Fotos de pareja -->
-                <div class="profile" onclick="selectProfile('nosotros')">
-                    <div class="avatar-wrapper"><div class="avatar avatar-2"></div></div>
-                    <span class="profile-name">Nuestra Historia</span>
-                </div>
-                <!-- Perfil 3: Juego interactivo -->
-                <div class="profile" onclick="selectProfile('magia')">
-                    <div class="avatar-wrapper"><div class="avatar avatar-3"></div></div>
-                    <span class="profile-name">Top Secret 🌟</span>
-                </div>
-                <!-- Perfil 4: Modo Netflix Kids (Fotos divertidas) -->
-                <div class="profile" onclick="selectProfile('kids')">
-                    <div class="avatar-wrapper"><div class="avatar avatar-4"></div></div>
-                    <span class="profile-name">Mini Vale (Kids)</span>
+                    <span class="profile-name">Vale</span>
                 </div>
             </div>
-            <button class="manage-profiles">Administrar perfiles</button>
         </div>
     </div>
 
-    <!-- NAVBAR GLOBAL (Oculto al inicio) -->
+    <!-- NAVBAR GLOBAL CON PESTAÑAS (Oculto al inicio) -->
     <nav id="navbar" class="navbar hidden">
         <div class="nav-left">
             <h1 class="logo-netflix" id="nav-logo" onclick="location.reload()" style="cursor:pointer;">ValeFlix</h1>
+            <!-- PESTAÑAS DE NAVEGACIÓN -->
             <ul class="nav-links">
-                <li><a href="#" class="active" onclick="location.reload()">Cambiar Perfil</a></li>
+                <li><a href="#" class="nav-tab active" data-target="tab-inicio" onclick="switchTab(event, 'tab-inicio')">Inicio</a></li>
+                <li><a href="#" class="nav-tab" data-target="tab-cartas" onclick="switchTab(event, 'tab-cartas')">Cartas Mágicas</a></li>
+                <li><a href="#" class="nav-tab" data-target="tab-magia" onclick="switchTab(event, 'tab-magia')">Top Secret</a></li>
+                <li><a href="#" class="nav-tab" data-target="tab-mini" onclick="switchTab(event, 'tab-mini')">Mini Vale</a></li>
             </ul>
         </div>
         <div class="nav-right">
@@ -65,73 +52,9 @@
     </nav>
 
     <!-- ==============================================
-         VISTA 1: "VALE" (Buzón de Cartas y Emociones)
+         PESTAÑA 1: INICIO (Fotos y Documental)
          ============================================== -->
-    <main id="view-vale" class="content-view hidden">
-        <div class="billboard">
-            <div class="billboard-image">
-                <img src="https://images.unsplash.com/photo-1518599904199-0ca897819ddb?auto=format&fit=crop&q=80&w=1200" alt="Billboard">
-                <div class="billboard-vignette"></div>
-            </div>
-            <div class="billboard-layer">
-                <div class="billboard-content">
-                    <div class="logo-and-text">
-                        <span class="n-icon">V</span><span class="original-text">S E R I E &nbsp; O R I G I N A L</span>
-                    </div>
-                    <h2 class="title-logo">Lo que siento<br>por ti</h2>
-                    <p class="synopsis">Una colección de palabras no dichas, secretos a voces y todo el amor que me haces sentir. Abre esta carta magna para descubrir lo que hay en mi corazón.</p>
-                    <div class="billboard-buttons">
-                        <button class="btn btn-play" onclick="openModal('letter-modal')">
-                            <span class="icon">📖</span> Leer Carta Principal
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Fila de Cartas 3D (Flip Cards) -->
-        <div class="sliders-container">
-            <div class="slider-row">
-                <h3 class="row-title">Razones por las que te amo (¡Tócalas!)</h3>
-                <div class="row-items flip-items" style="gap:20px;">
-                    <!-- Tarjeta 1 -->
-                    <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                        <div class="flip-inner">
-                            <div class="flip-front"><p>Razón #1</p></div>
-                            <div class="flip-back"><p>Amo la forma en la que sonríes cuando me miras.</p></div>
-                        </div>
-                    </div>
-                    <!-- Tarjeta 2 -->
-                    <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                        <div class="flip-inner">
-                            <div class="flip-front"><p>Razón #2</p></div>
-                            <div class="flip-back"><p>Me das paz y haces que todo sea más bonito.</p></div>
-                        </div>
-                    </div>
-                    <!-- Tarjeta 3 -->
-                    <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                        <div class="flip-inner">
-                            <div class="flip-front"><p>Razón #3</p></div>
-                            <div class="flip-back"><p>Tus ojitos son las estrellas de mi propio cielo universo.</p></div>
-                        </div>
-                    </div>
-                    <!-- Tarjeta 4 -->
-                    <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                        <div class="flip-inner">
-                            <div class="flip-front"><p>Razón #4</p></div>
-                            <div class="flip-back"><p>Tu manera tan única y loca de alegrarme mis días más grises.</p></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <footer class="netflix-footer"><p>Original de ValeFlix 💚</p></footer>
-    </main>
-
-    <!-- ==============================================
-         VISTA 2: "NOSOTROS" (Álbum de Recuerdos)
-         ============================================== -->
-    <main id="view-nosotros" class="content-view hidden">
+    <main id="tab-inicio" class="content-view hidden">
         <div class="billboard">
             <div class="billboard-image">
                 <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&q=80&w=1200" alt="Billboard">
@@ -182,49 +105,104 @@
     </main>
 
     <!-- ==============================================
-         VISTA 3: "MAGIA" (Juego de Estrellas)
+         PESTAÑA 2: CARTAS Y SECRETOS
          ============================================== -->
-    <main id="view-magia" class="content-view hidden" style="height:100vh; overflow:hidden;">
+    <main id="tab-cartas" class="content-view hidden">
+        <div class="billboard">
+            <div class="billboard-image">
+                <img src="https://images.unsplash.com/photo-1518599904199-0ca897819ddb?auto=format&fit=crop&q=80&w=1200" alt="Billboard">
+                <div class="billboard-vignette"></div>
+            </div>
+            <div class="billboard-layer">
+                <div class="billboard-content">
+                    <div class="logo-and-text">
+                        <span class="n-icon">V</span><span class="original-text">S E R I E &nbsp; O R I G I N A L</span>
+                    </div>
+                    <h2 class="title-logo">Lo que siento<br>por ti</h2>
+                    <p class="synopsis">Una colección de palabras no dichas, secretos a voces y todo el amor que me haces sentir. Abre esta carta magna para descubrir lo que hay en mi corazón.</p>
+                    <div class="billboard-buttons">
+                        <button class="btn btn-play" onclick="openModal('letter-modal')">
+                            <span class="icon">📖</span> Leer Carta Principal
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sliders-container">
+            <div class="slider-row">
+                <h3 class="row-title">Pequeñas razones por las que te amo (¡Tócalas!)</h3>
+                <div class="row-items flip-items" style="gap:20px;">
+                    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-inner">
+                            <div class="flip-front"><p>Razón #1</p></div>
+                            <div class="flip-back"><p>Amo la forma en la que sonríes cuando me miras.</p></div>
+                        </div>
+                    </div>
+                    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-inner">
+                            <div class="flip-front"><p>Razón #2</p></div>
+                            <div class="flip-back"><p>Me das paz y haces que todo sea más bonito.</p></div>
+                        </div>
+                    </div>
+                    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-inner">
+                            <div class="flip-front"><p>Razón #3</p></div>
+                            <div class="flip-back"><p>Tus ojitos son las estrellas de mi propio cielo universo.</p></div>
+                        </div>
+                    </div>
+                    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-inner">
+                            <div class="flip-front"><p>Razón #4</p></div>
+                            <div class="flip-back"><p>Tu manera tan única y loca de alegrarme mis días más grises.</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="netflix-footer"><p>Cartas Exclusivas 💚</p></footer>
+    </main>
+
+    <!-- ==============================================
+         PESTAÑA 3: TOP SECRET (Juego de Magia)
+         ============================================== -->
+    <main id="tab-magia" class="content-view hidden" style="height:100vh; overflow:hidden;">
         <div id="particles-bg"></div>
         <div class="magic-container" id="star-hunt-game">
-            <h1 class="magic-title">Misterio Espacial 🌟</h1>
-            <p class="magic-subtitle">Toca todas las estrellas parpadeantes de la pantalla para revelar un secreto cósmico de amor.</p>
+            <h1 class="magic-title">Misterio Cósmico 🌟</h1>
+            <p class="magic-subtitle">Toca todas las estrellas parpadeantes de la pantalla para revelar un secreto de amor.</p>
             <div id="hunt-stars-wrapper" class="hunt-wrapper"></div>
             
-            <!-- Recompensa -->
             <div id="magic-reward" class="hidden reward-box">
                 <h2>¡Ganaste! 🎉</h2>
                 <p>Tu premio es saber que <strong>eres el amor de mi vida</strong> todos los días y para siempre. ¡Feliz Cumpleaños preciosa!</p>
-                <button class="btn btn-play" onclick="location.reload()" style="margin-top:20px;">Volver a ValeFlix</button>
+                <button class="btn btn-play" onclick="switchTab(event, 'tab-inicio')" style="margin-top:20px;">Volver al Inicio</button>
             </div>
         </div>
     </main>
 
     <!-- ==============================================
-         VISTA 4: "MINI VALE" (Netflix Kids Theme)
+         PESTAÑA 4: MINI VALE (Modo Kids)
          ============================================== -->
-    <main id="view-kids" class="content-view kids-theme hidden">
+    <main id="tab-mini" class="content-view kids-theme hidden">
         <div class="kids-billboard">
             <h2>¡Galería de Travesuras! 🎈</h2>
-            <p>Donde guardamos las fotos divertidas y lindas.</p>
+            <p>Donde guardamos las fotos más graciosas, lindas o de tu niñez.</p>
         </div>
         <div class="kids-slider-row">
             <div class="row-items">
-                <!-- Fotos divertidas o baby fotos -->
                 <div class="kids-card"><img src="https://images.unsplash.com/photo-1513258496099-481620d4ce6d?w=400" alt="Funny"></div>
                 <div class="kids-card"><img src="https://images.unsplash.com/photo-1533514114760-4389f572ae26?w=400" alt="Funny"></div>
                 <div class="kids-card"><img src="https://images.unsplash.com/photo-1563206767-5b18f218e8de?w=400" alt="Funny"></div>
                 <div class="kids-card"><img src="https://images.unsplash.com/photo-1511529323049-7603309a4dce?w=400" alt="Funny"></div>
             </div>
         </div>
-        <footer class="kids-footer"><p>ValeFlix Mini 🎈</p></footer>
+        <footer class="kids-footer"><p>Mini ValeFlix 🎈</p></footer>
     </main>
-
 
     <!-- ==============================================
          MODALES GLOBALES
          ============================================== -->
-    <!-- Modal Carta -->
     <div id="letter-modal" class="modal hidden">
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal('letter-modal')">✖</button>
@@ -247,7 +225,6 @@
         </div>
     </div>
 
-    <!-- Modal Contador -->
     <div id="countdown-modal" class="modal hidden">
         <div class="modal-content info-modal">
             <button class="close-btn" onclick="closeModal('countdown-modal')">✖</button>
@@ -265,6 +242,7 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Referencia al archivo JS organizado -->
+    <script src="js/script.js"></script>
 </body>
 </html>

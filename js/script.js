@@ -1,61 +1,66 @@
-// 1. Configuración de la fecha del cumpleaños
 const birthdayDate = new Date("April 2, 2026 00:00:00").getTime();
 
 const profileGate = document.getElementById("profile-gate");
 const navbar = document.getElementById("navbar");
 const audioSound = document.getElementById("netflix-sound");
-const currentAvatar = document.getElementById("current-avatar");
 
-const views = {
-    vale: document.getElementById("view-vale"),
-    nosotros: document.getElementById("view-nosotros"),
-    magia: document.getElementById("view-magia"),
-    kids: document.getElementById("view-kids")
-};
-
-const avatars = {
-    vale: "avatar-1",
-    nosotros: "avatar-2",
-    magia: "avatar-3",
-    kids: "avatar-4"
-};
-
-// 2. Transición entre Perfiles
-function selectProfile(profileId) {
-    // Intentar sonido "Ta-dum"
+// Al tocar el perfil de "Vale" para entrar
+function enterValeFlix() {
     audioSound.volume = 0.5;
     audioSound.play().catch(e => console.log("Audio prevent: ", e));
     
-    // Configurar avatar superior
-    currentAvatar.className = `avatar nav-avatar ${avatars[profileId]}`;
-    
-    // Efecto Netflix Kids logo color change
-    if (profileId === 'kids') {
-        document.getElementById('nav-logo').style.color = "white";
-    }
-
-    // Ocultar compuerta
     profileGate.classList.add("fade-out");
-    
     setTimeout(() => {
         profileGate.classList.add("hidden");
-        
-        // Ocultar todas las vistas posibles primero
-        Object.values(views).forEach(v => v.classList.add("hidden"));
-        
-        // Mostrar vista elegida
-        views[profileId].classList.remove("hidden");
         navbar.classList.remove("hidden");
-        
-        if (profileId === "magia") {
-            initStarHunt();
-        }
-        
+        // Empezar en Inicio
+        document.getElementById("tab-inicio").classList.remove("hidden");
         window.scrollTo(0, 0); 
     }, 800);
 }
 
-// 3. Navbar scroll effect
+// Lógica para cambiar de pestaña en el Navbar
+function switchTab(event, targetTabId) {
+    if(event) event.preventDefault();
+    
+    // 1. Quitar clase active de todos los links
+    document.querySelectorAll('.nav-tab').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    
+    // 2. Ocultar todas las páginas principales
+    document.querySelectorAll('.content-view').forEach(view => {
+        view.classList.add('hidden');
+    });
+    
+    // 3. Añadir active al tab clickeado (si vino de un clik real)
+    if(event) {
+        event.currentTarget.classList.add('active');
+    } else {
+        // En caso de invocarse manualmente (como el botón volver del minijuego)
+        document.querySelector(`[data-target="${targetTabId}"]`).classList.add('active');
+    }
+    
+    // 4. Mostrar la vista elegida
+    document.getElementById(targetTabId).classList.remove('hidden');
+    
+    // 5. Configurar logos y temas especiales (Modo Kids)
+    const logo = document.getElementById('nav-logo');
+    if (targetTabId === 'tab-mini') {
+        logo.style.color = "white"; 
+    } else {
+        logo.style.color = "var(--pacay-accent)"; 
+    }
+    
+    // 6. Si abre el minijuego, resetear las estrellas
+    if (targetTabId === 'tab-magia') {
+        initStarHunt();
+    }
+    
+    window.scrollTo(0, 0);
+}
+
+// Efecto Navbar oscuro al scrollear
 window.addEventListener("scroll", () => {
     if (window.scrollY > 50) {
         navbar.classList.add("scrolled");
@@ -64,7 +69,7 @@ window.addEventListener("scroll", () => {
     }
 });
 
-// 4. Modales Globales
+// Lógica de Modales
 function openModal(id) {
     const modal = document.getElementById(id);
     modal.classList.remove("hidden");
@@ -76,7 +81,6 @@ function closeModal(id) {
     document.body.style.overflow = "auto";
 }
 
-// Cerrar modales clicando fuera
 const allModals = document.querySelectorAll('.modal');
 allModals.forEach(modal => {
     modal.addEventListener('click', (e) => {
@@ -87,7 +91,7 @@ allModals.forEach(modal => {
     });
 });
 
-// 5. Lógica del Contador
+// Lógica del Contador
 const countdownInterval = setInterval(() => {
     const now = new Date().getTime();
     const distance = birthdayDate - now;
@@ -112,13 +116,20 @@ const countdownInterval = setInterval(() => {
     }
 }, 1000);
 
-// 6. Juego de la Magia
+// Minijuego Cazador de Estrellas
 function initStarHunt() {
     const wrapper = document.getElementById('hunt-stars-wrapper');
-    if (!wrapper) return;
-    wrapper.innerHTML = '';
+    const reward = document.getElementById('magic-reward');
+    const subtitle = document.querySelector('.magic-subtitle');
     
-    // Lista de mensajes, puedes añadir las q quieras
+    if (!wrapper) return;
+    
+    // Reset estado
+    wrapper.innerHTML = '';
+    wrapper.classList.remove('hidden');
+    subtitle.classList.remove('hidden');
+    reward.classList.add('hidden');
+    
     const messages = [
         "Amo cómo sonríes",
         "Eres mi universo",
@@ -136,7 +147,6 @@ function initStarHunt() {
         star.style.top = `${Math.random() * 80 + 5}%`;
         
         star.addEventListener('click', (e) => {
-            // Estrellita desaparece
             star.style.transform = "scale(0)";
             setTimeout(() => star.remove(), 300);
             
@@ -144,10 +154,8 @@ function initStarHunt() {
             
             if (starsFound === messages.length) {
                 setTimeout(() => {
-                    document.getElementById('hunt-stars-wrapper').classList.add('hidden');
-                    document.querySelector('.magic-subtitle').classList.add('hidden');
-                    
-                    const reward = document.getElementById('magic-reward');
+                    wrapper.classList.add('hidden');
+                    subtitle.classList.add('hidden');
                     reward.classList.remove('hidden');
                 }, 800);
             }
