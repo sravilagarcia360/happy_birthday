@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¡Feliz Cumpleaños Mi Amor!</title>
-    <!-- Premium Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>ValeFlix</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     
     <!-- Favicons -->
@@ -15,116 +15,168 @@
     <link rel="manifest" href="favicons/site.webmanifest">
 </head>
 <body>
-    <!-- Pantalla de Bienvenida (El Sobre) -->
-    <div id="envelope-screen">
-        <div class="floating-container">
-            <div class="envelope" onclick="openEnvelope()" id="envelope">
-                <div class="flap top-flap"></div>
-                <div class="flap bottom-flap"></div>
-                <div class="flap left-flap"></div>
-                <div class="flap right-flap"></div>
-                <div class="seal"><span class="seal-icon">❤️</span></div>
+    <!-- Efecto de Sonido "Ta-dum" -->
+    <audio id="netflix-sound" src="https://assets.mixkit.co/active_storage/sfx/2218/2218-preview.mp3" preload="auto"></audio>
+    
+    <!-- PANTALLA 1: SELECCIÓN DE PERFIL -->
+    <div id="profile-gate" class="profile-gate">
+        <header class="gate-header">
+            <h1 class="logo-netflix">ValeFlix</h1>
+        </header>
+        <div class="profile-selection">
+            <h2 class="profile-title">¿Quién está viendo?</h2>
+            <div class="profiles-container">
+                <div class="profile" onclick="selectProfile('Vale')">
+                    <div class="avatar-wrapper">
+                        <!-- Usando un color solido como placeholder (verde pacay claro) -->
+                        <div class="avatar avatar-1"></div>
+                    </div>
+                    <span class="profile-name">Vale</span>
+                </div>
+                <div class="profile" onclick="selectProfile('Amor')">
+                    <div class="avatar-wrapper">
+                        <div class="avatar avatar-2"></div>
+                    </div>
+                    <span class="profile-name">Mi Amor</span>
+                </div>
             </div>
-            <p class="envelope-text">Toca para abrir tu sorpresa...</p>
+            <button class="manage-profiles">Administrar perfiles</button>
         </div>
     </div>
 
-    <!-- Contenido Principal -->
-    <main id="main-content" class="hidden">
-        <!-- Efecto de fondo animado -->
-        <div id="particles"></div>
+    <!-- PANTALLA 2: CONTENIDO PRINCIPAL VALEFLIX -->
+    <main id="netflix-main" class="hidden">
         
-        <div class="content-wrapper">
-            <!-- Sección Héroe con Contador -->
-            <section class="hero glass-panel fade-in-section">
-                <div class="hero-content">
-                    <span class="badge">02 de Abril de 2007</span>
-                    <h1 class="main-title">¡Felices 19 Años, Mi Amor!</h1>
-                    <p class="subtitle">Celebrando la vida de la persona más maravillosa del mundo.</p>
+        <!-- Navbar -->
+        <nav id="navbar" class="navbar">
+            <div class="nav-left">
+                <h1 class="logo-netflix">ValeFlix</h1>
+                <ul class="nav-links">
+                    <li><a href="#" class="active">Inicio</a></li>
+                    <li><a href="#">Series</a></li>
+                    <li><a href="#">Películas</a></li>
+                    <li><a href="#">Nuestra Lista</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <span class="nav-icon">🔍</span>
+                <span class="nav-icon">🔔</span>
+                <div class="avatar nav-avatar avatar-1"></div>
+            </div>
+        </nav>
+
+        <!-- Héroe / Billboard Principal -->
+        <div class="billboard">
+            <div class="billboard-image">
+                <img src="https://images.unsplash.com/photo-1518599904199-0ca897819ddb?auto=format&fit=crop&q=80&w=1200" alt="Billboard Background">
+                <div class="billboard-vignette"></div>
+            </div>
+            
+            <div class="billboard-layer">
+                <div class="billboard-content">
+                    <div class="logo-and-text">
+                        <span class="n-icon">V</span>
+                        <span class="original-text">P E L Í C U L A &nbsp; O R I G I N A L</span>
+                    </div>
+                    <h2 class="title-logo">Felices 19<br>Años</h2>
                     
-                    <div class="countdown-container">
-                        <p class="countdown-label">Faltan para tu día especial:</p>
-                        <div class="time-blocks">
-                            <div class="time-box"><span id="days">00</span><p>Días</p></div>
-                            <div class="time-box"><span id="hours">00</span><p>Horas</p></div>
-                            <div class="time-box"><span id="minutes">00</span><p>Min.</p></div>
-                            <div class="time-box"><span id="seconds">00</span><p>Seg.</p></div>
-                        </div>
-                        <p id="birthday-message" class="hidden">¡HOY ES TU CUMPLEAÑOS! TE AMO 🎉💚</p>
+                    <div class="tags">
+                        <span class="match">99% de compatibilidad</span>
+                        <span class="year">2026</span>
+                        <span class="rating">+18 Temporadas</span>
+                        <span class="hd">HD</span>
+                    </div>
+                    <p class="synopsis">
+                        En este nuevo capítulo de tu vida, la persona más maravillosa del mundo celebra su cumpleaños. Acompáñala en esta emocionante aventura llena de amor, sonrisas y momentos inolvidables porque ella lo merece todo y mucho más.
+                    </p>
+                    <div class="billboard-buttons">
+                        <button class="btn btn-play" onclick="openLetterModal()">
+                            <span class="icon">▶</span> Reproducir Carta
+                        </button>
+                        <button class="btn btn-more" onclick="openCountdownModal()">
+                            <span class="icon">ⓘ</span> Más Información
+                        </button>
                     </div>
                 </div>
-            </section>
+            </div>
+        </div>
 
-            <!-- Sección de Galería de Recuerdos -->
-            <section class="gallery fade-in-section">
-                <h2 class="section-title">Nuestros Mejores Momentos</h2>
-                <p class="section-desc">Cada instante a tu lado es un tesoro.</p>
-                <div class="gallery-carousel">
-                    <div class="carousel-track">
-                    <!-- FOTO 1: Reemplaza la URL en el 'src' por tu foto. Ej: "img/foto1.jpg" -->
-                    <div class="polaroid">
-                        <div class="polaroid-image">
-                            <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=400&h=400" alt="Recuerdo">
-                        </div>
-                        <p class="polaroid-text">Nuestro comienzo</p>
-                    </div>
+        <!-- Filas de Contenido (Carruseles) -->
+        <div class="sliders-container">
+            <!-- Fila 1 -->
+            <div class="slider-row">
+                <h3 class="row-title">Tendencias Contigo</h3>
+                <div class="row-items">
+                    <!-- FOTO 1: Reemplazar el src con la ruta de su foto (ej. img/foto1.jpg) -->
+                    <div class="movie-card"><img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400" alt="Foto"></div>
                     <!-- FOTO 2 -->
-                    <div class="polaroid tilt-right">
-                        <div class="polaroid-image">
-                            <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&q=80&w=400&h=400" alt="Recuerdo">
-                        </div>
-                        <p class="polaroid-text">Siempre juntos</p>
-                    </div>
+                    <div class="movie-card"><img src="https://images.unsplash.com/photo-1494774112101-70e1b6f6580f?w=400" alt="Foto"></div>
                     <!-- FOTO 3 -->
-                    <div class="polaroid tilt-left">
-                        <div class="polaroid-image">
-                            <img src="https://images.unsplash.com/photo-1494774112101-70e1b6f6580f?auto=format&fit=crop&q=80&w=400&h=400" alt="Recuerdo">
-                        </div>
-                        <p class="polaroid-text">Mi lugar favorito</p>
-                    </div>
-                    </div>
-                    <p class="swipe-hint">👈 Desliza para ver más 👉</p>
+                    <div class="movie-card"><img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400" alt="Foto"></div>
+                    <!-- FOTO 4 -->
+                    <div class="movie-card"><img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400" alt="Foto"></div>
+                    <div class="movie-card"><img src="https://images.unsplash.com/photo-1474552226712-ac0f0961a954?w=400" alt="Foto"></div>
                 </div>
-            </section>
+            </div>
 
-            <!-- Sección de la Carta -->
-            <section class="love-letter-section fade-in-section" id="letter-section">
-                
-                <!-- Cazador de estrellas (se revelan al tocar) -->
-                <div id="star-hunt" class="star-hunt-container">
-                    <p class="hunt-instruction">Toca los destellos mágicos para descubrir mi sorpresa...</p>
-                    <div class="hunt-stars-wrapper" id="hunt-stars-wrapper">
-                        <!-- Estrellas generadas con JS -->
-                    </div>
+            <!-- Fila 2 -->
+            <div class="slider-row">
+                <h3 class="row-title">Momentos Inolvidables</h3>
+                <div class="row-items">
+                    <div class="movie-card"><img src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=400" alt="Foto"></div>
+                    <div class="movie-card"><img src="https://images.unsplash.com/photo-1514316454349-750a7fd3da3a?w=400" alt="Foto"></div>
+                    <div class="movie-card"><img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=400" alt="Foto"></div>
+                    <div class="movie-card"><img src="https://images.unsplash.com/photo-1520699049698-acd2fce18738?w=400" alt="Foto"></div>
                 </div>
+            </div>
+        </div>
+        
+        <footer class="netflix-footer">
+            <p>Original de ValeFlix 💚 Hecho con amor.</p>
+        </footer>
+    </main>
 
-                <div class="letter-paper hidden" id="main-letter">
-                    <div class="floral-decoration top-left">🌿</div>
-                    <div class="floral-decoration bottom-right">🍃</div>
-                    <h2 class="letter-title">Lo que siento por ti</h2>
-                    <p class="letter-content">
+    <!-- MODAL DE LA CARTA (Al darle Play) -->
+    <div id="letter-modal" class="modal hidden">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeLetterModal()">✖</button>
+            <div class="modal-body letter-body">
+                <h2 class="letter-title">Carta para mi Princesa</h2>
+                <div class="letter-text">
+                    <p>
                         Mi Princesa hermosa,<br><br>
                         Hoy quiero aprovechar este rinconcito que he creado para ti, para decirte todo lo que significas en mi vida. Desde que te conocí, mis días tienen un color diferente, y mi mundo es mucho más feliz. 
                         <br><br>
-                        Tus 19 años marcan una etapa preciosa y me siento el hombre más afortunado por poder tomarnos de la mano mientras la vives. Adoro tu sonrisa, tus ojos y me encanta saber que tu color favorito es este verde hermoso, porque me recuerda que a tu lado todo siempre está lleno de vida y esperanza.
+                        Tus 19 años marcan una etapa preciosa y me siento el hombre más afortunado por poder tomarnos de la mano mientras la vives. Adoro tu sonrisa, tus ojos y me encanta saber que tu color favorito es el verde pacay, porque me recuerda que a tu lado todo siempre está lleno de vida y esperanza.
                         <br><br>
                         Eres mi persona favorita, mi paz y mi alegría. Espero que este pequeño detalle te haga sonreír tanto como tú me haces sonreír a mí cada día. Nunca olvides lo especial que eres para el mundo y para mí.
                         <br><br>
                         ¡Feliz cumpleaños, mi amor! Te amaré hoy, mañana y siempre. 💚
                     </p>
-                    <div class="signature">
-                        Con todo mi corazón,<br>
-                        <span class="sign-name">Tu Amor</span>
-                    </div>
+                    <p class="signature">- Tu amor</p>
                 </div>
-            </section>
-            
-            <footer>
-                <p>Hecho con mucho amor para el cumpleañito de la niña más bonita</p>
-                <div class="heart-pulse">💚</div>
-            </footer>
+            </div>
         </div>
-    </main>
+    </div>
+
+    <!-- MODAL DE CONTADOR (Mas Info) -->
+    <div id="countdown-modal" class="modal hidden">
+        <div class="modal-content info-modal">
+            <button class="close-btn" onclick="closeCountdownModal()">✖</button>
+            <div class="modal-body" style="text-align:center;">
+                <h2>Tu Fecha Especial</h2>
+                <p class="fake-synopsis">Temporada 19 - Estreno el 2 de Abril</p>
+                
+                <div class="countdown-blocks">
+                    <div class="time-box"><span id="days">00</span><p>Días</p></div>
+                    <div class="time-box"><span id="hours">00</span><p>Horas</p></div>
+                    <div class="time-box"><span id="minutes">00</span><p>Min.</p></div>
+                    <div class="time-box"><span id="seconds">00</span><p>Seg.</p></div>
+                </div>
+                <p id="birthday-message" class="hidden" style="color:var(--pacay-accent); font-size:1.5rem; margin-top:20px;">¡HOY ES TU CUMPLEAÑOS! TE AMO 🎉</p>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

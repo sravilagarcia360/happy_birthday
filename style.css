@@ -1,562 +1,524 @@
-/* Paleta de colores: Verde Pacay Pastel y Cremas */
 :root {
-    --bg-cream: #FDFBF7;
-    --pacay-light: #E8F5E9;   /* Verde muy claro de fondo */
-    --pacay-pastel: #A5D6A7;  /* Verde pacay principal */
-    --pacay-dark: #2E4F2F;    /* Verde oscuro para textos fuertes */
-    --pacay-accent: #66BB6A;  /* Verde para acentos/botones */
-    --gold: #D4AF37;
-    
-    font-family: 'Montserrat', sans-serif;
+    --bg-dark-pacay: #102012;   /* Fondo general tipo Netflix pero verde profundo */
+    --bg-darker-pacay: #081109; /* Gradientes más oscuros */
+    --pacay-accent: #66BB6A;    /* Botón / Acentos (El "rojo" de Netflix) */
+    --pacay-hover: #4CAF50;
+    --cream: #FDFBF7;           /* Texto principal */
+    --grey-text: #Aebcaf;       /* Texto secundario / Meta datos */
+    --avatar-1: #A5D6A7;
+    --avatar-2: #81C784;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
 }
 
 body {
-    background-color: var(--pacay-light);
-    color: var(--pacay-dark);
+    background-color: var(--bg-dark-pacay);
+    color: var(--cream);
     overflow-x: hidden;
-    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
 }
 
 .hidden {
     display: none !important;
 }
 
+h1, h2, h3, h4 {
+    font-weight: 700;
+}
+
 /* =========================================
-   PANTALLA DE CARGA (EL SOBRE)
+   PANTALLA 1: SELECCIÓN DE PERFIL
 ========================================= */
-#envelope-screen {
+.profile-gate {
     position: fixed;
     top: 0; left: 0; width: 100vw; height: 100vh;
-    background: linear-gradient(135deg, var(--bg-cream) 0%, var(--pacay-light) 100%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-color: var(--bg-dark-pacay);
     z-index: 1000;
-    transition: opacity 1s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-.floating-container {
-    animation: float 4s ease-in-out infinite;
+.profile-gate.fade-out {
+    opacity: 0;
+    transform: scale(1.1);
+    pointer-events: none;
+}
+
+.gate-header {
+    position: absolute;
+    top: 0; left: 0;
+    padding: 2rem 4rem;
+    width: 100%;
+}
+
+.logo-netflix {
+    color: var(--pacay-accent);
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.profile-selection {
     text-align: center;
+    animation: fadeIn 1s ease-in-out;
 }
 
-/* Dibujando el Sobre con CSS */
-.envelope {
-    position: relative;
-    width: 280px;
-    height: 180px;
-    background: var(--pacay-pastel);
-    border-radius: 5px;
+.profile-title {
+    font-size: 3vw;
+    font-weight: 500;
+    color: var(--cream);
+    margin-bottom: 2rem;
+}
+
+.profiles-container {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     cursor: pointer;
-    margin: 0 auto 30px auto;
-    box-shadow: 0 10px 30px rgba(46, 79, 47, 0.2);
+    transition: transform 0.2s ease;
+}
+.profile:hover .avatar-wrapper {
+    border-color: var(--cream);
+}
+.profile:hover .profile-name {
+    color: var(--cream);
+}
+
+.avatar-wrapper {
+    width: 10vw;
+    height: 10vw;
+    min-width: 84px;
+    min-height: 84px;
+    max-width: 200px;
+    max-height: 200px;
+    border: 3px solid transparent;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color 0.2s ease;
+    margin-bottom: 0.8rem;
+}
+
+.avatar {
+    width: 100%;
+    height: 100%;
+}
+.avatar-1 { background: var(--avatar-1) url('https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png') center/cover; }
+.avatar-2 { background: var(--avatar-2) url('https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png') center/cover; filter: hue-rotate(90deg); }
+
+.profile-name {
+    color: var(--grey-text);
+    font-size: 1.3vw;
+    min-font-size: 14px;
+    transition: color 0.2s;
+}
+
+.manage-profiles {
+    background: transparent;
+    border: 1px solid var(--grey-text);
+    color: var(--grey-text);
+    padding: 0.5rem 1.5rem;
+    font-size: 1.2vw;
+    cursor: pointer;
+    margin-top: 3rem;
+    transition: all 0.2s;
+}
+.manage-profiles:hover {
+    color: var(--cream);
+    border-color: var(--cream);
+}
+
+/* =========================================
+   PANTALLA 2: NAVBAR
+========================================= */
+.navbar {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    padding: 1rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(8,17,9,0.8) 0%, rgba(8,17,9,0) 100%);
+    transition: background-color 0.4s ease;
+    z-index: 900;
+}
+
+.navbar.scrolled {
+    background-color: var(--bg-dark-pacay);
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.nav-left .logo-netflix {
+    font-size: 2rem;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.2rem;
+}
+
+.nav-links a {
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 0.9rem;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+.nav-links a.active, .nav-links a:hover {
+    opacity: 1;
+    font-weight: 600;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.nav-icon {
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.nav-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* =========================================
+   HERO / BILLBOARD
+========================================= */
+.billboard {
+    position: relative;
+    width: 100%;
+    height: 85vh;
+    min-height: 600px;
+    overflow: hidden;
+}
+
+.billboard-image {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 1;
+}
+
+.billboard-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    opacity: 0.7;
+}
+
+.billboard-vignette {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    /* Gradientes estilo Netflix para text legibilidad */
+    background: linear-gradient(to right, var(--bg-dark-pacay) 0%, transparent 50%),
+                linear-gradient(to bottom, transparent 60%, var(--bg-dark-pacay) 100%);
+}
+
+.billboard-layer {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 4rem;
+}
+
+.billboard-content {
+    max-width: 40%;
+}
+
+.logo-and-text {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.5rem;
+}
+
+.n-icon {
+    color: var(--pacay-accent);
+    font-weight: 900;
+    font-size: 2rem;
+}
+
+.original-text {
+    color: var(--grey-text);
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    font-weight: 600;
+}
+
+.title-logo {
+    font-size: calc(3rem + 2vw);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.tags {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.match { color: #46d369; }
+.rating { border: 1px solid var(--grey-text); padding: 0 5px; color: var(--cream); }
+.hd { border: 1px solid var(--grey-text); padding: 0 5px; font-size: 0.8rem; border-radius: 3px; color: var(--grey-text); }
+
+.synopsis {
+    font-size: 1.2vw;
+    line-height: 1.5;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+    margin-bottom: 1.5rem;
+}
+
+.billboard-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.6rem 1.8rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.btn-play {
+    background-color: var(--cream);
+    color: black;
+}
+.btn-play:hover { background-color: rgba(253, 251, 247, 0.7); }
+
+.btn-more {
+    background-color: rgba(109, 109, 110, 0.7);
+    color: white;
+}
+.btn-more:hover { background-color: rgba(109, 109, 110, 0.4); }
+
+.btn .icon { font-size: 1.3rem; }
+
+/* =========================================
+   CARRUSELES DE PELÍCULAS (Móvil y Desktop)
+========================================= */
+.sliders-container {
+    position: relative;
+    z-index: 20;
+    margin-top: -8vw; /* Para que suba sobre el gradiente del billboard */
+    padding: 0 0 4rem 3rem;
+}
+
+.slider-row {
+    margin-bottom: 3rem;
+}
+
+.row-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: #e5e5e5;
+}
+
+.row-items {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-right: 3rem; /* Espacio extra al final */
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+.row-items::-webkit-scrollbar { display: none; }
+
+.movie-card {
+    min-width: 250px;
+    height: 140px;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    scroll-snap-align: start;
     transition: transform 0.3s ease;
 }
 
-.envelope:hover {
-    transform: scale(1.05);
-}
-
-.envelope::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 0; height: 0;
-    border-style: solid;
-    border-width: 90px 140px 90px 140px;
-    border-color: transparent transparent var(--bg-cream) transparent;
-    z-index: 2;
-}
-
-.top-flap {
-    position: absolute;
-    top: 0; left: 0;
-    width: 0; height: 0;
-    border-style: solid;
-    border-width: 100px 140px 0 140px;
-    border-color: var(--pacay-accent) transparent transparent transparent;
-    z-index: 4;
-    transform-origin: top;
-    transition: transform 0.8s ease-in-out;
-}
-
-.seal {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -100%);
-    width: 50px; height: 50px;
-    background: var(--gold);
-    border-radius: 50%;
-    z-index: 5;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 20px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    transition: opacity 0.5s ease;
-}
-
-.envelope-opened .top-flap {
-    transform: rotateX(180deg);
-}
-.envelope-opened .seal {
-    opacity: 0;
-}
-
-.envelope-text {
-    font-family: 'Lora', serif;
-    font-size: 1.2rem;
-    color: var(--pacay-dark);
-    font-style: italic;
-    opacity: 0.8;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
-}
-
-/* =========================================
-   CONTENIDO PRINCIPAL Y FONDOS
-========================================= */
-#main-content {
-    position: relative;
-    min-height: 100vh;
-}
-
-/* Hojas o partículas que caerán de fondo (creadas via JS) */
-#particles {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 0;
-    overflow: hidden;
-}
-.particle {
-    position: absolute;
-    top: -5%;
-    background-color: var(--pacay-pastel);
-    opacity: 0.6;
-    border-radius: 50%; /* O en forma de hojita */
-    animation: fall linear forwards;
-}
-
-@keyframes fall {
-    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-    10% { opacity: 0.7; }
-    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
-}
-
-.content-wrapper {
-    position: relative;
-    z-index: 10;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-}
-
-/* Glassmorphism Panel */
-.glass-panel {
-    background: rgba(253, 251, 247, 0.75);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(46, 79, 47, 0.1);
-    padding: 3rem 2rem;
-    text-align: center;
-    margin-bottom: 4rem;
-}
-
-/* Typography styles */
-.badge {
-    display: inline-block;
-    background: var(--pacay-pastel);
-    color: var(--pacay-dark);
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    margin-bottom: 1.5rem;
-    letter-spacing: 1px;
-}
-
-.main-title {
-    font-family: 'Dancing Script', cursive;
-    font-size: 4rem;
-    color: var(--pacay-dark);
-    margin-bottom: 0.5rem;
-    line-height: 1.2;
-}
-
-.subtitle {
-    font-family: 'Lora', serif;
-    font-size: 1.2rem;
-    color: #557956;
-    margin-bottom: 2.5rem;
-}
-
-/* Contador */
-.countdown-label {
-    font-weight: 600;
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-size: 0.9rem;
-}
-
-.time-blocks {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-}
-
-.time-box {
-    background: var(--bg-cream);
-    min-width: 80px;
-    padding: 1rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    border-bottom: 3px solid var(--pacay-accent);
-}
-
-.time-box span {
-    font-size: 2rem;
-    font-weight: 600;
-    color: var(--pacay-accent);
-    display: block;
-}
-
-.time-box p {
-    font-size: 0.8rem;
-    margin-top: 0.3rem;
-    color: var(--pacay-dark);
-    font-weight: 500;
-}
-
-#birthday-message {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--pacay-accent);
-    margin-top: 1rem;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-/* =========================================
-   GALERÍA (Haciéndolo ver como Polaroids)
-========================================= */
-.section-title {
-    font-family: 'Dancing Script', cursive;
-    font-size: 3rem;
-    text-align: center;
-    color: var(--pacay-dark);
-    margin-bottom: 0.5rem;
-}
-.section-desc {
-    text-align: center;
-    font-family: 'Lora', serif;
-    color: #557956;
-    margin-bottom: 3rem;
-    font-style: italic;
-}
-
-.gallery-carousel {
-    width: 100%;
-    margin-bottom: 2rem;
-    position: relative;
-    padding-bottom: 20px;
-}
-
-.carousel-track {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    gap: 30px;
-    padding: 20px 0;
-    -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
-}
-
-/* Ocultar barra de scroll en navegadores Webkit */
-.carousel-track::-webkit-scrollbar {
-    display: none;
-}
-
-.polaroid {
-    background: #fff;
-    padding: 15px 15px 40px 15px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    border-radius: 4px;
-    transition: transform 0.4s ease;
-    text-align: center;
-    
-    /* Carrusel properties */
-    min-width: 280px;
-    flex-shrink: 0;
-    scroll-snap-align: center;
-}
-
-.swipe-hint {
-    text-align: center;
-    font-size: 0.9rem;
-    color: var(--pacay-dark);
-    opacity: 0.6;
-    animation: flashHint 3s infinite;
-}
-
-@keyframes flashHint {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 1; transform: scale(1.05); }
-}
-
-.polaroid {
-    background: #fff;
-    padding: 15px 15px 40px 15px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    border-radius: 4px;
-    transition: transform 0.4s ease;
-    text-align: center;
-}
-
-.polaroid:hover {
-    transform: scale(1.05) translateY(-10px) rotate(0deg) !important;
-    z-index: 5;
-    position: relative;
-    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-}
-
-.polaroid-image {
-    width: 100%;
-    aspect-ratio: 1/1;
-    overflow: hidden;
-    background: #eee;
-    border-radius: 2px;
-}
-
-.polaroid-image img {
+.movie-card img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.polaroid-text {
-    font-family: 'Dancing Script', cursive;
-    font-size: 1.5rem;
-    margin-top: 15px;
-    color: #333;
+.movie-card:hover {
+    transform: scale(1.05);
+    z-index: 10;
 }
 
-.tilt-left { transform: rotate(-3deg); }
-.tilt-right { transform: rotate(4deg); }
+.netflix-footer {
+    text-align: center;
+    color: var(--grey-text);
+    padding: 2rem;
+    font-size: 0.9rem;
+}
 
 /* =========================================
-   LA CARTA ROMÁNTICA
+   MODALES (Carta y Contador)
 ========================================= */
-.love-letter-section {
-    margin: 4rem auto;
+.modal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.modal.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal-content {
+    background-color: var(--bg-dark-pacay);
+    width: 90%;
     max-width: 800px;
-}
-
-.letter-paper {
-    background-color: #fffff8;
-    background-image: linear-gradient(#f4f4f4 1px, transparent 1px);
-    background-size: 100% 2.5rem;
-    padding: 4rem 3rem;
-    border-radius: 8px;
-    box-shadow: 0 15px 35px rgba(46, 79, 47, 0.1);
+    border-radius: 10px;
     position: relative;
-    border-left: 2px solid var(--pacay-pastel);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+    border: 1px solid #333;
+    animation: dropIn 0.4s ease;
+    overflow-y: auto;
+    max-height: 90vh;
 }
 
-.floral-decoration {
-    position: absolute;
-    font-size: 2.5rem;
-    opacity: 0.6;
+@keyframes dropIn {
+    0% { transform: scale(0.9); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
 }
-.top-left { top: 20px; left: 20px; }
-.bottom-right { bottom: 20px; right: 20px; }
+
+.close-btn {
+    position: absolute;
+    top: 15px; right: 20px;
+    background: transparent;
+    border: none;
+    color: var(--cream);
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.modal-body {
+    padding: 3rem;
+}
+
+.letter-body {
+    background: #FFFAF0; /* Papel carta ligero para contraste */
+    color: var(--bg-dark-pacay);
+}
 
 .letter-title {
-    font-family: 'Dancing Script', cursive;
-    font-size: 2.5rem;
+    font-family: 'Montserrat', sans-serif;
     text-align: center;
-    color: var(--pacay-dark);
     margin-bottom: 2rem;
+    color: var(--pacay-accent);
 }
 
-.letter-content {
-    font-family: 'Lora', serif;
+.letter-text {
+    font-family: 'Lora', serif; /* Podriamos usar Lora o dejar Montserrat */
     font-size: 1.1rem;
-    line-height: 2.5rem; /* Ajustado al grid de fondo */
-    color: #444;
+    line-height: 1.8;
+}
+.letter-text .signature {
+    text-align: right; margin-top: 2rem; font-weight: bold; color: var(--pacay-accent);
 }
 
-.signature {
-    margin-top: 3rem;
-    text-align: right;
-    font-family: 'Lora', serif;
-    font-style: italic;
+/* Contador (dentro de modal) */
+.countdown-blocks {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 2rem;
 }
 
-.sign-name {
-    font-family: 'Dancing Script', cursive;
-    font-size: 2rem;
+.time-box {
+    background: #1e3a20;
+    padding: 15px 20px;
+    border-radius: 8px;
+    min-width: 80px;
+}
+.time-box span {
+    font-size: 2.5rem;
+    font-weight: 700;
     color: var(--pacay-accent);
     display: block;
 }
 
-/* =========================================
-   FOOTER
-========================================= */
-footer {
-    text-align: center;
-    padding: 3rem 0;
-    color: #557956;
-    font-family: 'Lora', serif;
-}
-
-.heart-pulse {
-    font-size: 2rem;
-    margin-top: 0.5rem;
-    animation: heartbeat 1.5s infinite alternate;
-}
-
-@keyframes heartbeat {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.2); }
-}
-
-/* Animaciones al hacer scroll */
-.fade-in-section {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-.fade-in-section.is-visible {
-    opacity: 1;
-    transform: translateY(0);
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 /* =========================================
-   INTERACTIVIDAD MÓVIL (Hadas y Estrellas)
-========================================= */
-
-/* Corazones al Tocar (Touch Particles) */
-.touch-heart {
-    position: fixed;
-    pointer-events: none;
-    font-size: 1.5rem;
-    transform: translate(-50%, -50%) scale(0.5);
-    animation: touchFloat 1s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
-    z-index: 9999;
-    text-shadow: 0 0 10px rgba(165, 214, 167, 0.8);
-}
-
-@keyframes touchFloat {
-    0% { transform: translate(-50%, -50%) scale(0.8); opacity: 1; }
-    100% { transform: translate(-50%, -150%) scale(1.5); opacity: 0; }
-}
-
-/* Cazador de Estrellas (Letter Reveal) */
-.star-hunt-container {
-    min-height: 300px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 2rem;
-}
-
-.hunt-instruction {
-    font-family: 'Dancing Script', cursive;
-    font-size: 1.8rem;
-    color: var(--pacay-dark);
-    margin-bottom: 2rem;
-    animation: pulse 2s infinite;
-    text-align: center;
-    padding: 0 1rem;
-}
-
-.hunt-stars-wrapper {
-    position: relative;
-    width: 100%;
-    height: 250px;
-}
-
-.hunt-star {
-    position: absolute;
-    font-size: 2rem;
-    cursor: pointer;
-    animation: starPulse 1.5s infinite alternate;
-    transition: transform 0.3s;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.hunt-star:active {
-    transform: scale(0.8) !important;
-}
-
-@keyframes starPulse {
-    0% { transform: scale(1); filter: drop-shadow(0 0 5px var(--gold)); }
-    100% { transform: scale(1.3); filter: drop-shadow(0 0 15px var(--gold)); }
-}
-
-/* Mensajitos revelados por las estrellas */
-.star-message {
-    position: absolute;
-    background: rgba(46, 79, 47, 0.85); /* Pacay Dark transparente */
-    color: var(--bg-cream);
-    padding: 10px 15px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-family: 'Montserrat', sans-serif;
-    white-space: nowrap;
-    pointer-events: none;
-    animation: popUpMsg 2s ease-out forwards;
-    text-align: center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
-@keyframes popUpMsg {
-    0% { opacity: 0; transform: translate(-50%, 10px) scale(0.8); }
-    20% { opacity: 1; transform: translate(-50%, -15px) scale(1.05); }
-    80% { opacity: 1; transform: translate(-50%, -20px) scale(1); }
-    100% { opacity: 0; transform: translate(-50%, -40px) scale(0.9); }
-}
-
-/* Efecto de transicion de la carta suave */
-.letter-paper {
-    transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1), transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.letter-paper.hidden {
-    opacity: 0;
-    transform: translateY(30px) scale(0.95);
-    pointer-events: none;
-}
-
-/* =========================================
-   MEDIA QUERIES (Responsividad Móvil)
+   RESPONSIVE MÓVIL
 ========================================= */
 @media (max-width: 768px) {
-    .main-title { font-size: 3rem; }
-    .glass-panel { padding: 2rem 1rem; }
-    .time-blocks { gap: 0.8rem; }
-    .time-box { min-width: 65px; padding: 0.5rem; }
-    .time-box span { font-size: 1.5rem; }
-    .letter-paper { padding: 3rem 1.5rem; }
+    .gate-header { padding: 1.5rem; text-align: center; }
+    .profile-title { font-size: 1.5rem; }
+    .profile-name { font-size: 1rem; }
+    .avatar-wrapper { width: 100px; height: 100px; }
+    .manage-profiles { font-size: 1rem; }
+    
+    .navbar { padding: 1rem 1.5rem; }
+    .nav-links { display: none; } /* Ocultar menus extra en el móvil para limpiar */
+    
+    .billboard { height: 75vh; }
+    .title-logo { font-size: 2.5rem; }
+    .billboard-layer { padding: 0 1.5rem; align-items: flex-end; padding-bottom: 3rem; text-align: center; justify-content: center;}
+    .billboard-content { max-width: 100%; display: flex; flex-direction: column; align-items: center;}
+    .synopsis { font-size: 0.9rem; margin-bottom: 1rem; }
+    .tags { justify-content: center; font-size: 0.8rem; }
+    .btn { padding: 0.5rem 1rem; font-size: 0.9rem; }
+    .logo-and-text { justify-content: center; }
+    
+    .sliders-container { margin-top: -2vw; padding: 0 0 2rem 1.5rem; }
+    .movie-card { min-width: 140px; height: 200px; }
+    
+    .modal-body { padding: 2rem 1.5rem; }
+    .time-box span { font-size: 1.8rem; }
 }
