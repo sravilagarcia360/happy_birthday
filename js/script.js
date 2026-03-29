@@ -1,3 +1,40 @@
+/* ==========================================================
+   CONFIGURACIÓN PRINCIPAL (Añade tus fotos aquí)
+   Ejemplo: "img/foto1.jpg"
+========================================================== */
+const VALEFLIX_CONFIG = {
+    fotosTendencias: [
+        "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400",
+        "https://images.unsplash.com/photo-1494774112101-70e1b6f6580f?w=400",
+        "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400",
+        "https://images.unsplash.com/photo-1474552226712-ac0f0961a954?w=400"
+    ],
+    fotosMomentos: [
+        "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=400",
+        "https://images.unsplash.com/photo-1514316454349-750a7fd3da3a?w=400",
+        "https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=400",
+        "https://images.unsplash.com/photo-1520699049698-acd2fce18738?w=400"
+    ]
+};
+
+// Generar carruseles dinámicamente al cargar la página
+function renderGallery() {
+    const tendenciasCtn = document.getElementById('slider-tendencias');
+    const momentosCtn = document.getElementById('slider-momentos');
+    
+    if (tendenciasCtn) {
+        VALEFLIX_CONFIG.fotosTendencias.forEach(src => {
+            tendenciasCtn.innerHTML += `<div class="movie-card"><img src="${src}" alt="Tendencias"></div>`;
+        });
+    }
+    if (momentosCtn) {
+        VALEFLIX_CONFIG.fotosMomentos.forEach(src => {
+            momentosCtn.innerHTML += `<div class="movie-card"><img src="${src}" alt="Momentos"></div>`;
+        });
+    }
+}
+renderGallery();
+
 const birthdayDate = new Date("April 2, 2026 00:00:00").getTime();
 
 const profileGate = document.getElementById("profile-gate");
@@ -113,6 +150,12 @@ const countdownInterval = setInterval(() => {
         document.querySelector(".countdown-blocks").classList.add("hidden");
         document.querySelector(".fake-synopsis").classList.add("hidden");
         document.getElementById("birthday-message").classList.remove("hidden");
+        
+        // Intentar reproducir automáticamente el video
+        const video = document.getElementById("birthday-video");
+        if(video) {
+            video.play().catch(e => console.log("Reproducción automática bloqueada. El usuario debe darle play manualmente."));
+        }
     }
 }, 1000);
 
@@ -130,6 +173,19 @@ function initStarHunt() {
     subtitle.classList.remove('hidden');
     reward.classList.add('hidden');
     
+    // Generar estrellas fugaces dinámicas de fondo
+    const bg = document.getElementById('particles-bg');
+    if(bg && bg.children.length === 0) {
+        for(let i=0; i<8; i++) {
+            const ss = document.createElement('div');
+            ss.classList.add('shooting-star');
+            ss.style.top = `${Math.random() * 50}%`; /* En la mitad de arriba */
+            ss.style.left = `${Math.random() * 100}%`;
+            ss.style.animationDelay = `${Math.random() * 5}s`;
+            bg.appendChild(ss);
+        }
+    }
+    
     const messages = [
         "Amo cómo sonríes",
         "Eres mi universo",
@@ -140,8 +196,7 @@ function initStarHunt() {
 
     messages.forEach((msg, index) => {
         const star = document.createElement('div');
-        star.classList.add('hunt-star');
-        star.innerHTML = '⭐';
+        star.classList.add('glowing-star');
         
         star.style.left = `${Math.random() * 80 + 5}%`;
         star.style.top = `${Math.random() * 80 + 5}%`;

@@ -82,20 +82,14 @@
         <div class="sliders-container">
             <div class="slider-row">
                 <h3 class="row-title">Tendencias Contigo</h3>
-                <div class="row-items">
-                    <div class="movie-card"><img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400" alt="Foto"></div>
-                    <div class="movie-card"><img src="https://images.unsplash.com/photo-1494774112101-70e1b6f6580f?w=400" alt="Foto"></div>
-                    <div class="movie-card"><img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400" alt="Foto"></div>
-                    <div class="movie-card"><img src="https://images.unsplash.com/photo-1474552226712-ac0f0961a954?w=400" alt="Foto"></div>
+                <div class="row-items" id="slider-tendencias">
+                    <!-- Las fotos se cargarán automáticamente desde script.js -->
                 </div>
             </div>
             <div class="slider-row">
                 <h3 class="row-title">Momentos Inolvidables</h3>
-                <div class="row-items">
-                    <div class="movie-card"><img src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=400" alt="Foto"></div>
-                    <div class="movie-card"><img src="https://images.unsplash.com/photo-1514316454349-750a7fd3da3a?w=400" alt="Foto"></div>
-                    <div class="movie-card"><img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=400" alt="Foto"></div>
-                    <div class="movie-card"><img src="https://images.unsplash.com/photo-1520699049698-acd2fce18738?w=400" alt="Foto"></div>
+                <div class="row-items" id="slider-momentos">
+                    <!-- Las fotos se cargarán automáticamente desde script.js -->
                 </div>
             </div>
         </div>
@@ -218,7 +212,13 @@
                     <div class="time-box"><span id="minutes">00</span><p>Min.</p></div>
                     <div class="time-box"><span id="seconds">00</span><p>Seg.</p></div>
                 </div>
-                <p id="birthday-message" class="hidden" style="color:var(--pacay-accent); font-size:1.5rem; margin-top:20px;">¡HOY ES TU CUMPLEAÑOS! TE AMO 🎉</p>
+                <div id="birthday-message" class="hidden">
+                    <p style="color:var(--pacay-accent); font-size:1.5rem; margin-top:20px; font-weight:800;">¡FELIZ CUMPLEAÑOS! TE AMO 🎉</p>
+                    <div class="video-wrapper">
+                        <!-- El video se reproducirá automáticamente aquí. Pon tu video en img/ y cámbiale el nombre en script.js -->
+                        <video id="birthday-video" src="img/tu_video_aqui.mp4" controls preload="none"></video>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

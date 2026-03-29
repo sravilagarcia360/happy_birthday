@@ -99,20 +99,28 @@ h1, h2, h3, h4 { font-weight: 700; }
 /* =========================================
    VISTA "MAGIA" (Star Hunt)
 ========================================= */
-#tab-magia { background: radial-gradient(circle at center, #1b3d1f 0%, var(--bg-darker-pacay) 100%); position: relative; }
+#tab-magia { background: radial-gradient(ellipse at bottom, #0d1a10 0%, var(--bg-darker-pacay) 100%); position: relative; overflow: hidden; }
 .magic-container { padding-top: 15vh; text-align: center; height: 100%; position: relative; z-index: 10; }
-.magic-title { font-family: 'Dancing Script', cursive; font-size: 4rem; margin-bottom: 1rem; color: var(--cream); text-shadow: 0 0 20px rgba(102, 187, 106, 0.8); }
-.magic-subtitle { font-family: 'Lora', serif; font-size: 1.2rem; opacity: 0.8; margin-bottom: 2rem; padding: 0 1rem; }
-.hunt-wrapper { position: relative; width: 90%; max-width: 800px; height: 60vh; margin: 0 auto; border: 1px dashed rgba(253, 251, 247, 0.2); border-radius: 20px;}
-.hunt-star { position: absolute; font-size: 3rem; cursor: pointer; animation: starPulse 1.5s infinite alternate; user-select: none; -webkit-tap-highlight-color: transparent; }
-.hunt-star:active { transform: scale(0.8) !important; }
+.magic-title { font-family: 'Dancing Script', cursive; font-size: 4rem; margin-bottom: 1rem; color: #fff; text-shadow: 0 0 20px rgba(255, 213, 79, 0.8), 0 0 40px rgba(102, 187, 106, 0.5); }
+.magic-subtitle { font-family: 'Lora', serif; font-size: 1.2rem; opacity: 0.9; margin-bottom: 2rem; padding: 0 1rem; color: #ddd; }
 
-@keyframes starPulse {
-    0% { transform: scale(1); filter: drop-shadow(0 0 5px #FFD54F); }
-    100% { transform: scale(1.3) rotate(15deg); filter: drop-shadow(0 0 25px #FFD54F); }
-}
+/* Estrellas Fugaces de Fondo */
+#particles-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+.shooting-star { position: absolute; top: 50%; left: 50%; width: 4px; height: 4px; background: #fff; border-radius: 50%; box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1), 0 0 0 8px rgba(255, 255, 255, 0.1), 0 0 20px rgba(255, 255, 255, 1); animation: shooting 3s linear infinite; }
+.shooting-star::before { content: ''; position: absolute; top: 50%; transform: translateY(-50%); width: 300px; height: 1px; background: linear-gradient(90deg, #fff, transparent); }
+@keyframes shooting { 0% { transform: scale(1) translateX(0) rotate(45deg); opacity: 1; } 100% { transform: scale(0.2) translateX(1000px) rotate(45deg); opacity: 0; } }
 
-.reward-box { background: rgba(253, 251, 247, 0.9); color: var(--bg-dark-pacay); padding: 3rem; border-radius: 15px; max-width: 600px; margin: 0 auto; position: relative; z-index: 20; box-shadow: 0 20px 50px rgba(0,0,0,0.5); animation: dropIn 0.8s ease; }
+.hunt-wrapper { position: relative; width: 90%; max-width: 800px; height: 60vh; margin: 0 auto; border: 1px dashed rgba(255, 213, 79, 0.1); border-radius: 20px;}
+
+/* Orbes Luminosos (Reemplazan Emojis) */
+.glowing-star { position: absolute; width: 25px; height: 25px; cursor: pointer; border-radius: 50%; background: radial-gradient(circle, #fff 0%, #FFD54F 40%, transparent 100%); box-shadow: 0 0 20px 10px rgba(255, 213, 79, 0.5); animation: orbitPulse 2s infinite alternate; user-select: none; -webkit-tap-highlight-color: transparent; transition: transform 0.3s; }
+.glowing-star:active { transform: scale(0.5) !important; }
+@keyframes orbitPulse { 0% { transform: scale(0.8); opacity: 0.8; } 100% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 40px 15px rgba(255, 213, 79, 0.8); } }
+
+/* Carta Mágica de Recompensa */
+.reward-box { background: linear-gradient(135deg, #1f2b23, #0f1611); color: var(--cream); padding: 3rem; border-radius: 8px; max-width: 600px; margin: 0 auto; position: relative; z-index: 20; box-shadow: 0 0 30px rgba(255, 213, 79, 0.3), inset 0 0 10px rgba(255, 213, 79, 0.2); border: 2px solid rgba(255, 213, 79, 0.5); animation: dropIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.reward-box h2 { font-family: 'Dancing Script', cursive; font-size: 3.5rem; color: #FFD54F; margin-bottom: 1rem; }
+.reward-box p { font-family: 'Lora', serif; font-size: 1.2rem; line-height: 1.6; }
 
 
 
@@ -134,6 +142,8 @@ h1, h2, h3, h4 { font-weight: 700; }
 .time-box { background: #1e3a20; padding: 15px 20px; border-radius: 8px; min-width: 80px; display:inline-block; margin: 0 5px;}
 .time-box span { font-size: 2.5rem; font-weight: 700; color: var(--pacay-accent); display: block; }
 .countdown-blocks { display: flex; gap: 10px; justify-content: center; margin-top: 2rem; flex-wrap: wrap;}
+.video-wrapper { width: 100%; max-width: 600px; margin: 1.5rem auto 0 auto; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.6); border: 2px solid var(--pacay-accent); }
+.birthday-video { width: 100%; height: auto; display: block; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 /* =========================================
