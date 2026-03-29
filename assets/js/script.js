@@ -15,6 +15,8 @@ const VALEFLIX_CONFIG = {
         "https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=400",
         "https://images.unsplash.com/photo-1520699049698-acd2fce18738?w=400"
     ],
+    pinSecreto: "081225",
+    musicaFondo: "https://github.com/rafaelreis-hotmart/Audio-Sample/raw/main/sample.mp3", // Reemplaza con una canción real en assets/img/
     razonesAmor: [
         "Amo la forma en la que sonríes cuando me miras.",
         "Me das paz y haces que todo sea más bonito.",
@@ -110,6 +112,14 @@ function enterValeFlix() {
     audioSound.volume = 0.5;
     audioSound.play().catch(e => console.log("Audio prevent: ", e));
     
+    // Música de fondo
+    const bgMusic = document.getElementById("bg-music");
+    if(bgMusic && VALEFLIX_CONFIG.musicaFondo) {
+        bgMusic.src = VALEFLIX_CONFIG.musicaFondo;
+        bgMusic.volume = 0.2; 
+        setTimeout(() => bgMusic.play().catch(e=>console.log(e)), 2500);
+    }
+    
     profileGate.classList.add("fade-out");
     setTimeout(() => {
         profileGate.classList.add("hidden");
@@ -123,6 +133,14 @@ function enterValeFlix() {
 // Lógica para cambiar de pestaña en el Navbar
 function switchTab(event, targetTabId) {
     if(event) event.preventDefault();
+    
+    // Si la pestaña objetivo es Top Secret, interceptamos con el PIN
+    if (targetTabId === 'tab-magia' && VALEFLIX_CONFIG.pinSecreto) {
+        openModal('pin-modal');
+        document.getElementById('pin-input').value = "";
+        document.getElementById('pin-error').classList.add('hidden');
+        return;
+    }
     
     // 1. Quitar clase active de todos los links
     document.querySelectorAll('.nav-tab').forEach(tab => {
@@ -191,6 +209,22 @@ allModals.forEach(modal => {
         }
     });
 });
+
+// Lógica de validación del PIN Parental
+function checkPin() {
+    const input = document.getElementById('pin-input').value;
+    const errorMsg = document.getElementById('pin-error');
+    if(input === VALEFLIX_CONFIG.pinSecreto) {
+        closeModal('pin-modal');
+        VALEFLIX_CONFIG.pinSecreto = null; // Unlocked! No pedirá clave si aprieta Start Hunt otra vez
+        switchTab(null, 'tab-magia');
+    } else {
+        errorMsg.classList.remove('hidden');
+        const inptEl = document.getElementById('pin-input');
+        inptEl.classList.add('error-shake');
+        setTimeout(() => inptEl.classList.remove('error-shake'), 500);
+    }
+}
 
 // Lógica del Contador
 const countdownInterval = setInterval(() => {

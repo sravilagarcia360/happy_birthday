@@ -17,6 +17,8 @@
 </head>
 <body>
     <audio id="netflix-sound" src="https://assets.mixkit.co/active_storage/sfx/2218/2218-preview.mp3" preload="auto"></audio>
+    <!-- Elemento para audio de fondo romántico -->
+    <audio id="bg-music" src="" loop preload="auto"></audio>
     
     <!-- PANTALLA INICIAL: ENTRADA VALEFLIX -->
     <div id="profile-gate" class="profile-gate">
@@ -78,6 +80,10 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Botón Flotante interactivo Netflix Style -->
+        <button class="btn-skip-intro" onclick="openModal('countdown-modal')">Saltar Intro ⏭</button>
+
 
         <div class="sliders-container">
             <div class="slider-row">
@@ -196,6 +202,22 @@
                         <video id="birthday-video" src="assets/img/tu_video_aqui.mp4" controls preload="none"></video>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal del PIN Top Secret -->
+    <div id="pin-modal" class="modal hidden">
+        <div class="modal-content pin-content" style="max-width: 400px; text-align: center;">
+            <button class="close-btn" onclick="closeModal('pin-modal')">✖</button>
+            <div class="modal-body">
+                <h2 style="font-size: 1.8rem; margin-bottom: 2rem;">Ingresa el PIN</h2>
+                <p style="color: var(--grey-text); margin-bottom: 1rem; font-size: 0.9rem;">Se requiere el código para acceder a Top Secret.</p>
+                <div class="pin-inputs">
+                    <input type="password" id="pin-input" maxlength="6" placeholder="000000" autocomplete="off">
+                </div>
+                <p id="pin-error" class="hidden" style="color: #e50914; font-size: 0.85rem; margin-top: 1rem;">Clave incorrecta. Inténtalo de nuevo.</p>
+                <button class="btn btn-play" style="margin-top: 2rem; width: 100%; border-radius: 4px;" onclick="checkPin()">Acceder</button>
             </div>
         </div>
     </div>
