@@ -1,0 +1,67 @@
+<!-- ============================================================
+     MODALES GLOBALES
+     Estos modales son compartidos entre todas las pestañas.
+============================================================ -->
+
+<!-- Modal: Carta de Amor -->
+<div id="letter-modal" class="modal hidden">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('letter-modal')">✖</button>
+        <div class="modal-body letter-body">
+            <h2 class="letter-title">Carta para mi Princesa</h2>
+            <div class="letter-text">
+                <p>
+                    Mi Princesa hermosa,<br><br>
+                    Hoy quiero aprovechar este rinconcito que he creado para ti, para decirte todo lo que significas en mi vida. Desde que te conocí, mis días tienen un color diferente, y mi mundo es mucho más feliz.
+                    <br><br>
+                    Tus 19 años marcan una etapa preciosa y me siento el hombre más afortunado por poder tomarnos de la mano mientras la vives. Adoro tu sonrisa, tus ojos y me encanta saber que tu color favorito es el verde pacay, porque me recuerda que a tu lado todo siempre está lleno de vida y esperanza.
+                    <br><br>
+                    Eres mi persona favorita, mi paz y mi alegría. Espero que este pequeño detalle te haga sonreír tanto como tú me haces sonreír a mí cada día. Nunca olvides lo especial que eres para el mundo y para mí.
+                    <br><br>
+                    ¡Feliz cumpleaños, mi amor! Te amaré hoy, mañana y siempre. 💚
+                </p>
+                <p class="signature">- Tu amor</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Cuenta Regresiva y Video Sorpresa -->
+<div id="countdown-modal" class="modal hidden">
+    <div class="modal-content info-modal">
+        <button class="close-btn" onclick="closeModal('countdown-modal')">✖</button>
+        <div class="modal-body" style="text-align:center;">
+            <h2>Tu Fecha Especial</h2>
+            <p class="fake-synopsis">Temporada 19 - Estreno el 2 de Abril</p>
+            <div class="countdown-blocks">
+                <div class="time-box"><span id="days">00</span><p>Días</p></div>
+                <div class="time-box"><span id="hours">00</span><p>Horas</p></div>
+                <div class="time-box"><span id="minutes">00</span><p>Min.</p></div>
+                <div class="time-box"><span id="seconds">00</span><p>Seg.</p></div>
+            </div>
+            <div id="birthday-message" class="hidden">
+                <p style="color:var(--pacay-accent); font-size:1.5rem; margin-top:20px; font-weight:800;">¡FELIZ CUMPLEAÑOS! TE AMO 🎉</p>
+                <div class="video-wrapper">
+                    <!-- Pon tu video en assets/img/ y actualiza el src abajo -->
+                    <video id="birthday-video" src="assets/img/tu_video_aqui.mp4" controls preload="none"></video>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: PIN Top Secret -->
+<div id="pin-modal" class="modal hidden">
+    <div class="modal-content pin-content" style="max-width: 400px; text-align: center;">
+        <button class="close-btn" onclick="closeModal('pin-modal')">✖</button>
+        <div class="modal-body">
+            <h2 style="font-size: 1.8rem; margin-bottom: 2rem;">Ingresa el PIN</h2>
+            <p style="color: var(--grey-text); margin-bottom: 1rem; font-size: 0.9rem;">Se requiere el código para acceder a Top Secret.</p>
+            <div class="pin-inputs">
+                <input type="password" id="pin-input" maxlength="6" placeholder="000000" autocomplete="off">
+            </div>
+            <p id="pin-error" class="hidden" style="color: #e50914; font-size: 0.85rem; margin-top: 1rem;">Clave incorrecta. Inténtalo de nuevo.</p>
+            <button class="btn btn-play" style="margin-top: 2rem; width: 100%; border-radius: 4px;" onclick="checkPin()">Acceder</button>
+        </div>
+    </div>
+</div>

@@ -99,7 +99,27 @@ function renderGallery() {
         });
     }
 }
-renderGallery();
+
+/* =======================================================
+   CARGADOR DE PARTIALS (inyecta HTML de cada pestaña)
+======================================================= */
+async function loadPartials() {
+    const partials = [
+        { id: 'app-content',  files: ['tab-inicio', 'tab-cartas', 'tab-magia'] },
+        { id: 'app-modals',   files: ['modales'] }
+    ];
+    for (const group of partials) {
+        const container = document.getElementById(group.id);
+        for (const name of group.files) {
+            const res  = await fetch(`assets/partials/${name}.html`);
+            const html = await res.text();
+            container.insertAdjacentHTML('beforeend', html);
+        }
+    }
+    // Una vez cargados los partials, renderá los carruseles
+    renderGallery();
+}
+loadPartials();
 
 const birthdayDate = new Date("April 2, 2026 00:00:00").getTime();
 
@@ -226,54 +246,45 @@ function checkPin() {
     }
 }
 
+function playCinematic(overlayId, onReveal, onDone) {
+    const el = document.getElementById(overlayId);
+    if (!el) { if(onReveal) onReveal(); return; }
+
+    // Paso 1: hacer visible el overlay (fade-in negro)
+    el.classList.add('active');
+
+    // Paso 2: mostrar el título cinemático
+    setTimeout(() => el.classList.add('show-text'), 600);
+
+    // Paso 3: desvanecer el texto antes de abrir
+    setTimeout(() => {
+        el.classList.add('fade-text');
+        el.classList.remove('show-text');
+    }, 3500);
+
+    // Paso 4: abrir las barras letterbox
+    setTimeout(() => el.classList.add('open'), 4000);
+
+    // Paso 5: revelar el contenido debajo
+    setTimeout(() => { if(onReveal) onReveal(); }, 4300);
+
+    // Paso 6: desaparecer el overlay completamente
+    setTimeout(() => {
+        el.classList.remove('active', 'open', 'fade-text');
+        if(onDone) onDone();
+    }, 5400);
+}
+
 function playCinematicIntro() {
-    const intro = document.getElementById('cinematic-intro');
-
-    // 1. Aparece la pantalla negra con barras
-    intro.classList.remove('hidden');
-
-    // 2. Después de 400ms, mostrar el título con fade
-    setTimeout(() => { intro.classList.add('show-text'); }, 400);
-
-    // 3. Después de 3.2s, abrir las barras como un cine (letterbox abre)
-    setTimeout(() => { intro.classList.add('open'); }, 3200);
-
-    // 4. Cambiar de pestaña mientras las barras se están abriendo
-    setTimeout(() => {
-        switchTab(null, 'tab-magia');
-    }, 3400);
-
-    // 5. Cuando las barras terminen de abrirse, desaparecer el overlay
-    setTimeout(() => {
-        intro.classList.add('hidden');
-        intro.classList.remove('show-text', 'open');
-    }, 4400);
+    playCinematic('cinematic-intro', () => switchTab(null, 'tab-magia'));
 }
 
-// Secuencia cinemática para la Carta
 function cinematicCarta() {
-    const intro = document.getElementById('cinematic-carta');
-    intro.classList.remove('hidden');
-    setTimeout(() => { intro.classList.add('show-text'); }, 400);
-    setTimeout(() => { intro.classList.add('open'); }, 3200);
-    setTimeout(() => { openModal('letter-modal'); }, 3800);
-    setTimeout(() => {
-        intro.classList.add('hidden');
-        intro.classList.remove('show-text', 'open');
-    }, 4400);
+    playCinematic('cinematic-carta', () => openModal('letter-modal'));
 }
 
-// Secuencia cinemática para el Video (cuando el conteo llega a cero)
 function cinematicVideo(callback) {
-    const intro = document.getElementById('cinematic-video');
-    intro.classList.remove('hidden');
-    setTimeout(() => { intro.classList.add('show-text'); }, 400);
-    setTimeout(() => { intro.classList.add('open'); }, 3200);
-    setTimeout(() => { if(callback) callback(); }, 3800);
-    setTimeout(() => {
-        intro.classList.add('hidden');
-        intro.classList.remove('show-text', 'open');
-    }, 4400);
+    playCinematic('cinematic-video', callback);
 }
 
 // Lógica del Contador

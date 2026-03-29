@@ -163,9 +163,56 @@ h1, h2, h3, h4 { font-weight: 700; }
 .countdown-blocks { display: flex; gap: 10px; justify-content: center; margin-top: 2rem; flex-wrap: wrap;}
 .video-wrapper { width: 100%; max-width: 600px; margin: 1.5rem auto 0 auto; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.6); border: 2px solid var(--pacay-accent); }
 .birthday-video { width: 100%; height: auto; display: block; }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+/* =========================================
+   SECUENCIAS CINEMÁTICAS
+   Usan opacity/visibility en vez de display:none
+   para que las transiciones CSS funcionen.
+========================================= */
+.cinematic-overlay {
+    position: fixed; top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: #000;
+    z-index: 99999;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    /* Invisible por defecto, sin display:none para permitir transiciones */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+}
+.cinematic-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+}
+.cinematic-overlay .letterbox-top,
+.cinematic-overlay .letterbox-bottom {
+    position: absolute; left: 0; width: 100%;
+    background: #000; z-index: 2;
+    transition: height 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+}
+.cinematic-overlay .letterbox-top    { top: 0;    height: 20vh; }
+.cinematic-overlay .letterbox-bottom { bottom: 0; height: 20vh; }
+.cinematic-overlay.open .letterbox-top,
+.cinematic-overlay.open .letterbox-bottom { height: 0; }
 
-/* Elementos del Input PIN */
+.cinematic-overlay .cinematic-text {
+    color: white; text-align: center; z-index: 3;
+    opacity: 0; transform: scale(1.04);
+    transition: opacity 1s ease, transform 1s ease;
+    padding: 0 2rem;
+}
+.cinematic-overlay.show-text .cinematic-text { opacity: 1; transform: scale(1); }
+.cinematic-overlay.fade-text  .cinematic-text { opacity: 0; transform: scale(0.97); }
+
+.cinematic-studio   { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; letter-spacing: 6px; text-transform: uppercase; color: #aaa; margin-bottom: 1.5rem; }
+.cinematic-title    { font-family: 'Dancing Script', cursive; font-size: clamp(3rem, 8vw, 6rem); color: #FFD54F; text-shadow: 0 0 40px rgba(255,213,79,0.8); margin-bottom: 1rem; line-height: 1.2; }
+.cinematic-subtitle { font-family: 'Lora', serif; font-size: clamp(1rem, 2vw, 1.4rem); color: #ddd; font-style: italic; }
+
+/* Intro de Película (Cinemático) - compatibilidad hacia atrás */
+@keyframes cineFade { 0% { opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; } }
+
 #pin-input { background: #333; border: 2px solid #555; color: white; font-size: 2rem; font-weight: bold; width: 100%; text-align: center; padding: 10px; border-radius: 4px; letter-spacing: 12px; transition: border 0.3s; outline: none; }
 #pin-input:focus { border-color: var(--pacay-accent); }
 #pin-input::placeholder { color: #888; font-weight: 300; letter-spacing: 8px; }

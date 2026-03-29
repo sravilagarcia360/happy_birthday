@@ -6,9 +6,8 @@
     <title>ValeFlix</title>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- CSS en su carpeta de Assets -->
+    <!-- CSS principal -->
     <link rel="stylesheet" href="assets/css/style.css">
-    
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png">
@@ -16,12 +15,15 @@
     <link rel="manifest" href="assets/favicons/site.webmanifest">
 </head>
 <body>
+
+    <!-- =====================================================
+         ELEMENTOS DE SISTEMA (audio, overlays cinemáticos)
+    ===================================================== -->
     <audio id="netflix-sound" src="https://assets.mixkit.co/active_storage/sfx/2218/2218-preview.mp3" preload="auto"></audio>
-    <!-- Elemento para audio de fondo romántico -->
     <audio id="bg-music" src="" loop preload="auto"></audio>
 
-    <!-- Secuencia Cinemática 1: PIN/Top Secret -->
-    <div id="cinematic-intro" class="hidden">
+    <!-- Secuencia Cinemática 1: PIN / Top Secret -->
+    <div id="cinematic-intro" class="cinematic-overlay">
         <div class="letterbox-top"></div>
         <div class="cinematic-text">
             <div class="cinematic-studio">ValeFlix Original</div>
@@ -32,28 +34,30 @@
     </div>
 
     <!-- Secuencia Cinemática 2: La Carta -->
-    <div id="cinematic-carta" class="hidden">
+    <div id="cinematic-carta" class="cinematic-overlay">
         <div class="letterbox-top"></div>
         <div class="cinematic-text">
             <div class="cinematic-studio">ValeFlix Presenta</div>
             <div class="cinematic-title">Una Carta para Ti</div>
-            <div class="cinematic-subtitle">Escrita desde lo más profundo del corazón&hellip;</div>
+            <div class="cinematic-subtitle">Escrita desde lo m&aacute;s profundo del coraz&oacute;n&hellip;</div>
         </div>
         <div class="letterbox-bottom"></div>
     </div>
 
     <!-- Secuencia Cinemática 3: El Gran Video -->
-    <div id="cinematic-video" class="hidden">
+    <div id="cinematic-video" class="cinematic-overlay">
         <div class="letterbox-top"></div>
         <div class="cinematic-text">
             <div class="cinematic-studio">🎉 Temporada 19 &mdash; Episodio Final</div>
-            <div class="cinematic-title">¡Feliz Cumpleaños!</div>
-            <div class="cinematic-subtitle">Te amo hoy, mañana y siempre&hellip; 💚</div>
+            <div class="cinematic-title">&iexcl;Feliz Cumplea&ntilde;os!</div>
+            <div class="cinematic-subtitle">Te amo hoy, ma&ntilde;ana y siempre&hellip; 💚</div>
         </div>
         <div class="letterbox-bottom"></div>
     </div>
-    
-    <!-- PANTALLA INICIAL: ENTRADA VALEFLIX -->
+
+    <!-- =====================================================
+         PANTALLA DE ENTRADA (Selección de Perfil)
+    ===================================================== -->
     <div id="profile-gate" class="profile-gate">
         <header class="gate-header">
             <h1 class="logo-netflix">ValeFlix</h1>
@@ -69,14 +73,16 @@
         </div>
     </div>
 
-    <!-- NAVBAR GLOBAL CON PESTAÑAS -->
+    <!-- =====================================================
+         NAVBAR GLOBAL (Pestañas de navegación)
+    ===================================================== -->
     <nav id="navbar" class="navbar hidden">
         <div class="nav-left">
             <h1 class="logo-netflix" id="nav-logo" onclick="location.reload()" style="cursor:pointer;">ValeFlix</h1>
             <ul class="nav-links">
-                <li><a href="#" class="nav-tab active" data-target="tab-inicio" onclick="switchTab(event, 'tab-inicio')">Inicio</a></li>
-                <li><a href="#" class="nav-tab" data-target="tab-cartas" onclick="switchTab(event, 'tab-cartas')">Cartas Mágicas</a></li>
-                <li><a href="#" class="nav-tab" data-target="tab-magia" onclick="switchTab(event, 'tab-magia')">Top Secret</a></li>
+                <li><a href="#" class="nav-tab active" data-target="tab-inicio"  onclick="switchTab(event, 'tab-inicio')">Inicio</a></li>
+                <li><a href="#" class="nav-tab"        data-target="tab-cartas"  onclick="switchTab(event, 'tab-cartas')">Cartas Mágicas</a></li>
+                <li><a href="#" class="nav-tab"        data-target="tab-magia"   onclick="switchTab(event, 'tab-magia')">Top Secret</a></li>
             </ul>
         </div>
         <div class="nav-right">
@@ -84,178 +90,17 @@
         </div>
     </nav>
 
-    <!-- ==============================================
-         PESTAÑA 1: INICIO (Fotos y Documental)
-         ============================================== -->
-    <main id="tab-inicio" class="content-view hidden">
-        <div class="billboard">
-            <div class="billboard-image">
-                <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&q=80&w=1200" alt="Billboard">
-                <div class="billboard-vignette"></div>
-            </div>
-            <div class="billboard-layer">
-                <div class="billboard-content">
-                    <div class="logo-and-text">
-                        <span class="n-icon">V</span><span class="original-text">D O C U M E N T A L</span>
-                    </div>
-                    <h2 class="title-logo">Felices 19<br>Años</h2>
-                    <div class="tags">
-                        <span class="match">100% de compatibilidad</span>
-                        <span class="rating">+18 Temporadas</span>
-                        <span class="hd">HD</span>
-                    </div>
-                    <p class="synopsis">Un viaje fotográfico por la vida de la cumpleañera más hermosa del mundo y todas nuestras maravillosas locuras juntos.</p>
-                    <div class="billboard-buttons">
-                        <button class="btn btn-more" onclick="openModal('countdown-modal')">
-                            <span class="icon">ⓘ</span> Faltan para el Gran Evento
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Botón Flotante interactivo Netflix Style -->
-        <button class="btn-skip-intro" onclick="openModal('countdown-modal')">Saltar Intro ⏭</button>
+    <!-- =====================================================
+         CONTENEDOR DE PESTAÑAS (inyectadas desde partials)
+    ===================================================== -->
+    <div id="app-content"></div>
 
+    <!-- =====================================================
+         CONTENEDOR DE MODALES (inyectados desde partials)
+    ===================================================== -->
+    <div id="app-modals"></div>
 
-        <div class="sliders-container">
-            <div class="slider-row">
-                <h3 class="row-title">Tendencias Contigo</h3>
-                <div class="row-items" id="slider-tendencias">
-                    <!-- Las fotos se cargarán automáticamente desde script.js -->
-                </div>
-            </div>
-            <div class="slider-row">
-                <h3 class="row-title">Momentos Inolvidables</h3>
-                <div class="row-items" id="slider-momentos">
-                    <!-- Las fotos se cargarán automáticamente desde script.js -->
-                </div>
-            </div>
-        </div>
-        <footer class="netflix-footer"><p>Original de ValeFlix 💚</p></footer>
-    </main>
-
-    <!-- ==============================================
-         PESTAÑA 2: CARTAS Y SECRETOS
-         ============================================== -->
-    <main id="tab-cartas" class="content-view hidden">
-        <div class="billboard">
-            <div class="billboard-image">
-                <img src="https://images.unsplash.com/photo-1518599904199-0ca897819ddb?auto=format&fit=crop&q=80&w=1200" alt="Billboard">
-                <div class="billboard-vignette"></div>
-            </div>
-            <div class="billboard-layer">
-                <div class="billboard-content">
-                    <div class="logo-and-text">
-                        <span class="n-icon">V</span><span class="original-text">S E R I E &nbsp; O R I G I N A L</span>
-                    </div>
-                    <h2 class="title-logo">Mi amor<br>por ti</h2>
-                    <p class="synopsis">Una colección de palabras no dichas, secretos a voces y todo el amor que me haces sentir. Abre esta carta magna para descubrir lo que hay en mi corazón.</p>
-                    <div class="billboard-buttons">
-                        <button class="btn btn-play" onclick="cinematicCarta()">
-                            <span class="icon">📖</span> Leer Carta Principal
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="sliders-container">
-            <div class="slider-row" style="margin-bottom:0;">
-                <h3 class="row-title">Pequeñas razones por las que te amo (¡Tócalas!)</h3>
-                <div class="flip-items" id="slider-razones" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding-bottom: 30px; margin-top: 1.5rem;">
-                    <!-- Se ha delegado la generación de 50 cartas mágicas al archivo script.js para mejor orden y escalabilidad -->
-                </div>
-            </div>
-        </div>
-        <footer class="netflix-footer"><p>Cartas Exclusivas 💚</p></footer>
-    </main>
-
-    <!-- ==============================================
-         PESTAÑA 3: TOP SECRET (Juego de Magia)
-         ============================================== -->
-    <main id="tab-magia" class="content-view hidden" style="min-height:100vh;">
-        <div id="particles-bg"></div>
-        <div class="magic-container" id="star-hunt-game">
-            <h1 class="magic-title">Misterio Cósmico 🌟</h1>
-            <p class="magic-subtitle">Toca todas las estrellas parpadeantes de la pantalla para revelar un secreto de amor.</p>
-            <div id="hunt-stars-wrapper" class="hunt-wrapper"></div>
-            
-            <div id="magic-reward" class="hidden reward-box">
-                <h2>¡Ganaste! 🎉</h2>
-                <p>Tu premio es saber que <strong>eres el amor de mi vida</strong> todos los días y para siempre. ¡Feliz Cumpleaños preciosa!</p>
-                <button class="btn btn-play" onclick="switchTab(event, 'tab-inicio')" style="margin-top:20px;">Volver al Inicio</button>
-            </div>
-        </div>
-    </main>
-
-
-
-    <!-- ==============================================
-         MODALES GLOBALES
-         ============================================== -->
-    <div id="letter-modal" class="modal hidden">
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeModal('letter-modal')">✖</button>
-            <div class="modal-body letter-body">
-                <h2 class="letter-title">Carta para mi Princesa</h2>
-                <div class="letter-text">
-                    <p>
-                        Mi Princesa hermosa,<br><br>
-                        Hoy quiero aprovechar este rinconcito que he creado para ti, para decirte todo lo que significas en mi vida. Desde que te conocí, mis días tienen un color diferente, y mi mundo es mucho más feliz. 
-                        <br><br>
-                        Tus 19 años marcan una etapa preciosa y me siento el hombre más afortunado por poder tomarnos de la mano mientras la vives. Adoro tu sonrisa, tus ojos y me encanta saber que tu color favorito es el verde pacay, porque me recuerda que a tu lado todo siempre está lleno de vida y esperanza.
-                        <br><br>
-                        Eres mi persona favorita, mi paz y mi alegría. Espero que este pequeño detalle te haga sonreír tanto como tú me haces sonreír a mí cada día. Nunca olvides lo especial que eres para el mundo y para mí.
-                        <br><br>
-                        ¡Feliz cumpleaños, mi amor! Te amaré hoy, mañana y siempre. 💚
-                    </p>
-                    <p class="signature">- Tu amor</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="countdown-modal" class="modal hidden">
-        <div class="modal-content info-modal">
-            <button class="close-btn" onclick="closeModal('countdown-modal')">✖</button>
-            <div class="modal-body" style="text-align:center;">
-                <h2>Tu Fecha Especial</h2>
-                <p class="fake-synopsis">Temporada 19 - Estreno el 2 de Abril</p>
-                <div class="countdown-blocks">
-                    <div class="time-box"><span id="days">00</span><p>Días</p></div>
-                    <div class="time-box"><span id="hours">00</span><p>Horas</p></div>
-                    <div class="time-box"><span id="minutes">00</span><p>Min.</p></div>
-                    <div class="time-box"><span id="seconds">00</span><p>Seg.</p></div>
-                </div>
-                <div id="birthday-message" class="hidden">
-                    <p style="color:var(--pacay-accent); font-size:1.5rem; margin-top:20px; font-weight:800;">¡FELIZ CUMPLEAÑOS! TE AMO 🎉</p>
-                    <div class="video-wrapper">
-                        <!-- El video se reproducirá automáticamente aquí. Pon tu video en assets/img/ y cámbiale el nombre en script.js -->
-                        <video id="birthday-video" src="assets/img/tu_video_aqui.mp4" controls preload="none"></video>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal del PIN Top Secret -->
-    <div id="pin-modal" class="modal hidden">
-        <div class="modal-content pin-content" style="max-width: 400px; text-align: center;">
-            <button class="close-btn" onclick="closeModal('pin-modal')">✖</button>
-            <div class="modal-body">
-                <h2 style="font-size: 1.8rem; margin-bottom: 2rem;">Ingresa el PIN</h2>
-                <p style="color: var(--grey-text); margin-bottom: 1rem; font-size: 0.9rem;">Se requiere el código para acceder a Top Secret.</p>
-                <div class="pin-inputs">
-                    <input type="password" id="pin-input" maxlength="6" placeholder="000000" autocomplete="off">
-                </div>
-                <p id="pin-error" class="hidden" style="color: #e50914; font-size: 0.85rem; margin-top: 1rem;">Clave incorrecta. Inténtalo de nuevo.</p>
-                <button class="btn btn-play" style="margin-top: 2rem; width: 100%; border-radius: 4px;" onclick="checkPin()">Acceder</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Referencia al archivo JS organizado -->
+    <!-- Script principal -->
     <script src="assets/js/script.js"></script>
 </body>
 </html>
