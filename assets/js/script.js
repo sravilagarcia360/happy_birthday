@@ -1,4 +1,4 @@
-﻿/* ==============================================================
+/* ==============================================================
    VALEFLIX — SCRIPT PRINCIPAL
    Configuración de contenido, lógica de UI y animaciones.
 ============================================================== */
@@ -8,7 +8,7 @@ const VALEFLIX_CONFIG = {
     /* Agrega URLs o rutas locales (ej: "assets/img/foto1.jpg") */
     fotosTendencias: [
         "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=500",
-        "https://images.unsplash.com/photo-1494774112101-70e1b6f6580f?w=500",
+        "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=500",
         "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=500",
         "https://images.unsplash.com/photo-1474552226712-ac0f0961a954?w=500"
     ],
