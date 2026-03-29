@@ -125,11 +125,90 @@ function createParticles(amount, originRect = null) {
 
 // Generador contínuo de hojas suaves cayendo
 function startBackgroundParticles() {
-    // Crear unas pocas cada cierto tiempo
     setInterval(() => {
-        // Solo si la pestaña es visible para ahorrar recursos
         if (document.visibilityState === 'visible') {
             createParticles(2);
         }
     }, 1500);
+
+    // Mover la inicialización de estrellas interactivas aquí para que se preparen
+    // al entrar a la página pincipal.
+    initStarHunt();
+}
+
+// ==========================================
+// 5. INTERACTIVIDAD CELULAR: Hadas al Tocar
+// ==========================================
+document.addEventListener('pointerdown', (e) => {
+    // No crear corazones si se toca un boton o estrella
+    if(e.target.closest('.hunt-star') || e.target.closest('.envelope')) return;
+
+    const heart = document.createElement('div');
+    heart.classList.add('touch-heart');
+    heart.innerHTML = '✨'; // O 💚
+    heart.style.left = `${e.clientX}px`;
+    heart.style.top = `${e.clientY}px`;
+    
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 1000);
+});
+
+// ==========================================
+// 6. CAZADOR DE ESTRELLAS (Mensajes Ocultos)
+// ==========================================
+function initStarHunt() {
+    const wrapper = document.getElementById('hunt-stars-wrapper');
+    if (!wrapper) return;
+    wrapper.innerHTML = '';
+    
+    const messages = [
+        "Amo cómo sonríes",
+        "Eres el centro de mi universo",
+        "Gracias por existir"
+    ];
+    let starsFound = 0;
+
+    messages.forEach((msg, index) => {
+        const star = document.createElement('div');
+        star.classList.add('hunt-star');
+        star.innerHTML = '⭐';
+        
+        // Posiciones aleatorias en el contenedor
+        star.style.left = `${Math.random() * 80 + 10}%`;
+        star.style.top = `${Math.random() * 80 + 10}%`;
+        
+        star.addEventListener('click', (e) => {
+            // Mostrar mensaje flotante
+            const popMsg = document.createElement('div');
+            popMsg.classList.add('star-message');
+            popMsg.innerText = msg;
+            popMsg.style.left = `${e.clientX}px`;
+            popMsg.style.top = `${e.clientY}px`;
+            document.body.appendChild(popMsg);
+            
+            // Borrar mensaje despues
+            setTimeout(() => { popMsg.remove(); }, 2000);
+
+            // Hacer desaparecer la estrella
+            star.style.transform = "scale(0)";
+            setTimeout(() => { star.remove(); }, 300);
+
+            starsFound++;
+            
+            // Si encuentra todas, mostrar la carta
+            if (starsFound === messages.length) {
+                setTimeout(() => {
+                    document.getElementById('star-hunt').classList.add('hidden');
+                    const letter = document.getElementById('main-letter');
+                    letter.classList.remove('hidden');
+                    window.scrollBy({ top: 150, behavior: 'smooth' }); // Bajar un poco para ver la carta
+                }, 1500); // Dar un segundito de pausa a que lea el ultimo popup
+            }
+        });
+        
+        wrapper.appendChild(star);
+    });
 }

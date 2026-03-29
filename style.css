@@ -273,11 +273,53 @@ body {
     font-style: italic;
 }
 
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-bottom: 5rem;
+.gallery-carousel {
+    width: 100%;
+    margin-bottom: 2rem;
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.carousel-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 30px;
+    padding: 20px 0;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+}
+
+/* Ocultar barra de scroll en navegadores Webkit */
+.carousel-track::-webkit-scrollbar {
+    display: none;
+}
+
+.polaroid {
+    background: #fff;
+    padding: 15px 15px 40px 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    border-radius: 4px;
+    transition: transform 0.4s ease;
+    text-align: center;
+    
+    /* Carrusel properties */
+    min-width: 280px;
+    flex-shrink: 0;
+    scroll-snap-align: center;
+}
+
+.swipe-hint {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--pacay-dark);
+    opacity: 0.6;
+    animation: flashHint 3s infinite;
+}
+
+@keyframes flashHint {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; transform: scale(1.05); }
 }
 
 .polaroid {
@@ -406,6 +448,105 @@ footer {
 .fade-in-section.is-visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* =========================================
+   INTERACTIVIDAD MÓVIL (Hadas y Estrellas)
+========================================= */
+
+/* Corazones al Tocar (Touch Particles) */
+.touch-heart {
+    position: fixed;
+    pointer-events: none;
+    font-size: 1.5rem;
+    transform: translate(-50%, -50%) scale(0.5);
+    animation: touchFloat 1s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+    z-index: 9999;
+    text-shadow: 0 0 10px rgba(165, 214, 167, 0.8);
+}
+
+@keyframes touchFloat {
+    0% { transform: translate(-50%, -50%) scale(0.8); opacity: 1; }
+    100% { transform: translate(-50%, -150%) scale(1.5); opacity: 0; }
+}
+
+/* Cazador de Estrellas (Letter Reveal) */
+.star-hunt-container {
+    min-height: 300px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.hunt-instruction {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.8rem;
+    color: var(--pacay-dark);
+    margin-bottom: 2rem;
+    animation: pulse 2s infinite;
+    text-align: center;
+    padding: 0 1rem;
+}
+
+.hunt-stars-wrapper {
+    position: relative;
+    width: 100%;
+    height: 250px;
+}
+
+.hunt-star {
+    position: absolute;
+    font-size: 2rem;
+    cursor: pointer;
+    animation: starPulse 1.5s infinite alternate;
+    transition: transform 0.3s;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.hunt-star:active {
+    transform: scale(0.8) !important;
+}
+
+@keyframes starPulse {
+    0% { transform: scale(1); filter: drop-shadow(0 0 5px var(--gold)); }
+    100% { transform: scale(1.3); filter: drop-shadow(0 0 15px var(--gold)); }
+}
+
+/* Mensajitos revelados por las estrellas */
+.star-message {
+    position: absolute;
+    background: rgba(46, 79, 47, 0.85); /* Pacay Dark transparente */
+    color: var(--bg-cream);
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-family: 'Montserrat', sans-serif;
+    white-space: nowrap;
+    pointer-events: none;
+    animation: popUpMsg 2s ease-out forwards;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+@keyframes popUpMsg {
+    0% { opacity: 0; transform: translate(-50%, 10px) scale(0.8); }
+    20% { opacity: 1; transform: translate(-50%, -15px) scale(1.05); }
+    80% { opacity: 1; transform: translate(-50%, -20px) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -40px) scale(0.9); }
+}
+
+/* Efecto de transicion de la carta suave */
+.letter-paper {
+    transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1), transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.letter-paper.hidden {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    pointer-events: none;
 }
 
 /* =========================================
