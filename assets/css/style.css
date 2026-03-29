@@ -381,29 +381,22 @@ h1,h2,h3,h4 { font-weight:800; }
 ================================================================ */
 .modal {
     position:fixed; inset:0;
-    background:rgba(0,0,0,0); backdrop-filter:blur(0px);
-    z-index:9999; display:flex; justify-content:center; align-items:flex-end;
-    transition: background 0.4s ease, backdrop-filter 0.4s ease;
-    pointer-events:none;
+    background:rgba(0,0,0,0.88); backdrop-filter:blur(10px);
+    z-index:9999; display:flex; justify-content:center; align-items:center;
+    /* Animación de entrada al aparecer */
+    animation: modalFadeIn 0.3s ease forwards;
 }
-.modal.open {
-    background:rgba(0,0,0,0.82); backdrop-filter:blur(10px);
-    pointer-events:all; align-items:center;
+.modal.hidden { display:none !important; }
+@keyframes modalFadeIn {
+    from { opacity:0; backdrop-filter:blur(0px); }
+    to   { opacity:1; backdrop-filter:blur(10px); }
 }
-.modal.hidden { display:none; }
 .modal-content {
     background: linear-gradient(160deg, #101f12, #0a1509);
     width:90%; max-width:820px; border-radius:12px;
     position:relative; overflow-y:auto; max-height:92vh;
     box-shadow:var(--shadow); border:1px solid rgba(102,187,106,0.12);
-    /* Entrance animation handled by .modal.open class */
-    transform: translateY(40px) scale(0.97);
-    opacity:0;
-    transition: transform 0.45s cubic-bezier(0.22,1,0.36,1), opacity 0.4s ease;
-}
-.modal.open .modal-content {
-    transform: translateY(0) scale(1);
-    opacity:1;
+    animation:dropIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
 }
 .close-btn {
     position:absolute; top:14px; right:18px;
