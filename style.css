@@ -1,498 +1,232 @@
 :root {
-    --bg-dark-pacay: #102012;   /* Fondo general tipo Netflix pero verde profundo */
-    --bg-darker-pacay: #081109; /* Gradientes más oscuros */
-    --pacay-accent: #66BB6A;    /* Botón / Acentos (El "rojo" de Netflix) */
-    --pacay-hover: #4CAF50;
-    --cream: #FDFBF7;           /* Texto principal */
-    --grey-text: #Aebcaf;       /* Texto secundario / Meta datos */
-    --avatar-1: #A5D6A7;
-    --avatar-2: #81C784;
+    --bg-dark-pacay: #102012;   
+    --bg-darker-pacay: #081109; 
+    --pacay-accent: #66BB6A;    
+    --cream: #FDFBF7;           
+    --grey-text: #Aebcaf;       
+    --avatar-1: #A5D6A7; /* Vale */
+    --avatar-2: #81C784; /* Nosotros */
+    --avatar-3: #FFD54F; /* Magia */
+    --avatar-4: #4FC3F7; /* Kids */
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Montserrat', sans-serif;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
 
-body {
-    background-color: var(--bg-dark-pacay);
-    color: var(--cream);
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-}
-
-.hidden {
-    display: none !important;
-}
-
-h1, h2, h3, h4 {
-    font-weight: 700;
-}
+body { background-color: var(--bg-dark-pacay); color: var(--cream); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+.hidden { display: none !important; }
+h1, h2, h3, h4 { font-weight: 700; }
 
 /* =========================================
    PANTALLA 1: SELECCIÓN DE PERFIL
 ========================================= */
-.profile-gate {
-    position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
-    background-color: var(--bg-dark-pacay);
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: opacity 0.8s ease, transform 0.8s ease;
-}
+.profile-gate { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: var(--bg-dark-pacay); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s ease, transform 0.8s ease; }
+.profile-gate.fade-out { opacity: 0; transform: scale(1.1); pointer-events: none; }
+.gate-header { position: absolute; top: 0; left: 0; padding: 2rem 4rem; width: 100%; }
+.logo-netflix { color: var(--pacay-accent); font-size: 2.5rem; text-transform: uppercase; font-weight: 800; letter-spacing: 2px; }
+.profile-selection { text-align: center; animation: fadeIn 1s ease-in-out; }
+.profile-title { font-size: 3vw; font-weight: 500; color: var(--cream); margin-bottom: 2rem; }
+.profiles-container { display: flex; gap: 2rem; justify-content: center; margin-bottom: 2rem; flex-wrap: wrap;}
+.profile { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.2s ease; }
+.profile:hover .avatar-wrapper { border-color: var(--cream); }
+.profile:hover .profile-name { color: var(--cream); }
 
-.profile-gate.fade-out {
-    opacity: 0;
-    transform: scale(1.1);
-    pointer-events: none;
-}
-
-.gate-header {
-    position: absolute;
-    top: 0; left: 0;
-    padding: 2rem 4rem;
-    width: 100%;
-}
-
-.logo-netflix {
-    color: var(--pacay-accent);
-    font-size: 2.5rem;
-    text-transform: uppercase;
-    font-weight: 800;
-    letter-spacing: 2px;
-}
-
-.profile-selection {
-    text-align: center;
-    animation: fadeIn 1s ease-in-out;
-}
-
-.profile-title {
-    font-size: 3vw;
-    font-weight: 500;
-    color: var(--cream);
-    margin-bottom: 2rem;
-}
-
-.profiles-container {
-    display: flex;
-    gap: 2rem;
-    justify-content: center;
-    margin-bottom: 2rem;
-}
-
-.profile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-}
-.profile:hover .avatar-wrapper {
-    border-color: var(--cream);
-}
-.profile:hover .profile-name {
-    color: var(--cream);
-}
-
-.avatar-wrapper {
-    width: 10vw;
-    height: 10vw;
-    min-width: 84px;
-    min-height: 84px;
-    max-width: 200px;
-    max-height: 200px;
-    border: 3px solid transparent;
-    border-radius: 4px;
-    overflow: hidden;
-    transition: border-color 0.2s ease;
-    margin-bottom: 0.8rem;
-}
-
-.avatar {
-    width: 100%;
-    height: 100%;
-}
+.avatar-wrapper { width: 10vw; height: 10vw; min-width: 84px; min-height: 84px; max-width: 150px; max-height: 150px; border: 3px solid transparent; border-radius: 4px; overflow: hidden; transition: border-color 0.2s ease; margin-bottom: 0.8rem; }
+.avatar { width: 100%; height: 100%; }
 .avatar-1 { background: var(--avatar-1) url('https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png') center/cover; }
 .avatar-2 { background: var(--avatar-2) url('https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png') center/cover; filter: hue-rotate(90deg); }
+.avatar-3 { background: var(--avatar-3) url('https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png') center/cover; filter: hue-rotate(240deg); }
+.avatar-4 { background: var(--cream) url('https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png') center/cover; border-radius: 50%; filter: hue-rotate(180deg); }
 
-.profile-name {
-    color: var(--grey-text);
-    font-size: 1.3vw;
-    min-font-size: 14px;
-    transition: color 0.2s;
-}
-
-.manage-profiles {
-    background: transparent;
-    border: 1px solid var(--grey-text);
-    color: var(--grey-text);
-    padding: 0.5rem 1.5rem;
-    font-size: 1.2vw;
-    cursor: pointer;
-    margin-top: 3rem;
-    transition: all 0.2s;
-}
-.manage-profiles:hover {
-    color: var(--cream);
-    border-color: var(--cream);
-}
+.profile-name { color: var(--grey-text); font-size: 1.3vw; min-font-size: 14px; transition: color 0.2s; }
+.manage-profiles { background: transparent; border: 1px solid var(--grey-text); color: var(--grey-text); padding: 0.5rem 1.5rem; font-size: 1.2vw; cursor: pointer; margin-top: 3rem; transition: all 0.2s; }
+.manage-profiles:hover { color: var(--cream); border-color: var(--cream); }
 
 /* =========================================
-   PANTALLA 2: NAVBAR
+   PANTALLA 2: NAVBAR GLOBAL
 ========================================= */
-.navbar {
-    position: fixed;
-    top: 0; left: 0; width: 100%;
-    padding: 1rem 3rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: linear-gradient(to bottom, rgba(8,17,9,0.8) 0%, rgba(8,17,9,0) 100%);
-    transition: background-color 0.4s ease;
-    z-index: 900;
-}
-
-.navbar.scrolled {
-    background-color: var(--bg-dark-pacay);
-}
-
-.nav-left {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-}
-
-.nav-left .logo-netflix {
-    font-size: 2rem;
-}
-
-.nav-links {
-    list-style: none;
-    display: flex;
-    gap: 1.2rem;
-}
-
-.nav-links a {
-    color: var(--cream);
-    text-decoration: none;
-    font-size: 0.9rem;
-    opacity: 0.8;
-    transition: opacity 0.3s;
-}
-.nav-links a.active, .nav-links a:hover {
-    opacity: 1;
-    font-weight: 600;
-}
-
-.nav-right {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.nav-icon {
-    font-size: 1.2rem;
-    cursor: pointer;
-}
-
-.nav-avatar {
-    width: 35px;
-    height: 35px;
-    border-radius: 4px;
-    cursor: pointer;
-}
+.navbar { position: fixed; top: 0; left: 0; width: 100%; padding: 1rem 3rem; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(to bottom, rgba(8,17,9,0.8) 0%, rgba(8,17,9,0) 100%); transition: background-color 0.4s ease; z-index: 900; }
+.navbar.scrolled { background-color: var(--bg-dark-pacay); }
+.nav-left { display: flex; align-items: center; gap: 2rem; }
+.nav-left .logo-netflix { font-size: 2rem; }
+.nav-links { list-style: none; display: flex; gap: 1.2rem; }
+.nav-links a { color: var(--cream); text-decoration: none; font-size: 0.9rem; opacity: 0.8; transition: opacity 0.3s; }
+.nav-links a.active, .nav-links a:hover { opacity: 1; font-weight: 600; }
+.nav-right { display: flex; align-items: center; gap: 1.5rem; }
+.nav-avatar { width: 35px; height: 35px; border-radius: 4px; cursor: pointer; }
 
 /* =========================================
    HERO / BILLBOARD
 ========================================= */
-.billboard {
-    position: relative;
-    width: 100%;
-    height: 85vh;
-    min-height: 600px;
-    overflow: hidden;
-}
-
-.billboard-image {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: 1;
-}
-
-.billboard-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top center;
-    opacity: 0.7;
-}
-
-.billboard-vignette {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    /* Gradientes estilo Netflix para text legibilidad */
-    background: linear-gradient(to right, var(--bg-dark-pacay) 0%, transparent 50%),
-                linear-gradient(to bottom, transparent 60%, var(--bg-dark-pacay) 100%);
-}
-
-.billboard-layer {
-    position: relative;
-    z-index: 10;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    padding: 0 4rem;
-}
-
-.billboard-content {
-    max-width: 40%;
-}
-
-.logo-and-text {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 0.5rem;
-}
-
-.n-icon {
-    color: var(--pacay-accent);
-    font-weight: 900;
-    font-size: 2rem;
-}
-
-.original-text {
-    color: var(--grey-text);
-    font-size: 0.8rem;
-    letter-spacing: 3px;
-    font-weight: 600;
-}
-
-.title-logo {
-    font-size: calc(3rem + 2vw);
-    line-height: 1.1;
-    margin-bottom: 1.5rem;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-}
-
-.tags {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 1rem;
-    font-size: 0.95rem;
-    font-weight: 600;
-}
-
+.billboard { position: relative; width: 100%; height: 85vh; min-height: 600px; overflow: hidden; }
+.billboard-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+.billboard-image img { width: 100%; height: 100%; object-fit: cover; object-position: top center; opacity: 0.7; }
+.billboard-vignette { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to right, var(--bg-dark-pacay) 0%, transparent 50%), linear-gradient(to bottom, transparent 60%, var(--bg-dark-pacay) 100%); }
+.billboard-layer { position: relative; z-index: 10; width: 100%; height: 100%; display: flex; align-items: center; padding: 0 4rem; }
+.billboard-content { max-width: 40%; }
+.logo-and-text { display: flex; align-items: center; gap: 10px; margin-bottom: 0.5rem; }
+.n-icon { color: var(--pacay-accent); font-weight: 900; font-size: 2rem; }
+.original-text { color: var(--grey-text); font-size: 0.8rem; letter-spacing: 3px; font-weight: 600; }
+.title-logo { font-size: calc(3rem + 2vw); line-height: 1.1; margin-bottom: 1.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+.tags { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; font-size: 0.95rem; font-weight: 600; }
 .match { color: #46d369; }
 .rating { border: 1px solid var(--grey-text); padding: 0 5px; color: var(--cream); }
 .hd { border: 1px solid var(--grey-text); padding: 0 5px; font-size: 0.8rem; border-radius: 3px; color: var(--grey-text); }
-
-.synopsis {
-    font-size: 1.2vw;
-    line-height: 1.5;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-    margin-bottom: 1.5rem;
-}
-
-.billboard-buttons {
-    display: flex;
-    gap: 1rem;
-}
-
-.btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 0.6rem 1.8rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-    border-radius: 4px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.2s, color 0.2s;
-}
-
-.btn-play {
-    background-color: var(--cream);
-    color: black;
-}
+.synopsis { font-size: 1.2vw; line-height: 1.5; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); margin-bottom: 1.5rem; }
+.billboard-buttons { display: flex; gap: 1rem; }
+.btn { display: flex; align-items: center; gap: 8px; padding: 0.6rem 1.8rem; font-size: 1.1rem; font-weight: 600; border-radius: 4px; border: none; cursor: pointer; transition: background-color 0.2s, color 0.2s; }
+.btn-play { background-color: var(--cream); color: black; }
 .btn-play:hover { background-color: rgba(253, 251, 247, 0.7); }
-
-.btn-more {
-    background-color: rgba(109, 109, 110, 0.7);
-    color: white;
-}
+.btn-more { background-color: rgba(109, 109, 110, 0.7); color: white; }
 .btn-more:hover { background-color: rgba(109, 109, 110, 0.4); }
 
-.btn .icon { font-size: 1.3rem; }
+/* =========================================
+   CARRUSELES GENERALES
+========================================= */
+.sliders-container { position: relative; z-index: 20; margin-top: -8vw; padding: 0 0 4rem 3rem; }
+.slider-row { margin-bottom: 3rem; }
+.row-title { font-size: 1.2rem; margin-bottom: 0.5rem; color: #e5e5e5; }
+.row-items { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; padding-right: 3rem; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; padding-bottom: 20px;}
+.row-items::-webkit-scrollbar { display: none; }
+.movie-card { min-width: 250px; height: 140px; border-radius: 4px; overflow: hidden; cursor: pointer; scroll-snap-align: start; transition: transform 0.3s ease; }
+.movie-card img { width: 100%; height: 100%; object-fit: cover; }
+.movie-card:hover { transform: scale(1.05); z-index: 10; }
 
 /* =========================================
-   CARRUSELES DE PELÍCULAS (Móvil y Desktop)
+   FLIP CARDS (Cartas de Amor View)
 ========================================= */
-.sliders-container {
-    position: relative;
-    z-index: 20;
-    margin-top: -8vw; /* Para que suba sobre el gradiente del billboard */
-    padding: 0 0 4rem 3rem;
+.flip-items {
+    perspective: 1000px;
 }
-
-.slider-row {
-    margin-bottom: 3rem;
-}
-
-.row-title {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-    color: #e5e5e5;
-}
-
-.row-items {
-    display: flex;
-    gap: 10px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    padding-right: 3rem; /* Espacio extra al final */
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-}
-.row-items::-webkit-scrollbar { display: none; }
-
-.movie-card {
-    min-width: 250px;
-    height: 140px;
-    border-radius: 4px;
-    overflow: hidden;
+.flip-card {
+    background-color: transparent;
+    min-width: 200px;
+    height: 180px;
+    perspective: 1000px;
     cursor: pointer;
     scroll-snap-align: start;
-    transition: transform 0.3s ease;
 }
-
-.movie-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.movie-card:hover {
-    transform: scale(1.05);
-    z-index: 10;
-}
-
-.netflix-footer {
+.flip-inner {
+    position: relative;
+    width: 100%; height: 100%;
     text-align: center;
-    color: var(--grey-text);
-    padding: 2rem;
-    font-size: 0.9rem;
+    transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+    transform-style: preserve-3d;
+}
+.flip-card.flipped .flip-inner, .flip-card:hover .flip-inner {
+    transform: rotateY(180deg);
+}
+.flip-front, .flip-back {
+    position: absolute;
+    width: 100%; height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.flip-front {
+    background: linear-gradient(135deg, var(--pacay-accent), #4CAF50);
+    color: var(--bg-dark-pacay);
+    font-weight: bold; font-family: 'Dancing Script', cursive; font-size: 2rem;
+}
+.flip-back {
+    background-color: var(--cream);
+    color: var(--bg-darker-pacay);
+    transform: rotateY(180deg);
+    font-family: 'Lora', serif; font-size: 1rem; font-style: italic;
+    border: 2px solid var(--pacay-accent);
 }
 
 /* =========================================
-   MODALES (Carta y Contador)
+   VISTA "MAGIA" (Star Hunt)
 ========================================= */
-.modal {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.8);
-    backdrop-filter: blur(5px);
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 1;
-    transition: opacity 0.3s ease;
-}
-
-.modal.hidden {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.modal-content {
-    background-color: var(--bg-dark-pacay);
-    width: 90%;
-    max-width: 800px;
-    border-radius: 10px;
+#view-magia {
+    background: radial-gradient(circle at center, #1b3d1f 0%, var(--bg-darker-pacay) 100%);
     position: relative;
-    box-shadow: 0 15px 30px rgba(0,0,0,0.5);
-    border: 1px solid #333;
-    animation: dropIn 0.4s ease;
-    overflow-y: auto;
-    max-height: 90vh;
 }
-
-@keyframes dropIn {
-    0% { transform: scale(0.9); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
-.close-btn {
-    position: absolute;
-    top: 15px; right: 20px;
-    background: transparent;
-    border: none;
-    color: var(--cream);
-    font-size: 1.5rem;
-    cursor: pointer;
-    z-index: 100;
-}
-
-.modal-body {
-    padding: 3rem;
-}
-
-.letter-body {
-    background: #FFFAF0; /* Papel carta ligero para contraste */
-    color: var(--bg-dark-pacay);
-}
-
-.letter-title {
-    font-family: 'Montserrat', sans-serif;
+.magic-container {
+    padding-top: 15vh;
     text-align: center;
-    margin-bottom: 2rem;
-    color: var(--pacay-accent);
+    height: 100%;
+    position: relative;
+    z-index: 10;
+}
+.magic-title { font-family: 'Dancing Script', cursive; font-size: 4rem; margin-bottom: 2rem; color: var(--cream); text-shadow: 0 0 20px rgba(102, 187, 106, 0.8); }
+.magic-subtitle { font-family: 'Lora', serif; font-size: 1.2rem; opacity: 0.8; margin-bottom: 2rem; }
+.hunt-wrapper { position: relative; width: 90%; max-width: 800px; height: 60vh; margin: 0 auto; border: 1px dashed rgba(253, 251, 247, 0.2); border-radius: 20px;}
+.hunt-star { position: absolute; font-size: 3rem; cursor: pointer; animation: starPulse 1.5s infinite alternate; user-select: none; -webkit-tap-highlight-color: transparent; }
+.hunt-star:active { transform: scale(0.8) !important; }
+
+@keyframes starPulse {
+    0% { transform: scale(1); filter: drop-shadow(0 0 5px #FFD54F); }
+    100% { transform: scale(1.3) rotate(15deg); filter: drop-shadow(0 0 25px #FFD54F); }
 }
 
-.letter-text {
-    font-family: 'Lora', serif; /* Podriamos usar Lora o dejar Montserrat */
-    font-size: 1.1rem;
-    line-height: 1.8;
-}
-.letter-text .signature {
-    text-align: right; margin-top: 2rem; font-weight: bold; color: var(--pacay-accent);
-}
-
-/* Contador (dentro de modal) */
-.countdown-blocks {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-top: 2rem;
+.reward-box {
+    background: rgba(253, 251, 247, 0.9);
+    color: var(--bg-dark-pacay);
+    padding: 3rem;
+    border-radius: 15px;
+    max-width: 600px;
+    margin: -40vh auto 0 auto;
+    position: relative;
+    z-index: 20;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    animation: dropIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.time-box {
-    background: #1e3a20;
-    padding: 15px 20px;
-    border-radius: 8px;
-    min-width: 80px;
+/* =========================================
+   VISTA "KIDS" (Mini Vale)
+========================================= */
+.kids-theme {
+    background-color: #FAFAFA; /* Fondo super claro */
+    color: #333;
 }
-.time-box span {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--pacay-accent);
-    display: block;
+.kids-theme .navbar { background: #66BB6A; }
+.kids-theme .nav-links a { color: #fff; font-family: 'Sniglet', cursive; }
+.kids-billboard {
+    height: 40vh;
+    background: url('https://images.unsplash.com/photo-1513258496099-481620d4ce6d?auto=format&fit=crop&q=80&w=1200') center/cover;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    font-family: 'Sniglet', cursive;
+    position: relative;
 }
+.kids-billboard::before { content: ''; position: absolute; inset:0; background: rgba(102, 187, 106, 0.4); }
+.kids-billboard h2, .kids-billboard p { position: relative; z-index: 2; }
+.kids-billboard h2 { font-size: 3rem; margin-bottom: 0.5rem; }
+.kids-slider-row { padding: 4rem 2rem; }
+.kids-card {
+    min-width: 200px; height: 200px; border-radius: 50%; /* Circulos en lugar de cuadrados */
+    overflow: hidden; cursor: pointer; border: 8px solid #FFD54F;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    scroll-snap-align: center; flex-shrink:0; transition: transform 0.4s;
+}
+.kids-card img { width: 100%; height: 100%; object-fit: cover; }
+.kids-card:hover { transform: scale(1.1) rotate(5deg); }
+.kids-footer { text-align: center; padding: 2rem; font-family: 'Sniglet', cursive; background: #66BB6A; color: white;}
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
+/* =========================================
+   MODALES (Generales)
+========================================= */
+.modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.8); backdrop-filter: blur(5px); z-index: 9999; display: flex; justify-content: center; align-items: center; opacity: 1; transition: opacity 0.3s ease; }
+.modal.hidden { opacity: 0; pointer-events: none; }
+.modal-content { background-color: var(--bg-dark-pacay); width: 90%; max-width: 800px; border-radius: 10px; position: relative; box-shadow: 0 15px 30px rgba(0,0,0,0.5); border: 1px solid #333; animation: dropIn 0.4s ease; overflow-y: auto; max-height: 90vh; }
+@keyframes dropIn { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+.close-btn { position: absolute; top: 15px; right: 20px; background: transparent; border: none; color: var(--cream); font-size: 1.5rem; cursor: pointer; z-index: 100; }
+.modal-body { padding: 3rem; }
+.letter-body { background: #FFFAF0; color: var(--bg-dark-pacay); }
+.letter-title { font-family: 'Montserrat', sans-serif; text-align: center; margin-bottom: 2rem; color: var(--pacay-accent); }
+.letter-text { font-family: 'Lora', serif; font-size: 1.1rem; line-height: 1.8; }
+.letter-text .signature { text-align: right; margin-top: 2rem; font-weight: bold; color: var(--pacay-accent); }
+
+.time-box { background: #1e3a20; padding: 15px 20px; border-radius: 8px; min-width: 80px; display:inline-block; margin: 0 5px;}
+.time-box span { font-size: 2.5rem; font-weight: 700; color: var(--pacay-accent); display: block; }
+.countdown-blocks { display: flex; gap: 10px; justify-content: center; margin-top: 2rem; flex-wrap: wrap;}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.netflix-footer { text-align: center; color: var(--grey-text); padding: 2rem; font-size: 0.9rem; }
 
 /* =========================================
    RESPONSIVE MÓVIL
@@ -502,10 +236,10 @@ h1, h2, h3, h4 {
     .profile-title { font-size: 1.5rem; }
     .profile-name { font-size: 1rem; }
     .avatar-wrapper { width: 100px; height: 100px; }
-    .manage-profiles { font-size: 1rem; }
+    .profiles-container { gap: 1rem; }
     
     .navbar { padding: 1rem 1.5rem; }
-    .nav-links { display: none; } /* Ocultar menus extra en el móvil para limpiar */
+    .nav-links { display: none; }
     
     .billboard { height: 75vh; }
     .title-logo { font-size: 2.5rem; }
@@ -514,11 +248,14 @@ h1, h2, h3, h4 {
     .synopsis { font-size: 0.9rem; margin-bottom: 1rem; }
     .tags { justify-content: center; font-size: 0.8rem; }
     .btn { padding: 0.5rem 1rem; font-size: 0.9rem; }
-    .logo-and-text { justify-content: center; }
     
     .sliders-container { margin-top: -2vw; padding: 0 0 2rem 1.5rem; }
     .movie-card { min-width: 140px; height: 200px; }
+    .flip-card { min-width: 140px; height: 160px; }
     
+    .magic-title { font-size: 2.5rem; }
+    .hunt-wrapper { height: 50vh; }
     .modal-body { padding: 2rem 1.5rem; }
     .time-box span { font-size: 1.8rem; }
+    .kids-card { min-width: 120px; height: 120px; border-width: 5px; }
 }
