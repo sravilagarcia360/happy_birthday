@@ -257,62 +257,13 @@ const countdownInterval = setInterval(() => {
     }
 }, 1000);
 
-// Minijuego Cazador de Estrellas
+// Minijuego Cazador de Estrellas (Desactivado por petición)
 function initStarHunt() {
     const wrapper = document.getElementById('hunt-stars-wrapper');
     const reward = document.getElementById('magic-reward');
     const subtitle = document.querySelector('.magic-subtitle');
     
-    if (!wrapper) return;
-    
-    // Reset estado
-    wrapper.innerHTML = '';
-    wrapper.classList.remove('hidden');
-    subtitle.classList.remove('hidden');
-    reward.classList.add('hidden');
-    
-    // Generar estrellas fugaces dinámicas de fondo
-    const bg = document.getElementById('particles-bg');
-    if(bg && bg.children.length === 0) {
-        for(let i=0; i<8; i++) {
-            const ss = document.createElement('div');
-            ss.classList.add('shooting-star');
-            ss.style.top = `${Math.random() * 50}%`; /* En la mitad de arriba */
-            ss.style.left = `${Math.random() * 100}%`;
-            ss.style.animationDelay = `${Math.random() * 5}s`;
-            bg.appendChild(ss);
-        }
-    }
-    
-    const messages = [
-        "Amo cómo sonríes",
-        "Eres mi universo",
-        "Gracias por tu paz",
-        "Felices 19 Años"
-    ];
-    let starsFound = 0;
-
-    messages.forEach((msg, index) => {
-        const star = document.createElement('div');
-        star.classList.add('glowing-star');
-        
-        star.style.left = `${Math.random() * 80 + 5}%`;
-        star.style.top = `${Math.random() * 80 + 5}%`;
-        
-        star.addEventListener('click', (e) => {
-            star.style.transform = "scale(0)";
-            setTimeout(() => star.remove(), 300);
-            
-            starsFound++;
-            
-            if (starsFound === messages.length) {
-                setTimeout(() => {
-                    wrapper.classList.add('hidden');
-                    subtitle.classList.add('hidden');
-                    reward.classList.remove('hidden');
-                }, 800);
-            }
-        });
-        wrapper.appendChild(star);
-    });
+    if (wrapper) wrapper.classList.add('hidden');
+    if (subtitle) subtitle.classList.add('hidden');
+    if (reward) reward.classList.remove('hidden');
 }
