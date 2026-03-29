@@ -14,7 +14,7 @@ body { background-color: var(--bg-dark-pacay); color: var(--cream); overflow-x: 
 h1, h2, h3, h4 { font-weight: 700; }
 
 /* =========================================
-   PANTALLA 1: SELECCIÓN DE PERFIL (Solo 1 Perfil)
+   PANTALLA 1: SELECCIÓN DE PERFIL
 ========================================= */
 .profile-gate { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: var(--bg-dark-pacay); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s ease, transform 0.8s ease; }
 .profile-gate.fade-out { opacity: 0; transform: scale(1.1); pointer-events: none; }
@@ -30,18 +30,17 @@ h1, h2, h3, h4 { font-weight: 700; }
 .avatar-wrapper { width: 10vw; height: 10vw; min-width: 100px; min-height: 100px; max-width: 200px; max-height: 200px; border: 3px solid transparent; border-radius: 4px; overflow: hidden; transition: border-color 0.2s ease; margin-bottom: 0.8rem; }
 .avatar { width: 100%; height: 100%; }
 .avatar-1 { background: var(--avatar-1) url('https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png') center/cover; }
-
 .profile-name { color: var(--grey-text); font-size: clamp(14px, 1.3vw, 24px); transition: color 0.2s; }
 
 /* =========================================
    PANTALLA 2: NAVBAR GLOBAL (Pestañas)
 ========================================= */
-.navbar { position: fixed; top: 0; left: 0; width: 100%; padding: 1rem 3rem; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(to bottom, rgba(8,17,9,0.9) 0%, rgba(8,17,9,0) 100%); transition: background-color 0.4s ease; z-index: 900; }
+.navbar { position: fixed; top: 0; left: 0; width: 100%; padding: 1rem 3rem; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(to bottom, rgba(8,17,9,0.9) 0%, rgba(8,17,9,0) 100%); transition: background-color 0.4s ease, box-shadow 0.4s ease; z-index: 900; }
 .navbar.scrolled { background-color: var(--bg-dark-pacay); box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
 .nav-left { display: flex; align-items: center; gap: 2rem; }
 .nav-left .logo-netflix { font-size: 2rem; }
 .nav-links { list-style: none; display: flex; gap: 1.2rem; }
-.nav-links a { color: var(--cream); text-decoration: none; font-size: 0.9rem; opacity: 0.7; transition: all 0.3s; padding-bottom: 5px; }
+.nav-links a { color: var(--cream); text-decoration: none; font-size: 0.9rem; opacity: 0.7; transition: all 0.3s; padding-bottom: 5px; white-space: nowrap; }
 .nav-links a.active, .nav-links a:hover { opacity: 1; font-weight: 700; border-bottom: 2px solid var(--cream); }
 .nav-right { display: flex; align-items: center; gap: 1.5rem; }
 .nav-avatar { width: 35px; height: 35px; border-radius: 4px; cursor: pointer; }
@@ -64,6 +63,7 @@ h1, h2, h3, h4 { font-weight: 700; }
 .rating { border: 1px solid var(--grey-text); padding: 0 5px; color: var(--cream); }
 .hd { border: 1px solid var(--grey-text); padding: 0 5px; font-size: 0.8rem; border-radius: 3px; color: var(--grey-text); }
 .synopsis { font-size: 1.2vw; line-height: 1.5; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); margin-bottom: 1.5rem; }
+
 .billboard-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0.6rem 1.8rem; font-size: 1.1rem; font-weight: 600; border-radius: 4px; border: none; cursor: pointer; transition: background-color 0.2s, transform 0.1s; text-align: center; }
 .btn:hover { transform: scale(1.02); }
@@ -75,17 +75,18 @@ h1, h2, h3, h4 { font-weight: 700; }
 /* =========================================
    CARRUSELES GENERALES
 ========================================= */
-.sliders-container { position: relative; z-index: 20; margin-top: -8vw; padding: 0 0 4rem 3rem; }
+.sliders-container { position: relative; z-index: 20; margin-top: -100px; padding: 0 0 4rem 3rem; }
 .slider-row { margin-bottom: 3rem; }
 .row-title { font-size: 1.2rem; margin-bottom: 0.5rem; color: #e5e5e5; }
-.row-items { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; padding-right: 3rem; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; padding-bottom: 20px;}
+.row-items { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding-right: 3rem; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; padding-bottom: 20px;}
 .row-items::-webkit-scrollbar { display: none; }
+
 .movie-card { min-width: 250px; height: 140px; border-radius: 4px; overflow: hidden; cursor: pointer; scroll-snap-align: start; transition: transform 0.3s ease; }
 .movie-card img { width: 100%; height: 100%; object-fit: cover; }
 .movie-card:hover { transform: scale(1.05); z-index: 10; }
 
 /* =========================================
-   FLIP CARDS (Cartas de Amor View)
+   FLIP CARDS (Cartas de Amor)
 ========================================= */
 .flip-items { perspective: 1000px; }
 .flip-card { background-color: transparent; min-width: 200px; height: 180px; perspective: 1000px; cursor: pointer; scroll-snap-align: start; }
@@ -100,8 +101,8 @@ h1, h2, h3, h4 { font-weight: 700; }
 ========================================= */
 #tab-magia { background: radial-gradient(circle at center, #1b3d1f 0%, var(--bg-darker-pacay) 100%); position: relative; }
 .magic-container { padding-top: 15vh; text-align: center; height: 100%; position: relative; z-index: 10; }
-.magic-title { font-family: 'Dancing Script', cursive; font-size: 4rem; margin-bottom: 2rem; color: var(--cream); text-shadow: 0 0 20px rgba(102, 187, 106, 0.8); }
-.magic-subtitle { font-family: 'Lora', serif; font-size: 1.2rem; opacity: 0.8; margin-bottom: 2rem; }
+.magic-title { font-family: 'Dancing Script', cursive; font-size: 4rem; margin-bottom: 1rem; color: var(--cream); text-shadow: 0 0 20px rgba(102, 187, 106, 0.8); }
+.magic-subtitle { font-family: 'Lora', serif; font-size: 1.2rem; opacity: 0.8; margin-bottom: 2rem; padding: 0 1rem; }
 .hunt-wrapper { position: relative; width: 90%; max-width: 800px; height: 60vh; margin: 0 auto; border: 1px dashed rgba(253, 251, 247, 0.2); border-radius: 20px;}
 .hunt-star { position: absolute; font-size: 3rem; cursor: pointer; animation: starPulse 1.5s infinite alternate; user-select: none; -webkit-tap-highlight-color: transparent; }
 .hunt-star:active { transform: scale(0.8) !important; }
@@ -111,23 +112,30 @@ h1, h2, h3, h4 { font-weight: 700; }
     100% { transform: scale(1.3) rotate(15deg); filter: drop-shadow(0 0 25px #FFD54F); }
 }
 
-.reward-box { background: rgba(253, 251, 247, 0.9); color: var(--bg-dark-pacay); padding: 3rem; border-radius: 15px; max-width: 600px; margin: -40vh auto 0 auto; position: relative; z-index: 20; box-shadow: 0 20px 50px rgba(0,0,0,0.5); animation: dropIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.reward-box { background: rgba(253, 251, 247, 0.9); color: var(--bg-dark-pacay); padding: 3rem; border-radius: 15px; max-width: 600px; margin: -40vh auto 0 auto; position: relative; z-index: 20; box-shadow: 0 20px 50px rgba(0,0,0,0.5); animation: dropIn 0.8s ease; }
 
 /* =========================================
-   VISTA "KIDS" (Mini Vale)
+   VISTA "TU PLAYLIST" (Music Cards)
 ========================================= */
-.kids-theme { background-color: #FAFAFA; color: #333; }
-.kids-theme .navbar { background: #66BB6A; }
-.kids-theme .nav-links a { color: #fff; font-family: 'Sniglet', cursive; }
-.kids-billboard { height: 40vh; background: url('https://images.unsplash.com/photo-1513258496099-481620d4ce6d?auto=format&fit=crop&q=80&w=1200') center/cover; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); font-family: 'Sniglet', cursive; position: relative; }
-.kids-billboard::before { content: ''; position: absolute; inset:0; background: rgba(102, 187, 106, 0.4); }
-.kids-billboard h2, .kids-billboard p { position: relative; z-index: 2; }
-.kids-billboard h2 { font-size: 3rem; margin-bottom: 0.5rem; }
-.kids-slider-row { padding: 4rem 2rem; }
-.kids-card { min-width: 200px; height: 200px; border-radius: 50%; overflow: hidden; cursor: pointer; border: 8px solid #FFD54F; box-shadow: 0 10px 20px rgba(0,0,0,0.1); scroll-snap-align: center; flex-shrink:0; transition: transform 0.4s; }
-.kids-card img { width: 100%; height: 100%; object-fit: cover; }
-.kids-card:hover { transform: scale(1.1) rotate(5deg); }
-.kids-footer { text-align: center; padding: 2rem; font-family: 'Sniglet', cursive; background: #66BB6A; color: white;}
+.music-card {
+    min-width: 180px; height: 180px;
+    border-radius: 8px; overflow: hidden;
+    cursor: pointer; position: relative;
+    scroll-snap-align: start; transition: transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+.music-card img { width: 100%; height: 100%; object-fit: cover; }
+.music-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem; color: var(--pacay-accent); opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.music-card:hover { transform: translateY(-10px); }
+.music-card:hover .music-overlay { opacity: 1; }
+
+.netflix-footer { text-align: center; color: var(--grey-text); padding: 2rem; font-size: 0.9rem; margin-top: 2rem; }
 
 /* =========================================
    MODALES (Generales)
@@ -146,38 +154,43 @@ h1, h2, h3, h4 { font-weight: 700; }
 .time-box span { font-size: 2.5rem; font-weight: 700; color: var(--pacay-accent); display: block; }
 .countdown-blocks { display: flex; gap: 10px; justify-content: center; margin-top: 2rem; flex-wrap: wrap;}
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-.netflix-footer { text-align: center; color: var(--grey-text); padding: 2rem; font-size: 0.9rem; }
 
 /* =========================================
-   RESPONSIVE MÓVIL
+   RESPONSIVE MÓVIL (Simetría y Bugfixes)
 ========================================= */
 @media (max-width: 768px) {
     .gate-header { padding: 1.5rem; text-align: center; }
     .profile-title { font-size: 1.5rem; }
-    .profile-name { font-size: 1rem; }
     
-    .navbar { padding: 1rem 1.5rem; flex-direction: column; gap:10px; background: rgba(8,17,9,0.95); }
-    .nav-links { gap: 0.8rem; overflow-x: auto; width: 100%; white-space: nowrap; padding-bottom: 5px;}
+    /* Configuración corregida para el Navbar móvil */
+    .navbar { padding: 1rem 1.5rem; flex-direction: column; align-items: flex-start; gap: 15px; background: rgba(8,17,9,0.95); box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+    .nav-left { flex-direction: column; align-items: flex-start; gap: 10px; width: 100%; }
+    .nav-links { flex-direction: row; gap: 1.5rem; overflow-x: auto; white-space: nowrap; width: 100%; padding-bottom: 8px; font-size: 1rem; }
     .nav-links::-webkit-scrollbar { display: none; }
     .nav-right { display: none; } 
     
-    .billboard { height: 75vh; }
-    .title-logo { font-size: 2.5rem; }
-    .billboard-layer { padding: 0 1.5rem; align-items: flex-end; padding-bottom: 3rem; text-align: center; justify-content: center;}
+    /* Billboard Simétrico */
+    .billboard { height: 80vh; min-height: 600px; }
+    .title-logo { font-size: 2.8rem; }
+    .billboard-layer { padding: 0 1.5rem; align-items: flex-end; padding-bottom: 4rem; text-align: center; justify-content: center;}
     .billboard-content { max-width: 100%; display: flex; flex-direction: column; align-items: center;}
     .synopsis { font-size: 0.95rem; margin-bottom: 1.5rem; text-align: center; }
     .tags { justify-content: center; font-size: 0.85rem; flex-wrap: wrap;}
     
+    /* Botones Stackeados y Centrados */
     .billboard-buttons { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; }
-    .btn { width: 100%; max-width: 250px; padding: 0.8rem 1rem; font-size: 0.95rem; justify-content: center; }
+    .btn { width: 100%; max-width: 280px; padding: 0.8rem 1rem; font-size: 0.95rem; justify-content: center; }
     
-    .sliders-container { margin-top: -2vw; padding: 0 0 2rem 1.5rem; }
-    .movie-card { min-width: 140px; height: 200px; }
+    /* Sliders acomodados */
+    .sliders-container { margin-top: -60px; padding: 0 0 2rem 1.5rem; }
+    .movie-card { min-width: 140px; height: 180px; }
     .flip-card { min-width: 140px; height: 160px; }
+    .music-card { min-width: 130px; height: 130px; }
     
     .magic-title { font-size: 2.5rem; }
     .hunt-wrapper { height: 50vh; }
+    .reward-box { margin-top: -30vh; padding: 2rem 1.5rem; width: 90%; text-align: center; }
+    
     .modal-body { padding: 2rem 1.5rem; }
     .time-box span { font-size: 1.8rem; }
-    .kids-card { min-width: 120px; height: 120px; border-width: 5px; }
 }

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ValeFlix</title>
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600;700;800&family=Sniglet:wght@400;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- CSS en su carpeta organizada -->
     <link rel="stylesheet" href="css/style.css">
     
@@ -34,16 +34,16 @@
         </div>
     </div>
 
-    <!-- NAVBAR GLOBAL CON PESTAÑAS (Oculto al inicio) -->
+    <!-- NAVBAR GLOBAL CON PESTAÑAS -->
     <nav id="navbar" class="navbar hidden">
         <div class="nav-left">
             <h1 class="logo-netflix" id="nav-logo" onclick="location.reload()" style="cursor:pointer;">ValeFlix</h1>
-            <!-- PESTAÑAS DE NAVEGACIÓN -->
             <ul class="nav-links">
                 <li><a href="#" class="nav-tab active" data-target="tab-inicio" onclick="switchTab(event, 'tab-inicio')">Inicio</a></li>
                 <li><a href="#" class="nav-tab" data-target="tab-cartas" onclick="switchTab(event, 'tab-cartas')">Cartas Mágicas</a></li>
                 <li><a href="#" class="nav-tab" data-target="tab-magia" onclick="switchTab(event, 'tab-magia')">Top Secret</a></li>
-                <li><a href="#" class="nav-tab" data-target="tab-mini" onclick="switchTab(event, 'tab-mini')">Mini Vale</a></li>
+                <!-- Pestaña Reemplazada -->
+                <li><a href="#" class="nav-tab" data-target="tab-audio" onclick="switchTab(event, 'tab-audio')">Tu Playlist</a></li>
             </ul>
         </div>
         <div class="nav-right">
@@ -74,7 +74,7 @@
                     <p class="synopsis">Un viaje fotográfico por la vida de la cumpleañera más hermosa del mundo y todas nuestras maravillosas locuras juntos.</p>
                     <div class="billboard-buttons">
                         <button class="btn btn-more" onclick="openModal('countdown-modal')">
-                            <span class="icon">ⓘ</span> Faltan para el Evento Especial
+                            <span class="icon">ⓘ</span> Faltan para el Gran Evento
                         </button>
                     </div>
                 </div>
@@ -118,7 +118,7 @@
                     <div class="logo-and-text">
                         <span class="n-icon">V</span><span class="original-text">S E R I E &nbsp; O R I G I N A L</span>
                     </div>
-                    <h2 class="title-logo">Lo que siento<br>por ti</h2>
+                    <h2 class="title-logo">Mi amor<br>por ti</h2>
                     <p class="synopsis">Una colección de palabras no dichas, secretos a voces y todo el amor que me haces sentir. Abre esta carta magna para descubrir lo que hay en mi corazón.</p>
                     <div class="billboard-buttons">
                         <button class="btn btn-play" onclick="openModal('letter-modal')">
@@ -130,9 +130,9 @@
         </div>
 
         <div class="sliders-container">
-            <div class="slider-row">
+            <div class="slider-row" style="margin-bottom:0;">
                 <h3 class="row-title">Pequeñas razones por las que te amo (¡Tócalas!)</h3>
-                <div class="row-items flip-items" style="gap:20px;">
+                <div class="row-items flip-items" style="gap:20px; padding-bottom:30px;">
                     <div class="flip-card" onclick="this.classList.toggle('flipped')">
                         <div class="flip-inner">
                             <div class="flip-front"><p>Razón #1</p></div>
@@ -166,7 +166,7 @@
     <!-- ==============================================
          PESTAÑA 3: TOP SECRET (Juego de Magia)
          ============================================== -->
-    <main id="tab-magia" class="content-view hidden" style="height:100vh; overflow:hidden;">
+    <main id="tab-magia" class="content-view hidden" style="min-height:100vh;">
         <div id="particles-bg"></div>
         <div class="magic-container" id="star-hunt-game">
             <h1 class="magic-title">Misterio Cósmico 🌟</h1>
@@ -182,22 +182,50 @@
     </main>
 
     <!-- ==============================================
-         PESTAÑA 4: MINI VALE (Modo Kids)
+         PESTAÑA 4: TU PLAYLIST (Nueva Sección de Música)
          ============================================== -->
-    <main id="tab-mini" class="content-view kids-theme hidden">
-        <div class="kids-billboard">
-            <h2>¡Galería de Travesuras! 🎈</h2>
-            <p>Donde guardamos las fotos más graciosas, lindas o de tu niñez.</p>
-        </div>
-        <div class="kids-slider-row">
-            <div class="row-items">
-                <div class="kids-card"><img src="https://images.unsplash.com/photo-1513258496099-481620d4ce6d?w=400" alt="Funny"></div>
-                <div class="kids-card"><img src="https://images.unsplash.com/photo-1533514114760-4389f572ae26?w=400" alt="Funny"></div>
-                <div class="kids-card"><img src="https://images.unsplash.com/photo-1563206767-5b18f218e8de?w=400" alt="Funny"></div>
-                <div class="kids-card"><img src="https://images.unsplash.com/photo-1511529323049-7603309a4dce?w=400" alt="Funny"></div>
+    <main id="tab-audio" class="content-view hidden">
+        <div class="billboard">
+            <div class="billboard-image">
+                <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=1200" alt="Music Stage">
+                <div class="billboard-vignette"></div>
+            </div>
+            <div class="billboard-layer">
+                <div class="billboard-content">
+                    <div class="logo-and-text">
+                        <span class="n-icon">V</span><span class="original-text">S O U N D T R A C K</span>
+                    </div>
+                    <h2 class="title-logo">Nuestra<br>Banda Sonora</h2>
+                    <p class="synopsis">Las melodías que nos acompañaron y las canciones que me recuerdan a ti en cada segundo del día.</p>
+                </div>
             </div>
         </div>
-        <footer class="kids-footer"><p>Mini ValeFlix 🎈</p></footer>
+        
+        <div class="sliders-container">
+            <div class="slider-row">
+                <h3 class="row-title">Nuestras Favoritas</h3>
+                <div class="row-items">
+                    <!-- Cards Cuadradas (Estilo Portada de Disco) -->
+                    <div class="music-card">
+                        <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=400" alt="Album Cover">
+                        <div class="music-overlay">▶</div>
+                    </div>
+                    <div class="music-card">
+                        <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400" alt="Album Cover">
+                        <div class="music-overlay">▶</div>
+                    </div>
+                    <div class="music-card">
+                        <img src="https://images.unsplash.com/photo-1458560871784-56d23406c091?w=400" alt="Album Cover">
+                        <div class="music-overlay">▶</div>
+                    </div>
+                    <div class="music-card">
+                        <img src="https://images.unsplash.com/photo-1516280440502-12003c20cce2?w=400" alt="Album Cover">
+                        <div class="music-overlay">▶</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="netflix-footer"><p>ValeFlix Música 🎧</p></footer>
     </main>
 
     <!-- ==============================================
