@@ -250,6 +250,32 @@ function playCinematicIntro() {
     }, 4400);
 }
 
+// Secuencia cinemática para la Carta
+function cinematicCarta() {
+    const intro = document.getElementById('cinematic-carta');
+    intro.classList.remove('hidden');
+    setTimeout(() => { intro.classList.add('show-text'); }, 400);
+    setTimeout(() => { intro.classList.add('open'); }, 3200);
+    setTimeout(() => { openModal('letter-modal'); }, 3800);
+    setTimeout(() => {
+        intro.classList.add('hidden');
+        intro.classList.remove('show-text', 'open');
+    }, 4400);
+}
+
+// Secuencia cinemática para el Video (cuando el conteo llega a cero)
+function cinematicVideo(callback) {
+    const intro = document.getElementById('cinematic-video');
+    intro.classList.remove('hidden');
+    setTimeout(() => { intro.classList.add('show-text'); }, 400);
+    setTimeout(() => { intro.classList.add('open'); }, 3200);
+    setTimeout(() => { if(callback) callback(); }, 3800);
+    setTimeout(() => {
+        intro.classList.add('hidden');
+        intro.classList.remove('show-text', 'open');
+    }, 4400);
+}
+
 // Lógica del Contador
 const countdownInterval = setInterval(() => {
     const now = new Date().getTime();
@@ -269,15 +295,16 @@ const countdownInterval = setInterval(() => {
 
     if (distance < 0) {
         clearInterval(countdownInterval);
-        document.querySelector(".countdown-blocks").classList.add("hidden");
-        document.querySelector(".fake-synopsis").classList.add("hidden");
-        document.getElementById("birthday-message").classList.remove("hidden");
-        
-        // Intentar reproducir automáticamente el video
-        const video = document.getElementById("birthday-video");
-        if(video) {
-            video.play().catch(e => console.log("Reproducción automática bloqueada. El usuario debe darle play manualmente."));
-        }
+        // Lanzar la secuencia cinématica antes de revelar el video
+        cinematicVideo(() => {
+            document.querySelector(".countdown-blocks").classList.add("hidden");
+            document.querySelector(".fake-synopsis").classList.add("hidden");
+            document.getElementById("birthday-message").classList.remove("hidden");
+            const video = document.getElementById("birthday-video");
+            if(video) {
+                video.play().catch(e => console.log("Reproducción automática bloqueada."));
+            }
+        });
     }
 }, 1000);
 
