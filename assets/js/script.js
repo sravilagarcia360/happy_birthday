@@ -1,22 +1,28 @@
-/* ==========================================================
-   CONFIGURACIÓN PRINCIPAL (Añade tus fotos aquí)
-   Ejemplo: "img/foto1.jpg"
-========================================================== */
+/* ==============================================================
+   VALEFLIX — SCRIPT PRINCIPAL
+   Configuración de contenido, lógica de UI y animaciones.
+============================================================== */
+
+/* ── CONFIGURACIÓN CENTRAL ────────────────────────────────── */
 const VALEFLIX_CONFIG = {
+    /* Agrega URLs o rutas locales (ej: "assets/img/foto1.jpg") */
     fotosTendencias: [
-        "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400",
-        "https://images.unsplash.com/photo-1494774112101-70e1b6f6580f?w=400",
-        "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400",
-        "https://images.unsplash.com/photo-1474552226712-ac0f0961a954?w=400"
+        "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=500",
+        "https://images.unsplash.com/photo-1494774112101-70e1b6f6580f?w=500",
+        "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=500",
+        "https://images.unsplash.com/photo-1474552226712-ac0f0961a954?w=500"
     ],
     fotosMomentos: [
-        "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=400",
-        "https://images.unsplash.com/photo-1514316454349-750a7fd3da3a?w=400",
-        "https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=400",
-        "https://images.unsplash.com/photo-1520699049698-acd2fce18738?w=400"
+        "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=500",
+        "https://images.unsplash.com/photo-1514316454349-750a7fd3da3a?w=500",
+        "https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=500",
+        "https://images.unsplash.com/photo-1520699049698-acd2fce18738?w=500"
     ],
+    /* Cambia por tu cancion: "assets/img/cancion.mp3" */
+    musicaFondo: "",
+    /* PIN de acceso a Top Secret */
     pinSecreto: "081225",
-    musicaFondo: "https://github.com/rafaelreis-hotmart/Audio-Sample/raw/main/sample.mp3", // Reemplaza con una canción real en assets/img/
+    /* 50 razones de amor */
     razonesAmor: [
         "Amo la forma en la que sonríes cuando me miras.",
         "Me das paz y haces que todo sea más bonito.",
@@ -67,48 +73,17 @@ const VALEFLIX_CONFIG = {
         "La lealtad que me das todos los días sin dudarlo.",
         "Porque estar cerca de ti, es estar donde pertenezco.",
         "Tu espíritu inquebrantable que no se rinde ante nada.",
-        "Y sobre todo: Solo te amo por ser tú, hoy y siempre."
+        "Y sobre todo: Solo te amo por ser tú, hoy y siempre. 💚"
     ]
 };
 
-// Generar carruseles dinámicamente al cargar la página
-function renderGallery() {
-    const tendenciasCtn = document.getElementById('slider-tendencias');
-    const momentosCtn = document.getElementById('slider-momentos');
-    const razonesCtn = document.getElementById('slider-razones');
-    
-    if (tendenciasCtn) {
-        VALEFLIX_CONFIG.fotosTendencias.forEach(src => {
-            tendenciasCtn.innerHTML += `<div class="movie-card"><img src="${src}" alt="Tendencias"></div>`;
-        });
-    }
-    if (momentosCtn) {
-        VALEFLIX_CONFIG.fotosMomentos.forEach(src => {
-            momentosCtn.innerHTML += `<div class="movie-card"><img src="${src}" alt="Momentos"></div>`;
-        });
-    }
-    if (razonesCtn && VALEFLIX_CONFIG.razonesAmor) {
-        VALEFLIX_CONFIG.razonesAmor.forEach((razon, index) => {
-            razonesCtn.innerHTML += `
-            <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                <div class="flip-inner">
-                    <div class="flip-front"><p>Razón #${index + 1}</p></div>
-                    <div class="flip-back"><p>${razon}</p></div>
-                </div>
-            </div>`;
-        });
-    }
-}
-
-/* =======================================================
-   CARGADOR DE PARTIALS (inyecta HTML de cada pestaña)
-======================================================= */
+/* ── CARGADOR DE PARTIALS ─────────────────────────────────── */
 async function loadPartials() {
-    const partials = [
-        { id: 'app-content',  files: ['tab-inicio', 'tab-cartas', 'tab-magia'] },
-        { id: 'app-modals',   files: ['modales'] }
+    const groups = [
+        { id: 'app-content', files: ['tab-inicio', 'tab-cartas', 'tab-magia'] },
+        { id: 'app-modals',  files: ['modales'] }
     ];
-    for (const group of partials) {
+    for (const group of groups) {
         const container = document.getElementById(group.id);
         for (const name of group.files) {
             const res  = await fetch(`assets/partials/${name}.html`);
@@ -116,216 +91,242 @@ async function loadPartials() {
             container.insertAdjacentHTML('beforeend', html);
         }
     }
-    // Una vez cargados los partials, renderá los carruseles
     renderGallery();
+    bindModalBackdrops();    // bind click-outside to close after modals exist in DOM
+    initShootingStars();     // generate star background for Top Secret
 }
 loadPartials();
 
-const birthdayDate = new Date("April 2, 2026 00:00:00").getTime();
+/* ── RENDER DE GALERÍAS Y CARTAS ─────────────────────────── */
+function renderGallery() {
+    const $t = document.getElementById('slider-tendencias');
+    const $m = document.getElementById('slider-momentos');
+    const $r = document.getElementById('slider-razones');
 
-const profileGate = document.getElementById("profile-gate");
-const navbar = document.getElementById("navbar");
-const audioSound = document.getElementById("netflix-sound");
-
-// Al tocar el perfil de "Vale" para entrar
-function enterValeFlix() {
-    audioSound.volume = 0.5;
-    audioSound.play().catch(e => console.log("Audio prevent: ", e));
-    
-    // Música de fondo
-    const bgMusic = document.getElementById("bg-music");
-    if(bgMusic && VALEFLIX_CONFIG.musicaFondo) {
-        bgMusic.src = VALEFLIX_CONFIG.musicaFondo;
-        bgMusic.volume = 0.2; 
-        setTimeout(() => bgMusic.play().catch(e=>console.log(e)), 2500);
+    VALEFLIX_CONFIG.fotosTendencias.forEach(src => {
+        if($t) $t.insertAdjacentHTML('beforeend',
+            `<div class="movie-card"><img src="${src}" alt="Foto" loading="lazy"></div>`);
+    });
+    VALEFLIX_CONFIG.fotosMomentos.forEach(src => {
+        if($m) $m.insertAdjacentHTML('beforeend',
+            `<div class="movie-card"><img src="${src}" alt="Momento" loading="lazy"></div>`);
+    });
+    if ($r) {
+        VALEFLIX_CONFIG.razonesAmor.forEach((razon, i) => {
+            $r.insertAdjacentHTML('beforeend', `
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-inner">
+                    <div class="flip-front"><p>Razón #${i + 1}</p></div>
+                    <div class="flip-back"><p>${razon}</p></div>
+                </div>
+            </div>`);
+        });
     }
-    
-    profileGate.classList.add("fade-out");
-    setTimeout(() => {
-        profileGate.classList.add("hidden");
-        navbar.classList.remove("hidden");
-        // Empezar en Inicio
-        document.getElementById("tab-inicio").classList.remove("hidden");
-        window.scrollTo(0, 0); 
-    }, 800);
 }
 
-// Lógica para cambiar de pestaña en el Navbar
-function switchTab(event, targetTabId) {
-    if(event) event.preventDefault();
-    
-    // Si la pestaña objetivo es Top Secret, interceptamos con el PIN
-    if (targetTabId === 'tab-magia' && VALEFLIX_CONFIG.pinSecreto) {
+/* ── ESTRELLAS FUGACES (Top Secret background) ────────────── */
+function initShootingStars() {
+    const bg = document.getElementById('particles-bg');
+    if (!bg || bg.children.length > 0) return;
+    for (let i = 0; i < 10; i++) {
+        const s = document.createElement('div');
+        s.classList.add('shooting-star');
+        s.style.top              = `${Math.random() * 60}%`;
+        s.style.left             = `${Math.random() * 80}%`;
+        s.style.animationDelay   = `${Math.random() * 6}s`;
+        s.style.animationDuration= `${3 + Math.random() * 3}s`;
+        bg.appendChild(s);
+    }
+}
+
+/* ── CONSTANTES DOM ───────────────────────────────────────── */
+const profileGate  = document.getElementById('profile-gate');
+const navbar       = document.getElementById('navbar');
+const audioTadum   = document.getElementById('netflix-sound');
+const birthdayDate = new Date('April 2, 2026 00:00:00').getTime();
+
+/* ── ENTRADA VALEFLIX ─────────────────────────────────────── */
+function enterValeFlix() {
+    // Ta-dum
+    audioTadum.volume = 0.5;
+    audioTadum.play().catch(() => {});
+
+    // Música de fondo (si está configurada)
+    const bgMusic = document.getElementById('bg-music');
+    if (bgMusic && VALEFLIX_CONFIG.musicaFondo) {
+        bgMusic.src    = VALEFLIX_CONFIG.musicaFondo;
+        bgMusic.volume = 0.18;
+        setTimeout(() => bgMusic.play().catch(() => {}), 2800);
+    }
+
+    profileGate.classList.add('fade-out');
+    setTimeout(() => {
+        profileGate.classList.add('hidden');
+        navbar.classList.remove('hidden');
+        const tabInicio = document.getElementById('tab-inicio');
+        if (tabInicio) tabInicio.classList.remove('hidden');
+        window.scrollTo(0, 0);
+    }, 850);
+}
+
+/* ── CAMBIO DE PESTAÑAS ───────────────────────────────────── */
+function switchTab(event, targetId) {
+    if (event) event.preventDefault();
+
+    /* Interceptar Top Secret con PIN */
+    if (targetId === 'tab-magia' && VALEFLIX_CONFIG.pinSecreto) {
         openModal('pin-modal');
-        document.getElementById('pin-input').value = "";
-        document.getElementById('pin-error').classList.add('hidden');
+        const pinInput = document.getElementById('pin-input');
+        if (pinInput) { pinInput.value = ''; }
+        const pinError = document.getElementById('pin-error');
+        if (pinError) pinError.classList.add('hidden');
         return;
     }
-    
-    // 1. Quitar clase active de todos los links
-    document.querySelectorAll('.nav-tab').forEach(tab => {
-        tab.classList.remove('active');
-    });
-    
-    // 2. Ocultar todas las páginas principales
-    document.querySelectorAll('.content-view').forEach(view => {
-        view.classList.add('hidden');
-    });
-    
-    // 3. Añadir active al tab clickeado (si vino de un clik real)
-    if(event) {
-        event.currentTarget.classList.add('active');
-    } else {
-        // En caso de invocarse manualmente (como el botón volver del minijuego)
-        document.querySelector(`[data-target="${targetTabId}"]`).classList.add('active');
-    }
-    
-    // 4. Mostrar la vista elegida
-    document.getElementById(targetTabId).classList.remove('hidden');
-    
-    // 5. Configurar logos y temas especiales (Modo Kids)
+
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.content-view').forEach(v => v.classList.add('hidden'));
+
+    const activeLink = event
+        ? event.currentTarget
+        : document.querySelector(`[data-target="${targetId}"]`);
+    if (activeLink) activeLink.classList.add('active');
+
+    const target = document.getElementById(targetId);
+    if (target) target.classList.remove('hidden');
+
+    /* Restaurar color del logo */
     const logo = document.getElementById('nav-logo');
-    if (targetTabId === 'tab-mini') {
-        logo.style.color = "white"; 
-    } else {
-        logo.style.color = "var(--pacay-accent)"; 
+    if (logo) logo.style.color = 'var(--accent)';
+
+    /* Mostrar reward directamente al llegar a Top Secret */
+    if (targetId === 'tab-magia') {
+        const reward = document.getElementById('magic-reward');
+        if (reward) reward.classList.remove('hidden');
     }
-    
-    // 6. Si abre el minijuego, resetear las estrellas
-    if (targetTabId === 'tab-magia') {
-        initStarHunt();
-    }
-    
+
     window.scrollTo(0, 0);
 }
 
-// Efecto Navbar oscuro al scrollear
-window.addEventListener("scroll", () => {
-    if (window.scrollY > 50) {
-        navbar.classList.add("scrolled");
-    } else {
-        navbar.classList.remove("scrolled");
-    }
+/* ── EFECTO NAVBAR AL SCROLL ──────────────────────────────── */
+window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 50);
 });
 
-// Lógica de Modales
+/* ── MODALES ──────────────────────────────────────────────── */
 function openModal(id) {
-    const modal = document.getElementById(id);
-    modal.classList.remove("hidden");
-    document.body.style.overflow = "hidden";
+    const m = document.getElementById(id);
+    if (!m) return;
+    m.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
 }
 function closeModal(id) {
-    const modal = document.getElementById(id);
-    modal.classList.add("hidden");
-    document.body.style.overflow = "auto";
+    const m = document.getElementById(id);
+    if (!m) return;
+    m.classList.add('hidden');
+    document.body.style.overflow = 'auto';
+}
+function bindModalBackdrops() {
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', e => {
+            if (e.target === modal) closeModal(modal.id);
+        });
+    });
 }
 
-const allModals = document.querySelectorAll('.modal');
-allModals.forEach(modal => {
-    modal.addEventListener('click', (e) => {
-        if(e.target === modal) {
-            modal.classList.add("hidden");
-            document.body.style.overflow = "auto";
-        }
-    });
-});
-
-// Lógica de validación del PIN Parental
+/* ── VALIDACIÓN PIN ───────────────────────────────────────── */
 function checkPin() {
-    const input = document.getElementById('pin-input').value;
+    const input    = document.getElementById('pin-input');
     const errorMsg = document.getElementById('pin-error');
-    if(input === VALEFLIX_CONFIG.pinSecreto) {
+    if (!input) return;
+    if (input.value === VALEFLIX_CONFIG.pinSecreto) {
         closeModal('pin-modal');
-        VALEFLIX_CONFIG.pinSecreto = null; // Unlocked!
+        VALEFLIX_CONFIG.pinSecreto = null; // Desbloqueado para esta sesión
         playCinematicIntro();
     } else {
-        errorMsg.classList.remove('hidden');
-        const inptEl = document.getElementById('pin-input');
-        inptEl.classList.add('error-shake');
-        setTimeout(() => inptEl.classList.remove('error-shake'), 500);
+        if (errorMsg) errorMsg.classList.remove('hidden');
+        input.classList.add('error-shake');
+        setTimeout(() => input.classList.remove('error-shake'), 500);
+        input.value = '';
     }
 }
+/* Soporte de teclado: Enter en el input del PIN */
+document.addEventListener('keydown', e => {
+    const pinInput = document.getElementById('pin-input');
+    if (e.key === 'Enter' && pinInput && document.activeElement === pinInput) {
+        checkPin();
+    }
+});
 
-function playCinematic(overlayId, onReveal, onDone) {
+/* ── SECUENCIAS CINEMÁTICAS ───────────────────────────────── */
+const _cinematicTimers = {};
+
+function playCinematic(overlayId, onReveal) {
     const el = document.getElementById(overlayId);
-    if (!el) { if(onReveal) onReveal(); return; }
+    if (!el) { if (onReveal) onReveal(); return; }
 
-    // Paso 1: hacer visible el overlay (fade-in negro)
+    el._onReveal = onReveal;
+    (_cinematicTimers[overlayId] || []).forEach(clearTimeout);
+    _cinematicTimers[overlayId] = [];
+
+    const t = (ms, fn) => {
+        const id = setTimeout(fn, ms);
+        _cinematicTimers[overlayId].push(id);
+    };
+
     el.classList.add('active');
+    t(500,  () => el.classList.add('show-text'));
+    t(3400, () => { el.classList.add('fade-text'); el.classList.remove('show-text'); });
+    t(4200, () => el.classList.add('open'));
+    t(5100, () => {
+        const handler = e => {
+            if (e.propertyName !== 'opacity') return;
+            el.removeEventListener('transitionend', handler);
+            el.classList.remove('active', 'open', 'fade-text');
+            if (el._onReveal) { el._onReveal(); el._onReveal = null; }
+        };
+        el.addEventListener('transitionend', handler);
+        el.classList.remove('active');
+    });
+}
 
-    // Paso 2: mostrar el título cinemático
-    setTimeout(() => el.classList.add('show-text'), 600);
-
-    // Paso 3: desvanecer el texto antes de abrir
+function skipCinematic(overlayId) {
+    const el = document.getElementById(overlayId);
+    if (!el) return;
+    (_cinematicTimers[overlayId] || []).forEach(clearTimeout);
+    _cinematicTimers[overlayId] = [];
+    el.classList.remove('active', 'open', 'show-text', 'fade-text');
     setTimeout(() => {
-        el.classList.add('fade-text');
-        el.classList.remove('show-text');
-    }, 3500);
-
-    // Paso 4: abrir las barras letterbox
-    setTimeout(() => el.classList.add('open'), 4000);
-
-    // Paso 5: revelar el contenido debajo
-    setTimeout(() => { if(onReveal) onReveal(); }, 4300);
-
-    // Paso 6: desaparecer el overlay completamente
-    setTimeout(() => {
-        el.classList.remove('active', 'open', 'fade-text');
-        if(onDone) onDone();
-    }, 5400);
+        if (el._onReveal) { el._onReveal(); el._onReveal = null; }
+    }, 50);
 }
 
-function playCinematicIntro() {
-    playCinematic('cinematic-intro', () => switchTab(null, 'tab-magia'));
-}
+function playCinematicIntro()  { playCinematic('cinematic-intro', () => switchTab(null, 'tab-magia')); }
+function cinematicCarta()      { playCinematic('cinematic-carta', () => openModal('letter-modal')); }
+function cinematicVideo(cb)    { playCinematic('cinematic-video', cb); }
 
-function cinematicCarta() {
-    playCinematic('cinematic-carta', () => openModal('letter-modal'));
-}
-
-function cinematicVideo(callback) {
-    playCinematic('cinematic-video', callback);
-}
-
-// Lógica del Contador
+/* ── CUENTA REGRESIVA ─────────────────────────────────────── */
 const countdownInterval = setInterval(() => {
-    const now = new Date().getTime();
-    const distance = birthdayDate - now;
+    const distance = birthdayDate - Date.now();
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    const pad = n => String(Math.floor(n)).padStart(2, '0');
+    const set = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; };
 
-    if (document.getElementById("days")) {
-        document.getElementById("days").innerText = days < 10 ? '0' + days : days;
-        document.getElementById("hours").innerText = hours < 10 ? '0' + hours : hours;
-        document.getElementById("minutes").innerText = minutes < 10 ? '0' + minutes : minutes;
-        document.getElementById("seconds").innerText = seconds < 10 ? '0' + seconds : seconds;
-    }
+    set('days',    pad(distance / (1000*60*60*24)));
+    set('hours',   pad((distance % (1000*60*60*24)) / (1000*60*60)));
+    set('minutes', pad((distance % (1000*60*60)) / (1000*60)));
+    set('seconds', pad((distance % (1000*60)) / 1000));
 
     if (distance < 0) {
         clearInterval(countdownInterval);
-        // Lanzar la secuencia cinématica antes de revelar el video
         cinematicVideo(() => {
-            document.querySelector(".countdown-blocks").classList.add("hidden");
-            document.querySelector(".fake-synopsis").classList.add("hidden");
-            document.getElementById("birthday-message").classList.remove("hidden");
-            const video = document.getElementById("birthday-video");
-            if(video) {
-                video.play().catch(e => console.log("Reproducción automática bloqueada."));
-            }
+            const blocks  = document.querySelector('.countdown-blocks');
+            const synopsis= document.querySelector('.fake-synopsis');
+            const message = document.getElementById('birthday-message');
+            const video   = document.getElementById('birthday-video');
+            if (blocks)  blocks.classList.add('hidden');
+            if (synopsis)synopsis.classList.add('hidden');
+            if (message) message.classList.remove('hidden');
+            if (video)   video.play().catch(() => {});
         });
     }
 }, 1000);
-
-// Minijuego Cazador de Estrellas (Desactivado por petición)
-function initStarHunt() {
-    const wrapper = document.getElementById('hunt-stars-wrapper');
-    const reward = document.getElementById('magic-reward');
-    const subtitle = document.querySelector('.magic-subtitle');
-    
-    if (wrapper) wrapper.classList.add('hidden');
-    if (subtitle) subtitle.classList.add('hidden');
-    if (reward) reward.classList.remove('hidden');
-}

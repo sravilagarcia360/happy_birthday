@@ -1,13 +1,14 @@
 <main id="tab-inicio" class="content-view hidden">
     <div class="billboard">
         <div class="billboard-image">
-            <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&q=80&w=1200" alt="Billboard">
+            <img src="assets/img/billboard_inicio.png" alt="Inicio">
             <div class="billboard-vignette"></div>
         </div>
         <div class="billboard-layer">
             <div class="billboard-content">
                 <div class="logo-and-text">
-                    <span class="n-icon">V</span><span class="original-text">D O C U M E N T A L</span>
+                    <span class="n-icon">V</span>
+                    <span class="original-text">D O C U M E N T A L</span>
                 </div>
                 <h2 class="title-logo">Felices 19<br>Años</h2>
                 <div class="tags">
@@ -18,28 +19,22 @@
                 <p class="synopsis">Un viaje fotográfico por la vida de la cumpleañera más hermosa del mundo y todas nuestras maravillosas locuras juntos.</p>
                 <div class="billboard-buttons">
                     <button class="btn btn-more" onclick="openModal('countdown-modal')">
-                        <span class="icon">ⓘ</span> Faltan para el Gran Evento
+                        <span>⏳</span> Faltan para el Gran Evento
                     </button>
                 </div>
             </div>
         </div>
+        <button class="btn-skip-intro" onclick="openModal('countdown-modal')">Saltar Intro ⏭</button>
     </div>
-
-    <!-- Botón Flotante interactivo Netflix Style -->
-    <button class="btn-skip-intro" onclick="openModal('countdown-modal')">Saltar Intro ⏭</button>
 
     <div class="sliders-container">
         <div class="slider-row">
             <h3 class="row-title">Tendencias Contigo</h3>
-            <div class="row-items" id="slider-tendencias">
-                <!-- Las fotos se cargarán automáticamente desde script.js -->
-            </div>
+            <div class="row-items" id="slider-tendencias"></div>
         </div>
         <div class="slider-row">
             <h3 class="row-title">Momentos Inolvidables</h3>
-            <div class="row-items" id="slider-momentos">
-                <!-- Las fotos se cargarán automáticamente desde script.js -->
-            </div>
+            <div class="row-items" id="slider-momentos"></div>
         </div>
     </div>
     <footer class="netflix-footer"><p>Original de ValeFlix 💚</p></footer>
