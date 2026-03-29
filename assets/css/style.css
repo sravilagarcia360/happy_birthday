@@ -38,10 +38,20 @@ body {
 
 /* ── TYPOGRAPHY ── */
 h1,h2,h3,h4 { font-weight:800; }
-@keyframes fadeIn { from{opacity:0} to{opacity:1} }
-@keyframes slideUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
-@keyframes dropIn { from{transform:scale(0.9);opacity:0} to{transform:scale(1);opacity:1} }
-@keyframes pulse  { 0%,100%{opacity:0.6} 50%{opacity:1} }
+
+/* ── KEYFRAMES PREMIUM ── */
+@keyframes fadeIn     { from{opacity:0}                             to{opacity:1} }
+@keyframes fadeOut    { from{opacity:1}                             to{opacity:0} }
+@keyframes slideUp    { from{opacity:0;transform:translateY(40px)}  to{opacity:1;transform:translateY(0)} }
+@keyframes slideDown  { from{opacity:1;transform:translateY(0)}     to{opacity:0;transform:translateY(30px)} }
+@keyframes dropIn     { from{transform:scale(0.88) translateY(20px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+@keyframes dropOut    { from{transform:scale(1);opacity:1}           to{transform:scale(0.92);opacity:0} }
+@keyframes pulse      { 0%,100%{opacity:0.6}  50%{opacity:1} }
+@keyframes glowPulse  { 0%,100%{box-shadow:0 0 15px var(--accent-glow)} 50%{box-shadow:0 0 40px var(--accent-glow),0 0 80px rgba(102,187,106,0.15)} }
+@keyframes tickFlash  { 0%{color:var(--cream);transform:scale(1.15)} 100%{color:var(--accent);transform:scale(1)} }
+@keyframes shimmer    { 0%{background-position:-200% center} 100%{background-position:200% center} }
+@keyframes bounceIn   { 0%{transform:scale(0.7);opacity:0} 60%{transform:scale(1.06);opacity:1} 80%{transform:scale(0.97)} 100%{transform:scale(1)} }
+@keyframes cardReveal { from{opacity:0;transform:translateY(24px) scale(0.95)} to{opacity:1;transform:translateY(0) scale(1)} }
 
 /* ================================================================
    1. PANTALLA DE ENTRADA — SELECCIÓN DE PERFIL
@@ -239,6 +249,22 @@ h1,h2,h3,h4 { font-weight:800; }
 }
 
 /* ================================================================
+   5b. TAB CONTENT — TRANSICIÓN DE ENTRADA/SALIDA
+================================================================ */
+.content-view {
+    animation: none;
+}
+.content-view.tab-entering {
+    animation: tabSlideIn 0.55s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+.content-view.tab-leaving {
+    animation: tabSlideOut 0.3s cubic-bezier(0.55,0,1,0.45) forwards;
+    pointer-events: none;
+}
+@keyframes tabSlideIn  { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+@keyframes tabSlideOut { from{opacity:1;transform:translateY(0)}     to{opacity:0;transform:translateY(-12px)} }
+
+/* ================================================================
    6. PESTAÑA TOP SECRET — COSMOS
 ================================================================ */
 #tab-magia {
@@ -277,9 +303,13 @@ h1,h2,h3,h4 { font-weight:800; }
     max-width:620px; margin:2rem auto;
     border:1px solid rgba(255,213,79,0.35);
     box-shadow: 0 0 50px rgba(255,213,79,0.12), 0 20px 60px rgba(0,0,0,0.5), inset 0 0 30px rgba(255,213,79,0.04);
-    animation:dropIn 0.9s cubic-bezier(0.175,0.885,0.32,1.275);
+    animation: bounceIn 0.9s cubic-bezier(0.175,0.885,0.32,1.275) forwards;
 }
-.reward-box h2 { font-family:'Dancing Script',cursive; font-size:3.5rem; color:var(--gold); margin-bottom:1rem; text-shadow:0 0 30px var(--gold-glow); }
+.reward-box h2 {
+    font-family:'Dancing Script',cursive; font-size:3.5rem; color:var(--gold); margin-bottom:1rem;
+    text-shadow:0 0 30px var(--gold-glow);
+    animation: glowPulse 3s ease infinite;
+}
 .reward-box p  { font-family:'Lora',serif; font-size:1.15rem; line-height:1.7; color:rgba(253,251,247,0.9); }
 .hunt-wrapper { display:none; }
 
@@ -336,17 +366,29 @@ h1,h2,h3,h4 { font-weight:800; }
 ================================================================ */
 .modal {
     position:fixed; inset:0;
-    background:rgba(0,0,0,0.85); backdrop-filter:blur(8px);
-    z-index:9999; display:flex; justify-content:center; align-items:center;
-    transition:opacity 0.3s ease;
+    background:rgba(0,0,0,0); backdrop-filter:blur(0px);
+    z-index:9999; display:flex; justify-content:center; align-items:flex-end;
+    transition: background 0.4s ease, backdrop-filter 0.4s ease;
+    pointer-events:none;
 }
-.modal.hidden { opacity:0; pointer-events:none; display:flex; }
+.modal.open {
+    background:rgba(0,0,0,0.82); backdrop-filter:blur(10px);
+    pointer-events:all; align-items:center;
+}
+.modal.hidden { display:none; }
 .modal-content {
     background: linear-gradient(160deg, #101f12, #0a1509);
     width:90%; max-width:820px; border-radius:12px;
     position:relative; overflow-y:auto; max-height:92vh;
     box-shadow:var(--shadow); border:1px solid rgba(102,187,106,0.12);
-    animation:dropIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+    /* Entrance animation handled by .modal.open class */
+    transform: translateY(40px) scale(0.97);
+    opacity:0;
+    transition: transform 0.45s cubic-bezier(0.22,1,0.36,1), opacity 0.4s ease;
+}
+.modal.open .modal-content {
+    transform: translateY(0) scale(1);
+    opacity:1;
 }
 .close-btn {
     position:absolute; top:14px; right:18px;
@@ -378,7 +420,12 @@ h1,h2,h3,h4 { font-weight:800; }
     display:inline-block; margin:0 6px; border:1px solid rgba(102,187,106,0.2);
     box-shadow:0 0 20px rgba(102,187,106,0.08);
 }
-.time-box span { font-size:2.6rem; font-weight:800; color:var(--accent); display:block; font-variant-numeric:tabular-nums; }
+.time-box span {
+    font-size:2.6rem; font-weight:800; color:var(--accent); display:block;
+    font-variant-numeric:tabular-nums;
+    transition: color 0.2s;
+}
+.time-box span.tick { animation: tickFlash 0.35s ease forwards; }
 .time-box p { font-size:0.72rem; letter-spacing:2px; text-transform:uppercase; color:var(--grey); margin-top:4px; }
 .countdown-blocks { display:flex; gap:12px; justify-content:center; margin-top:2rem; flex-wrap:wrap; }
 .video-wrapper {
@@ -425,6 +472,53 @@ h1,h2,h3,h4 { font-weight:800; }
 .btn-premium-close:hover { color:var(--bg-deep); box-shadow:0 0 25px var(--accent-glow); transform:translateY(-2px); }
 .btn-premium-close:hover::before { opacity:1; }
 .btn-premium-close:active { transform:translateY(0); }
+
+/* ── Flip Card Stagger Entrance ── */
+.flip-card {
+    opacity:0;
+    animation: cardReveal 0.5s ease forwards;
+}
+/* Each card gets its delay set inline via JS */
+
+/* ── Logo shimmer hover ── */
+.logo-netflix {
+    background: linear-gradient(90deg, var(--accent) 30%, #a5d6a7 50%, var(--accent) 70%);
+    background-size:200% auto;
+    -webkit-background-clip:text; background-clip:text;
+    -webkit-text-fill-color:transparent;
+    transition:background-position 0.4s;
+}
+.logo-netflix:hover {
+    animation:shimmer 1.2s linear infinite;
+}
+
+/* ── Avatar profile hover ring ── */
+.profile:hover .avatar-wrapper {
+    box-shadow:0 0 0 3px var(--accent), 0 0 30px var(--accent-glow);
+}
+
+/* ── Nav link active glow ── */
+.nav-links a.active { text-shadow:0 0 12px var(--accent-glow); }
+
+/* ── Btn hover lift ── */
+.btn-play:hover  { transform:translateY(-3px) scale(1.02); }
+.btn-more:hover  { transform:translateY(-3px) scale(1.02); }
+
+/* ── Movie card shimmer on hover ── */
+.movie-card::after {
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.06) 50%,transparent 70%);
+    transform:translateX(-100%); border-radius:inherit;
+    transition:transform 0.6s ease;
+}
+.movie-card { position:relative; overflow:hidden; }
+.movie-card:hover::after { transform:translateX(100%); }
+
+/* ── Premium close button pulse on first render ── */
+.btn-premium-close {
+    animation:glowPulse 4s ease infinite;
+}
 
 /* ================================================================
    10. FOOTER

@@ -1,4 +1,4 @@
-/* ==============================================================
+﻿/* ==============================================================
    VALEFLIX — SCRIPT PRINCIPAL
    Configuración de contenido, lógica de UI y animaciones.
 ============================================================== */
@@ -113,13 +113,16 @@ function renderGallery() {
     });
     if ($r) {
         VALEFLIX_CONFIG.razonesAmor.forEach((razon, i) => {
-            $r.insertAdjacentHTML('beforeend', `
-            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            const card = document.createElement('div');
+            card.className = 'flip-card';
+            card.style.animationDelay = `${i * 0.06}s`; // stagger
+            card.innerHTML = `
                 <div class="flip-inner">
                     <div class="flip-front"><p>Razón #${i + 1}</p></div>
                     <div class="flip-back"><p>${razon}</p></div>
-                </div>
-            </div>`);
+                </div>`;
+            card.addEventListener('click', () => card.classList.toggle('flipped'));
+            $r.appendChild(card);
         });
     }
 }
@@ -308,13 +311,22 @@ function cinematicVideo(cb)    { playCinematic('cinematic-video', cb); }
 const countdownInterval = setInterval(() => {
     const distance = birthdayDate - Date.now();
 
-    const pad = n => String(Math.floor(n)).padStart(2, '0');
-    const set = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; };
+    const pad = n => String(Math.max(0,Math.floor(n))).padStart(2, '0');
+    const setAndTick = (id, val) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (el.innerText !== val) {
+            el.classList.remove('tick');
+            void el.offsetWidth; // reflow para reiniciar la animación
+            el.classList.add('tick');
+        }
+        el.innerText = val;
+    };
 
-    set('days',    pad(distance / (1000*60*60*24)));
-    set('hours',   pad((distance % (1000*60*60*24)) / (1000*60*60)));
-    set('minutes', pad((distance % (1000*60*60)) / (1000*60)));
-    set('seconds', pad((distance % (1000*60)) / 1000));
+    setAndTick('days',    pad(distance / (1000*60*60*24)));
+    setAndTick('hours',   pad((distance % (1000*60*60*24)) / (1000*60*60)));
+    setAndTick('minutes', pad((distance % (1000*60*60)) / (1000*60)));
+    setAndTick('seconds', pad((distance % (1000*60)) / 1000));
 
     if (distance < 0) {
         clearInterval(countdownInterval);
