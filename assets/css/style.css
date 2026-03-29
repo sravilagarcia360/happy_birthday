@@ -123,6 +123,21 @@ h1, h2, h3, h4 { font-weight: 700; }
 
 /* Carta Mágica de Recompensa */
 .reward-box { background: linear-gradient(135deg, #1f2b23, #0f1611); color: var(--cream); padding: 3rem; border-radius: 8px; max-width: 600px; margin: 0 auto; position: relative; z-index: 20; box-shadow: 0 0 30px rgba(255, 213, 79, 0.3), inset 0 0 10px rgba(255, 213, 79, 0.2); border: 2px solid rgba(255, 213, 79, 0.5); animation: dropIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+
+/* Intro de Película (Cinemático) */
+#cinematic-intro { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; }
+#cinematic-intro .letterbox-top,
+#cinematic-intro .letterbox-bottom { position: absolute; left: 0; width: 100%; background: #000; z-index: 2; transition: height 1s cubic-bezier(0.77, 0, 0.175, 1); }
+#cinematic-intro .letterbox-top { top: 0; height: 15vh; }
+#cinematic-intro .letterbox-bottom { bottom: 0; height: 15vh; }
+#cinematic-intro.open .letterbox-top,
+#cinematic-intro.open .letterbox-bottom { height: 0; }
+#cinematic-intro .cinematic-text { color: white; text-align: center; z-index: 3; opacity: 0; animation: none; pointer-events: none; }
+#cinematic-intro.show-text .cinematic-text { animation: cineFade 2.5s ease forwards; }
+#cinematic-intro .cinematic-studio { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; letter-spacing: 6px; text-transform: uppercase; color: #aaa; margin-bottom: 1.5rem; }
+#cinematic-intro .cinematic-title { font-family: 'Dancing Script', cursive; font-size: clamp(3rem, 8vw, 6rem); color: #FFD54F; text-shadow: 0 0 40px rgba(255, 213, 79, 0.8); margin-bottom: 1rem; line-height: 1.2; }
+#cinematic-intro .cinematic-subtitle { font-family: 'Lora', serif; font-size: clamp(1rem, 2vw, 1.4rem); color: #ddd; font-style: italic; }
+@keyframes cineFade { 0% { opacity: 0; transform: scale(1.03); } 20% { opacity: 1; transform: scale(1); } 80% { opacity: 1; } 100% { opacity: 0; } }
 .reward-box h2 { font-family: 'Dancing Script', cursive; font-size: 3.5rem; color: #FFD54F; margin-bottom: 1rem; }
 .reward-box p { font-family: 'Lora', serif; font-size: 1.2rem; line-height: 1.6; }
 

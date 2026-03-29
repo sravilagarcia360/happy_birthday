@@ -216,14 +216,38 @@ function checkPin() {
     const errorMsg = document.getElementById('pin-error');
     if(input === VALEFLIX_CONFIG.pinSecreto) {
         closeModal('pin-modal');
-        VALEFLIX_CONFIG.pinSecreto = null; // Unlocked! No pedirá clave si aprieta Start Hunt otra vez
-        switchTab(null, 'tab-magia');
+        VALEFLIX_CONFIG.pinSecreto = null; // Unlocked!
+        playCinematicIntro();
     } else {
         errorMsg.classList.remove('hidden');
         const inptEl = document.getElementById('pin-input');
         inptEl.classList.add('error-shake');
         setTimeout(() => inptEl.classList.remove('error-shake'), 500);
     }
+}
+
+function playCinematicIntro() {
+    const intro = document.getElementById('cinematic-intro');
+
+    // 1. Aparece la pantalla negra con barras
+    intro.classList.remove('hidden');
+
+    // 2. Después de 400ms, mostrar el título con fade
+    setTimeout(() => { intro.classList.add('show-text'); }, 400);
+
+    // 3. Después de 3.2s, abrir las barras como un cine (letterbox abre)
+    setTimeout(() => { intro.classList.add('open'); }, 3200);
+
+    // 4. Cambiar de pestaña mientras las barras se están abriendo
+    setTimeout(() => {
+        switchTab(null, 'tab-magia');
+    }, 3400);
+
+    // 5. Cuando las barras terminen de abrirse, desaparecer el overlay
+    setTimeout(() => {
+        intro.classList.add('hidden');
+        intro.classList.remove('show-text', 'open');
+    }, 4400);
 }
 
 // Lógica del Contador
