@@ -360,7 +360,48 @@ function skipCinematic(overlayId) {
 function playCinematicIntro() { playCinematic('cinematic-intro', () => switchTab(null, 'tab-magia')); }
 function cinematicCarta() { playCinematic('cinematic-carta', () => openModal('letter-modal')); }
 function cinematicVideo(cb) { playCinematic('cinematic-video', cb); }
-function abrirCartaEspecial() { playCinematic('cinematic-video', () => openModal('countdown-modal')); }
+function abrirCartaEspecial() {
+    playCinematic('cinematic-video', () => {
+        openModal('countdown-modal');
+        // Mostrar la carta de inmediato (ya que es el día especial)
+        revelarCarta();
+    });
+}
+
+/* ── REVEAL CARTA (reutilizable) ──────────────────────────── */
+function revelarCarta() {
+    const blocks = document.querySelector('.countdown-blocks');
+    const synopsis = document.querySelector('.fake-synopsis');
+    const title = document.querySelector('#countdown-modal h2.fade-transition');
+    const message = document.getElementById('birthday-message');
+
+    // 1. Iniciar desvanecimiento de elementos actuales
+    if (blocks) blocks.classList.add('fade-out-active');
+    if (synopsis) synopsis.classList.add('fade-out-active');
+    if (title) title.classList.add('fade-out-active');
+
+    // 2. Esperar a que el desvanecimiento termine antes de mostrar la carta
+    setTimeout(() => {
+        if (blocks) blocks.classList.add('hidden');
+        if (synopsis) synopsis.classList.add('hidden');
+        if (title) title.classList.add('hidden');
+
+        if (message) {
+            message.classList.remove('hidden');
+            // Forzar reflow para que la animación se ejecute
+            void message.offsetWidth;
+            message.classList.add('reveal-content');
+
+            // 3. Scroll suave y pausado al inicio de la carta
+            setTimeout(() => {
+                const wrapper = message.querySelector('.birthday-letter-wrapper');
+                if (wrapper) {
+                    wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 600);
+        }
+    }, 450);
+}
 
 /* ── CUENTA REGRESIVA ─────────────────────────────────────── */
 let _contadorPrimerTick = true; // true = primera verificación al cargar
@@ -387,21 +428,6 @@ const countdownInterval = setInterval(() => {
 
     if (distance < 0) {
         clearInterval(countdownInterval);
-
-        const revelarCarta = () => {
-            const blocks = document.querySelector('.countdown-blocks');
-            const synopsis = document.querySelector('.fake-synopsis');
-            const message = document.getElementById('birthday-message');
-            if (blocks) blocks.classList.add('hidden');
-            if (synopsis) synopsis.classList.add('hidden');
-            if (message) {
-                message.classList.remove('hidden');
-                setTimeout(() => {
-                    const wrapper = message.querySelector('.birthday-letter-wrapper');
-                    if (wrapper) wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 300);
-            }
-        };
 
         if (_contadorPrimerTick) {
             // Ya venció antes de abrir la página: preparar modal sin cinematic
