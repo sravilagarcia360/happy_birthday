@@ -226,3 +226,4 @@ const birthdayDate = new Date('April 2, 2026 00:00:00').getTime();
 ---
 
 _Hecho con ❤️ — Sr. Avila_
+
