@@ -99,7 +99,10 @@ async function loadPartials() {
     bindModalBackdrops();    // bind click-outside to close after modals exist in DOM
     initShootingStars();     // generate star background for Top Secret
 }
-loadPartials();
+loadPartials().then(() => {
+    // Auto-reproducir intro cinemática al abrir la página
+    setTimeout(() => playCinematic('cinematic-intro', () => { }), 400);
+});
 
 /* ── RENDER DE GALERÍAS Y CARTAS ─────────────────────────── */
 function renderGallery() {
@@ -173,21 +176,25 @@ function enterValeFlix() {
     audioTadum.volume = 0.5;
     audioTadum.play().catch(() => { });
 
-    // Música de fondo (si está configurada)
-    const bgMusic = document.getElementById('bg-music');
-    if (bgMusic && VALEFLIX_CONFIG.musicaFondo) {
-        bgMusic.src = VALEFLIX_CONFIG.musicaFondo;
-        bgMusic.volume = 0.18;
-        setTimeout(() => bgMusic.play().catch(() => { }), 2800);
-    }
-
+    // Ocultar pantalla de selección de perfil
     profileGate.classList.add('fade-out');
     setTimeout(() => {
         profileGate.classList.add('hidden');
-        navbar.classList.remove('hidden');
-        const tabInicio = document.getElementById('tab-inicio');
-        if (tabInicio) tabInicio.classList.remove('hidden');
-        window.scrollTo(0, 0);
+
+        // Reproducir intro cinemática "Hola Amorcito"
+        playCinematic('cinematic-valeria', () => {
+            // Al terminar: arrancar música y mostrar la app
+            const bgMusic = document.getElementById('bg-music');
+            if (bgMusic && VALEFLIX_CONFIG.musicaFondo) {
+                bgMusic.src = VALEFLIX_CONFIG.musicaFondo;
+                bgMusic.volume = 0.18;
+                bgMusic.play().catch(() => { });
+            }
+            navbar.classList.remove('hidden');
+            const tabInicio = document.getElementById('tab-inicio');
+            if (tabInicio) tabInicio.classList.remove('hidden');
+            window.scrollTo(0, 0);
+        });
     }, 850);
 }
 
@@ -291,7 +298,7 @@ function checkPin() {
     if (input.value === VALEFLIX_CONFIG.pinSecreto) {
         closeModal('pin-modal');
         VALEFLIX_CONFIG.pinSecreto = null; // Desbloqueado para esta sesión
-        playCinematicIntro();
+        switchTab(null, 'tab-magia');
     } else {
         if (errorMsg) errorMsg.classList.remove('hidden');
         input.classList.add('error-shake');
@@ -353,8 +360,11 @@ function skipCinematic(overlayId) {
 function playCinematicIntro() { playCinematic('cinematic-intro', () => switchTab(null, 'tab-magia')); }
 function cinematicCarta() { playCinematic('cinematic-carta', () => openModal('letter-modal')); }
 function cinematicVideo(cb) { playCinematic('cinematic-video', cb); }
+function abrirCartaEspecial() { playCinematic('cinematic-video', () => openModal('countdown-modal')); }
 
 /* ── CUENTA REGRESIVA ─────────────────────────────────────── */
+let _contadorPrimerTick = true; // true = primera verificación al cargar
+
 const countdownInterval = setInterval(() => {
     const distance = birthdayDate - Date.now();
 
@@ -377,7 +387,8 @@ const countdownInterval = setInterval(() => {
 
     if (distance < 0) {
         clearInterval(countdownInterval);
-        cinematicVideo(() => {
+
+        const revelarCarta = () => {
             const blocks = document.querySelector('.countdown-blocks');
             const synopsis = document.querySelector('.fake-synopsis');
             const message = document.getElementById('birthday-message');
@@ -385,14 +396,23 @@ const countdownInterval = setInterval(() => {
             if (synopsis) synopsis.classList.add('hidden');
             if (message) {
                 message.classList.remove('hidden');
-                // Animar entrada de la carta con scroll suave al inicio
                 setTimeout(() => {
                     const wrapper = message.querySelector('.birthday-letter-wrapper');
                     if (wrapper) wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }, 300);
             }
-        });
+        };
+
+        if (_contadorPrimerTick) {
+            // Ya venció antes de abrir la página: preparar modal sin cinematic
+            revelarCarta();
+        } else {
+            // Venció mientras el usuario estaba viendo: mostrar cinematic
+            cinematicVideo(() => revelarCarta());
+        }
     }
+
+    _contadorPrimerTick = false;
 }, 1000);
 
 /* ── GESTIÓN DE AUDIO AVANZADA (Visibility & Loop) ────────── */
