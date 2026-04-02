@@ -1,5 +1,5 @@
 /* ==============================================================
-   VALEFLIX — SCRIPT PRINCIPAL
+   SCRIPT PRINCIPAL
    Configuración de contenido, lógica de UI y animaciones.
 ============================================================== */
 
@@ -7,43 +7,47 @@
 const VALEFLIX_CONFIG = {
     /* Agrega URLs o rutas locales (ej: "assets/img/foto1.jpg") */
     fotosTendencias: [
-        "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=500",
-        "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=500",
-        "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=500",
-        "https://images.unsplash.com/photo-1474552226712-ac0f0961a954?w=500"
+        "assets/img/foto1.jpg",
+        "assets/img/foto3.jpg",
+        "assets/img/foto2.jpg",
+        "assets/img/foto7.jpg",
+        "assets/img/foto10.jpg"
     ],
     fotosMomentos: [
-        "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=500",
-        "https://images.unsplash.com/photo-1514316454349-750a7fd3da3a?w=500",
-        "https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=500",
-        "https://images.unsplash.com/photo-1520699049698-acd2fce18738?w=500"
+        "assets/img/foto9.jpg",
+        "assets/img/foto8.jpg",
+        "assets/img/foto4.jpg",
+        "assets/img/foto5.jpg",
+        "assets/img/foto6.jpg"
     ],
     /* Cambia por tu cancion: "assets/img/cancion.mp3" */
-    musicaFondo: "",
+    musicaFondo: "assets/img/audio2.mp3",
+    /* Tu sonido de entrada (Netflix style): "assets/img/audio1.mp3" */
+    sonidoIntro: "assets/img/audio1.mp3",
     /* PIN de acceso a Top Secret */
     pinSecreto: "081225",
     /* 50 razones de amor */
     razonesAmor: [
         "Amo la forma en la que sonríes cuando me miras.",
         "Me das paz y haces que todo sea más bonito.",
-        "Tus ojitos son las estrellas de mi propio cielo.",
+        "Tus ojitos son como las estrellas de mi propio cielo.",
         "Tu manera tan única y loca de alegrarme mis días más grises.",
         "Tu voz es y siempre será mi sonido favorito en el mundo.",
-        "La ternura con la que me tratas a diario.",
+        "La 'ternura' con la que me tratas a diario.",
         "Ese sentido del humor que siempre me hace carcajear.",
-        "La inteligencia deslumbrante que tienes para todo.",
+        "La inteligencia inigualable que tienes para todo.",
         "Porque a tu lado siento que el tiempo se detiene por completo.",
-        "Cómo tus abrazos son mi refugio perfecto contra la tormenta.",
+        "Cómo tus abrazos son mi refugio perfecto contra todo lo malo.",
         "Tus mensajes inesperados que me aceleran el corazón.",
-        "Esa mirada profunda donde puedo perderme horas.",
-        "Lo hermosa que te ves, incluso cuando recién te despiertas.",
-        "Tu determinación inquebrantable para lograr lo que te propones.",
-        "Porque contigo puedo ser cien por ciento yo.",
-        "Tu risa contagiosa que ilumina cualquier habitación.",
-        "El aroma de tu cabello cuando te abrazo fuerte.",
+        "Esa mirada donde puedo perderme horas.",
+        "Lo hermosa que son tus pestañas aunque no esten con rimel.",
+        "Tu determinación para lograr lo que te propones.",
+        "Porque contigo puedo ser yo mismo.",
+        "Tu risa contagiosa que alegra mis días.",
+        "El aroma de tu cabello.",
         "Cómo siempre encuentras la manera de sorprenderme.",
-        "La forma en la que te emocionas por las pequeñas cosas.",
-        "Esa conexión telepática donde nos entendemos sin hablar.",
+        "La forma en la que te emocionas.",
+        "Esa conexión telepática donde compartimos la misma neurona.",
         "Tus besos, que son lo mejor que me ha pasado en la vida.",
         "Porque haces de cada rutina una aventura inolvidable.",
         "La empatía infinita que tienes con los demás.",
@@ -53,19 +57,19 @@ const VALEFLIX_CONFIG = {
         "Porque a tu lado el silencio nunca es incómodo.",
         "Cómo encaja perfectamente tu mano con la mía.",
         "La valentía que muestras para enfrentar los problemas.",
-        "Todas las infinitas conversaciones hasta la madrugada.",
+        "Porque me haces sentir que no estoy solo en este mundo.",
         "Tu forma de darme fuerza justo cuando más la necesito.",
         "Porque cada día encuentro una nueva cosa que amar en ti.",
-        "La manera mágica en la que sabes hacerme sentir seguro.",
+        "Porque no solo te amo por quien eres, sino por quien soy cuando estoy contigo.",
         "Por todos y cada uno de los recuerdos maravillosos que hemos hecho.",
         "Esa chispa de locura hermosa que nunca dejas morir.",
-        "La delicadeza con la que pronuncias mi nombre.",
+        "La delicadeza con la que pronuncias 'Mi amor'.",
         "Porque mis días no comienzan realmente hasta que te veo.",
         "Tu creatividad enorme y la forma que ves el mundo.",
-        "La paciencia infinita con la que escuchas mis historias.",
+        "La paciencia infinita que me tienes.",
         "Cómo siempre celebras y te alegras por mis triunfos.",
         "Por la promesa que siento en mi pecho cuando te abrazo.",
-        "Tus lunares perfectos, de los cuales no me canso de contar.",
+        "Porque no nos rendimos cuando las cosas se ponen difíciles.",
         "Esa sensibilidad de tu corazón tan puro y brillante.",
         "Tu capacidad infinita de perdonar y amar profundamente.",
         "Porque, literalmente, eres la persona de la que más orgulloso estoy.",
@@ -73,7 +77,7 @@ const VALEFLIX_CONFIG = {
         "La lealtad que me das todos los días sin dudarlo.",
         "Porque estar cerca de ti, es estar donde pertenezco.",
         "Tu espíritu inquebrantable que no se rinde ante nada.",
-        "Y sobre todo: Solo te amo por ser tú, hoy y siempre. 💚"
+        "Y sobre todo: Solo te amo por ser tú, hoy y siempre. 💝"
     ]
 };
 
@@ -81,12 +85,12 @@ const VALEFLIX_CONFIG = {
 async function loadPartials() {
     const groups = [
         { id: 'app-content', files: ['tab-inicio', 'tab-cartas', 'tab-magia'] },
-        { id: 'app-modals',  files: ['modales'] }
+        { id: 'app-modals', files: ['modales'] }
     ];
     for (const group of groups) {
         const container = document.getElementById(group.id);
         for (const name of group.files) {
-            const res  = await fetch(`assets/partials/${name}.html`);
+            const res = await fetch(`assets/partials/${name}.html`);
             const html = await res.text();
             container.insertAdjacentHTML('beforeend', html);
         }
@@ -104,13 +108,25 @@ function renderGallery() {
     const $r = document.getElementById('slider-razones');
 
     VALEFLIX_CONFIG.fotosTendencias.forEach(src => {
-        if($t) $t.insertAdjacentHTML('beforeend',
-            `<div class="movie-card"><img src="${src}" alt="Foto" loading="lazy"></div>`);
+        if ($t) {
+            const card = document.createElement('div');
+            card.className = 'movie-card';
+            card.innerHTML = `<img src="${src}" alt="Foto" loading="lazy">`;
+            card.onclick = () => openPhotoModal(src);
+            $t.appendChild(card);
+        }
     });
+
     VALEFLIX_CONFIG.fotosMomentos.forEach(src => {
-        if($m) $m.insertAdjacentHTML('beforeend',
-            `<div class="movie-card"><img src="${src}" alt="Momento" loading="lazy"></div>`);
+        if ($m) {
+            const card = document.createElement('div');
+            card.className = 'movie-card';
+            card.innerHTML = `<img src="${src}" alt="Momento" loading="lazy">`;
+            card.onclick = () => openPhotoModal(src);
+            $m.appendChild(card);
+        }
     });
+
     if ($r) {
         VALEFLIX_CONFIG.razonesAmor.forEach((razon, i) => {
             const card = document.createElement('div');
@@ -134,32 +150,35 @@ function initShootingStars() {
     for (let i = 0; i < 10; i++) {
         const s = document.createElement('div');
         s.classList.add('shooting-star');
-        s.style.top              = `${Math.random() * 60}%`;
-        s.style.left             = `${Math.random() * 80}%`;
-        s.style.animationDelay   = `${Math.random() * 6}s`;
-        s.style.animationDuration= `${3 + Math.random() * 3}s`;
+        s.style.top = `${Math.random() * 60}%`;
+        s.style.left = `${Math.random() * 80}%`;
+        s.style.animationDelay = `${Math.random() * 6}s`;
+        s.style.animationDuration = `${3 + Math.random() * 3}s`;
         bg.appendChild(s);
     }
 }
 
 /* ── CONSTANTES DOM ───────────────────────────────────────── */
-const profileGate  = document.getElementById('profile-gate');
-const navbar       = document.getElementById('navbar');
-const audioTadum   = document.getElementById('netflix-sound');
+const profileGate = document.getElementById('profile-gate');
+const navbar = document.getElementById('navbar');
+const audioTadum = document.getElementById('netflix-sound');
 const birthdayDate = new Date('April 2, 2026 00:00:00').getTime();
 
 /* ── ENTRADA VALEFLIX ─────────────────────────────────────── */
 function enterValeFlix() {
-    // Ta-dum
+    // Ta-dum (intro con sonido personalizado)
+    if (VALEFLIX_CONFIG.sonidoIntro) {
+        audioTadum.src = VALEFLIX_CONFIG.sonidoIntro;
+    }
     audioTadum.volume = 0.5;
-    audioTadum.play().catch(() => {});
+    audioTadum.play().catch(() => { });
 
     // Música de fondo (si está configurada)
     const bgMusic = document.getElementById('bg-music');
     if (bgMusic && VALEFLIX_CONFIG.musicaFondo) {
-        bgMusic.src    = VALEFLIX_CONFIG.musicaFondo;
+        bgMusic.src = VALEFLIX_CONFIG.musicaFondo;
         bgMusic.volume = 0.18;
-        setTimeout(() => bgMusic.play().catch(() => {}), 2800);
+        setTimeout(() => bgMusic.play().catch(() => { }), 2800);
     }
 
     profileGate.classList.add('fade-out');
@@ -225,8 +244,36 @@ function openModal(id) {
 function closeModal(id) {
     const m = document.getElementById(id);
     if (!m) return;
+
+    if (id === 'photo-modal') {
+        const photo = document.getElementById('enlarged-photo');
+        if (photo) photo.classList.remove('photo-visible');
+        m.classList.add('photo-closing');
+        setTimeout(() => {
+            m.classList.add('hidden');
+            m.classList.remove('photo-closing');
+            if (photo) photo.src = '';
+            document.body.style.overflow = 'auto';
+        }, 350);
+        return;
+    }
+
     m.classList.add('hidden');
     document.body.style.overflow = 'auto';
+}
+function openPhotoModal(src) {
+    const m = document.getElementById('photo-modal');
+    const photo = document.getElementById('enlarged-photo');
+    if (m && photo) {
+        photo.src = src;
+        photo.classList.remove('photo-visible');
+        m.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        // Trigger animation after paint
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => photo.classList.add('photo-visible'));
+        });
+    }
 }
 function bindModalBackdrops() {
     document.querySelectorAll('.modal').forEach(modal => {
@@ -238,7 +285,7 @@ function bindModalBackdrops() {
 
 /* ── VALIDACIÓN PIN ───────────────────────────────────────── */
 function checkPin() {
-    const input    = document.getElementById('pin-input');
+    const input = document.getElementById('pin-input');
     const errorMsg = document.getElementById('pin-error');
     if (!input) return;
     if (input.value === VALEFLIX_CONFIG.pinSecreto) {
@@ -277,7 +324,7 @@ function playCinematic(overlayId, onReveal) {
     };
 
     el.classList.add('active');
-    t(500,  () => el.classList.add('show-text'));
+    t(500, () => el.classList.add('show-text'));
     t(3400, () => { el.classList.add('fade-text'); el.classList.remove('show-text'); });
     t(4200, () => el.classList.add('open'));
     t(5100, () => {
@@ -303,15 +350,15 @@ function skipCinematic(overlayId) {
     }, 50);
 }
 
-function playCinematicIntro()  { playCinematic('cinematic-intro', () => switchTab(null, 'tab-magia')); }
-function cinematicCarta()      { playCinematic('cinematic-carta', () => openModal('letter-modal')); }
-function cinematicVideo(cb)    { playCinematic('cinematic-video', cb); }
+function playCinematicIntro() { playCinematic('cinematic-intro', () => switchTab(null, 'tab-magia')); }
+function cinematicCarta() { playCinematic('cinematic-carta', () => openModal('letter-modal')); }
+function cinematicVideo(cb) { playCinematic('cinematic-video', cb); }
 
 /* ── CUENTA REGRESIVA ─────────────────────────────────────── */
 const countdownInterval = setInterval(() => {
     const distance = birthdayDate - Date.now();
 
-    const pad = n => String(Math.max(0,Math.floor(n))).padStart(2, '0');
+    const pad = n => String(Math.max(0, Math.floor(n))).padStart(2, '0');
     const setAndTick = (id, val) => {
         const el = document.getElementById(id);
         if (!el) return;
@@ -323,22 +370,45 @@ const countdownInterval = setInterval(() => {
         el.innerText = val;
     };
 
-    setAndTick('days',    pad(distance / (1000*60*60*24)));
-    setAndTick('hours',   pad((distance % (1000*60*60*24)) / (1000*60*60)));
-    setAndTick('minutes', pad((distance % (1000*60*60)) / (1000*60)));
-    setAndTick('seconds', pad((distance % (1000*60)) / 1000));
+    setAndTick('days', pad(distance / (1000 * 60 * 60 * 24)));
+    setAndTick('hours', pad((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+    setAndTick('minutes', pad((distance % (1000 * 60 * 60)) / (1000 * 60)));
+    setAndTick('seconds', pad((distance % (1000 * 60)) / 1000));
 
     if (distance < 0) {
         clearInterval(countdownInterval);
         cinematicVideo(() => {
-            const blocks  = document.querySelector('.countdown-blocks');
-            const synopsis= document.querySelector('.fake-synopsis');
+            const blocks = document.querySelector('.countdown-blocks');
+            const synopsis = document.querySelector('.fake-synopsis');
             const message = document.getElementById('birthday-message');
-            const video   = document.getElementById('birthday-video');
-            if (blocks)  blocks.classList.add('hidden');
-            if (synopsis)synopsis.classList.add('hidden');
-            if (message) message.classList.remove('hidden');
-            if (video)   video.play().catch(() => {});
+            if (blocks) blocks.classList.add('hidden');
+            if (synopsis) synopsis.classList.add('hidden');
+            if (message) {
+                message.classList.remove('hidden');
+                // Animar entrada de la carta con scroll suave al inicio
+                setTimeout(() => {
+                    const wrapper = message.querySelector('.birthday-letter-wrapper');
+                    if (wrapper) wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 300);
+            }
         });
     }
 }, 1000);
+
+/* ── GESTIÓN DE AUDIO AVANZADA (Visibility & Loop) ────────── */
+document.addEventListener('visibilitychange', () => {
+    const bgMusic = document.getElementById('bg-music');
+    if (!bgMusic) return;
+
+    if (document.hidden) {
+        bgMusic.pause();
+    } else {
+        // Solo reanudar si el play original ya había ocurrido (ej: ya entró a ValeFlix)
+        // y si la cuenta regresiva no ha terminado
+        const profileGate = document.getElementById('profile-gate');
+        const distance = birthdayDate - Date.now();
+        if (profileGate && profileGate.classList.contains('hidden') && distance > 0) {
+            bgMusic.play().catch(() => { });
+        }
+    }
+});

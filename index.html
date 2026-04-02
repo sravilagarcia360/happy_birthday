@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ValeFlix</title>
+    <title>Happy Birthday</title>
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <!-- CSS principal -->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- Favicons -->
@@ -14,48 +17,49 @@
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16x16.png">
     <link rel="manifest" href="assets/favicons/site.webmanifest">
 </head>
+
 <body>
 
     <!-- =====================================================
          ELEMENTOS DE SISTEMA (audio, overlays cinemáticos)
     ===================================================== -->
-    <audio id="netflix-sound" src="https://assets.mixkit.co/active_storage/sfx/2218/2218-preview.mp3" preload="auto"></audio>
+    <audio id="netflix-sound" src="" preload="auto"></audio>
     <audio id="bg-music" src="" loop preload="auto"></audio>
 
     <!-- Secuencia Cinemática 1: PIN / Top Secret -->
     <div id="cinematic-intro" class="cinematic-overlay">
         <div class="letterbox-top"></div>
         <div class="cinematic-text">
-            <div class="cinematic-studio">ValeFlix Original</div>
+            <div class="cinematic-studio">Love of my life</div>
             <div class="cinematic-title">Para Vale</div>
             <div class="cinematic-subtitle">Una historia de amor sin fin&hellip;</div>
         </div>
         <div class="letterbox-bottom"></div>
-        <button class="cinematic-skip" onclick="skipCinematic('cinematic-intro')">Saltar &rsaquo;&rsaquo;</button>
+
     </div>
 
     <!-- Secuencia Cinemática 2: La Carta -->
     <div id="cinematic-carta" class="cinematic-overlay">
         <div class="letterbox-top"></div>
         <div class="cinematic-text">
-            <div class="cinematic-studio">ValeFlix Presenta</div>
+            <div class="cinematic-studio">Bienvenida!</div>
             <div class="cinematic-title">Una Carta para Ti</div>
             <div class="cinematic-subtitle">Escrita desde lo m&aacute;s profundo del coraz&oacute;n&hellip;</div>
         </div>
         <div class="letterbox-bottom"></div>
-        <button class="cinematic-skip" onclick="skipCinematic('cinematic-carta')">Saltar &rsaquo;&rsaquo;</button>
+
     </div>
 
     <!-- Secuencia Cinemática 3: El Gran Video -->
     <div id="cinematic-video" class="cinematic-overlay">
         <div class="letterbox-top"></div>
         <div class="cinematic-text">
-            <div class="cinematic-studio">🎉 Temporada 19 &mdash; Episodio Final</div>
+            <div class="cinematic-studio">Escrito desde lo mas profundo de mi corazón</div>
             <div class="cinematic-title">&iexcl;Feliz Cumplea&ntilde;os!</div>
             <div class="cinematic-subtitle">Te amo hoy, ma&ntilde;ana y siempre&hellip; 💚</div>
         </div>
         <div class="letterbox-bottom"></div>
-        <button class="cinematic-skip" onclick="skipCinematic('cinematic-video')">Saltar &rsaquo;&rsaquo;</button>
+
     </div>
 
     <!-- =====================================================
@@ -63,14 +67,16 @@
     ===================================================== -->
     <div id="profile-gate" class="profile-gate">
         <header class="gate-header">
-            <h1 class="logo-netflix">ValeFlix</h1>
+            <h1 class="logo-netflix">¡Sorpresa!</h1>
         </header>
         <div class="profile-selection">
             <h2 class="profile-title">¿Quién está viendo?</h2>
             <div class="profiles-container">
                 <div class="profile" onclick="enterValeFlix()">
-                    <div class="avatar-wrapper"><div class="avatar avatar-1"></div></div>
-                    <span class="profile-name">Vale</span>
+                    <div class="avatar-wrapper">
+                        <div class="avatar avatar-1"></div>
+                    </div>
+                    <span class="profile-name">Valeria</span>
                 </div>
             </div>
         </div>
@@ -81,15 +87,18 @@
     ===================================================== -->
     <nav id="navbar" class="navbar hidden">
         <div class="nav-left">
-            <h1 class="logo-netflix" id="nav-logo" onclick="location.reload()" style="cursor:pointer;">ValeFlix</h1>
+            <h1 class="logo-netflix" id="nav-logo" onclick="location.reload()" style="cursor:pointer;">Amorcito</h1>
             <ul class="nav-links">
-                <li><a href="#" class="nav-tab active" data-target="tab-inicio"  onclick="switchTab(event, 'tab-inicio')">Inicio</a></li>
-                <li><a href="#" class="nav-tab"        data-target="tab-cartas"  onclick="switchTab(event, 'tab-cartas')">Cartas Mágicas</a></li>
-                <li><a href="#" class="nav-tab"        data-target="tab-magia"   onclick="switchTab(event, 'tab-magia')">Top Secret</a></li>
+                <li><a href="#" class="nav-tab active" data-target="tab-inicio"
+                        onclick="switchTab(event, 'tab-inicio')">Inicio</a></li>
+                <li><a href="#" class="nav-tab" data-target="tab-cartas" onclick="switchTab(event, 'tab-cartas')">Cartas
+                        Mágicas</a></li>
+                <li><a href="#" class="nav-tab" data-target="tab-magia" onclick="switchTab(event, 'tab-magia')">Top
+                        Secret</a></li>
             </ul>
         </div>
         <div class="nav-right">
-            <div id="current-avatar" class="avatar nav-avatar avatar-1">V</div>
+            <div id="current-avatar" class="avatar nav-avatar avatar-1"></div>
         </div>
     </nav>
 
@@ -106,4 +115,5 @@
     <!-- Script principal -->
     <script src="assets/js/script.js"></script>
 </body>
+
 </html>
